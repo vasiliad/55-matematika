@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 12 — Вызов</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Раздел I · Алгебра · Задача 12 из 55</div>
+  <h1>Вызов</h1>
+  <div class="stars">★★★☆ — трудный уровень</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>Найти ненулевой многочлен с <b>целыми</b> коэффициентами, корнем которого
+  является число \(\sqrt{2}+\sqrt{3}\).</p>
+</div>
+
+<details>
+  <summary>Оригинал по-французски</summary>
+  <p class="orig"><b>Ex 12 ★★★✩ — Défi.</b><br>
+  Déterminer un polynôme non nul à coefficients entiers admettant pour racine
+  \(\sqrt2+\sqrt3\).</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Есть число \(\sqrt{2}+\sqrt{3}\). Если посчитать его на калькуляторе,
+получится примерно \(3{,}14626\ldots\) — бесконечная непериодическая
+десятичная дробь, которую нельзя записать точно ни дробью, ни конечным
+десятичным числом.</p>
+
+<p>Нам предлагают «поймать» это неудобное число в очень простую сеть.
+Надо построить выражение вида</p>
+\[ A x^4 + Bx^3 + Cx^2 + Dx + E \]
+<p>(или похожее, но обязательно из целых чисел \(A, B, C, D, E\)), такое,
+что при подстановке \(x=\sqrt2+\sqrt3\) всё сократится и получится ровно ноль.</p>
+
+<p>Звучит почти волшебно: числа с корнями — «кривые», а коэффициенты должны
+быть целыми, самыми обычными. Но это работает, и приём очень изящный:
+<b>возвести в квадрат — оставить корень в одиночестве — возвести в квадрат ещё
+раз</b>. Каждое возведение в квадрат убивает один корень.</p>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><b>1. Что такое квадратный корень (racine carrée).</b></p>
+  <p>Запись \(\sqrt{a}\) означает: «такое неотрицательное число, которое при
+  умножении само на себя даёт \(a\)». Примеры:</p>
+  <ul>
+    <li>\(\sqrt{9}=3\), потому что \(3\cdot 3=9\);</li>
+    <li>\(\sqrt{25}=5\), потому что \(5\cdot 5=25\);</li>
+    <li>\(\sqrt{2}\approx 1{,}4142\ldots\) — точного «красивого» числа тут нет,
+    но оно существует: это длина диагонали квадрата со стороной 1.</li>
+  </ul>
+  <p>Главное свойство, которым мы будем пользоваться постоянно:</p>
+  \[ \left(\sqrt{a}\right)^2=\sqrt{a}\cdot\sqrt{a}=a . \]
+  <p>Это буквально определение: корень — то число, чей квадрат равен \(a\).</p>
+
+  <p><b>2. Корень произведения.</b></p>
+  <p>Верна формула \(\sqrt{a}\cdot\sqrt{b}=\sqrt{ab}\). Например,</p>
+  \[ \sqrt{2}\cdot\sqrt{3}=\sqrt{6}. \]
+  <p>Почему? Возведём \(\sqrt2\cdot\sqrt3\) в квадрат:</p>
+  \[ \left(\sqrt2\cdot\sqrt3\right)^2=\sqrt2\cdot\sqrt3\cdot\sqrt2\cdot\sqrt3
+     =\left(\sqrt2\cdot\sqrt2\right)\cdot\left(\sqrt3\cdot\sqrt3\right)
+     =2\cdot 3=6 . \]
+  <p>Значит, число \(\sqrt2\cdot\sqrt3\) неотрицательно и его квадрат равен 6.
+  А такое число ровно одно — это \(\sqrt6\).</p>
+
+  <p><b>3. Что такое многочлен с целыми коэффициентами.</b></p>
+  <p>Многочлен — выражение, собранное из \(x\) умножениями на числа, умножениями
+  \(x\) само на себя и сложениями. Запись \(x^2\) значит \(x\cdot x\),
+  \(x^3\) значит \(x\cdot x\cdot x\), \(x^4\) значит \(x\cdot x\cdot x\cdot x\).</p>
+  <p>«Целые коэффициенты» означает, что числа перед \(x\) — целые:
+  \(\ldots,-2,-1,0,1,2,\ldots\) Никаких дробей и никаких корней среди них быть
+  не должно. Например, \(x^4-10x^2+1\) — многочлен с целыми коэффициентами,
+  а \(x^2-\sqrt5\) — нет.</p>
+  <p>«Ненулевой» значит, что многочлен не равен тождественно нулю. Оговорка не
+  лишняя: у нулевого многочлена корнем является вообще любое число, и задача
+  без этого условия была бы бессмысленной.</p>
+
+  <p><b>4. Формула квадрата суммы.</b></p>
+  <p>Для любых чисел \(u\) и \(v\):</p>
+  \[ (u+v)^2=(u+v)(u+v)=u\cdot u+u\cdot v+v\cdot u+v\cdot v=u^2+2uv+v^2 . \]
+  <p>Здесь мы просто умножили каждое слагаемое первой скобки на каждое слагаемое
+  второй и сложили. Запомнить словами: «квадрат первого, плюс удвоенное
+  произведение, плюс квадрат второго».</p>
+
+  <p><b>5. Формула разности квадратов.</b></p>
+  \[ (u-v)(u+v)=u^2+uv-vu-v^2=u^2-v^2 . \]
+  <p>Средние слагаемые взаимно уничтожаются. Понадобится в конце.</p>
+
+  <p><b>6. Правило «возведение в квадрат сохраняет равенство».</b></p>
+  <p>Если два числа равны, то и их квадраты равны: из \(A=B\) следует
+  \(A^2=B^2\). Мы будем пользоваться этим дважды — именно так корни и исчезают.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">Даём имя нашему числу</div>
+  <p>Обозначим</p>
+  \[ x=\sqrt{2}+\sqrt{3} . \]
+  <p>Зачем? Потому что мы ищем многочлен от \(x\), который обращается в ноль
+  именно при этом значении. Значит, будем честно работать с этим \(x\) как с
+  числом и попробуем получить равенство, где корней уже нет.</p>
+  <p>Для ориентира: \(\sqrt2\approx1{,}41421\), \(\sqrt3\approx1{,}73205\),
+  поэтому \(x\approx 3{,}14626\).</p>
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">Возводим в квадрат первый раз</div>
+  <p>Почему именно квадрат? Потому что квадрат — это «противоядие» от корня:
+  \(\left(\sqrt2\right)^2=2\), корень исчезает. Правда, при возведении суммы
+  в квадрат появляется ещё и перекрёстное слагаемое, но с ним мы разберёмся.</p>
+  <p>Применяем формулу \((u+v)^2=u^2+2uv+v^2\), где \(u=\sqrt2\), \(v=\sqrt3\):</p>
+  \[ x^2=\left(\sqrt2\right)^2+2\cdot\sqrt2\cdot\sqrt3+\left(\sqrt3\right)^2 . \]
+  <p>Считаем каждое слагаемое отдельно:</p>
+  <ul>
+    <li>\(\left(\sqrt2\right)^2=2\);</li>
+    <li>\(2\cdot\sqrt2\cdot\sqrt3=2\sqrt6\) (по правилу из пункта 2);</li>
+    <li>\(\left(\sqrt3\right)^2=3\).</li>
+  </ul>
+  <p>Складываем: \(2+3=5\), значит</p>
+  \[ x^2=5+2\sqrt{6} . \]
+  <p><b>Промежуточный итог:</b> вместо двух корней остался один. Прогресс!</p>
+  <p><b>Проверка числом:</b> \(\sqrt6\approx 2{,}44949\), значит
+  \(5+2\cdot 2{,}44949=5+4{,}89898=9{,}89898\).
+  А \(x^2\approx 3{,}14626\cdot3{,}14626\approx 9{,}89898\). Совпадает.
+  \(\checkmark\)</p>
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">Оставляем корень в одиночестве</div>
+  <p>Это ключевой ход. Чтобы второе возведение в квадрат сработало начисто,
+  корень должен стоять в одной части равенства совершенно один, без соседей.</p>
+  <p>Вычитаем 5 из обеих частей:</p>
+  \[ x^2-5=2\sqrt{6} . \]
+  <p>Теперь слева — выражение только из \(x\) и целых чисел, справа — только
+  «корневая» часть. Ровно то, что нужно.</p>
+</div>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">Возводим в квадрат второй раз</div>
+  <p>Возводим в квадрат обе части. Сначала правую — она проще:</p>
+  \[ \left(2\sqrt6\right)^2=2\sqrt6\cdot 2\sqrt6=2\cdot 2\cdot\sqrt6\cdot\sqrt6
+     =4\cdot 6=24 . \]
+  <p>Корень исчез полностью. Теперь левую, по формуле квадрата суммы
+  с \(u=x^2\) и \(v=-5\):</p>
+  \[ \left(x^2-5\right)^2=\left(x^2\right)^2+2\cdot x^2\cdot(-5)+(-5)^2 . \]
+  <p>Разбираем по кусочкам:</p>
+  <ul>
+    <li>\(\left(x^2\right)^2=x^2\cdot x^2=x\cdot x\cdot x\cdot x=x^4\);</li>
+    <li>\(2\cdot x^2\cdot(-5)=-10x^2\);</li>
+    <li>\((-5)^2=(-5)\cdot(-5)=25\).</li>
+  </ul>
+  \[ \left(x^2-5\right)^2=x^4-10x^2+25 . \]
+  <p>Приравниваем обе стороны:</p>
+  \[ x^4-10x^2+25=24 . \]
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">Переносим всё в одну часть</div>
+  <p>Вычитаем 24 из обеих частей:</p>
+  \[ x^4-10x^2+25-24=0, \]
+  \[ \boxed{\ x^4-10x^2+1=0\ } \]
+  <p>Мы получили равенство нулю, в котором нет ни одного корня — только \(x\)
+  и целые числа \(1\), \(-10\), \(1\). Значит, искомый многочлен:</p>
+  \[ P(x)=x^4-10x^2+1 . \]
+  <p>Коэффициенты: при \(x^4\) стоит \(1\), при \(x^3\) стоит \(0\),
+  при \(x^2\) стоит \(-10\), при \(x\) стоит \(0\), свободный член \(1\).
+  Все целые. Многочлен ненулевой. Задача решена.</p>
+</div>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">Проверка «в обратную сторону» (обязательно!)</div>
+  <p>Наши рассуждения шли в направлении «если \(x=\sqrt2+\sqrt3\), то …».
+  Проверим теперь напрямую, что подстановка действительно даёт ноль.</p>
+  <p>Мы уже посчитали в шаге 2:</p>
+  \[ x^2=5+2\sqrt6 . \]
+  <p>Найдём \(x^4=\left(x^2\right)^2=\left(5+2\sqrt6\right)^2\).
+  По формуле квадрата суммы с \(u=5\), \(v=2\sqrt6\):</p>
+  <ul>
+    <li>\(u^2=5^2=25\);</li>
+    <li>\(2uv=2\cdot 5\cdot 2\sqrt6=20\sqrt6\);</li>
+    <li>\(v^2=\left(2\sqrt6\right)^2=4\cdot 6=24\).</li>
+  </ul>
+  \[ x^4=25+20\sqrt6+24=49+20\sqrt6 . \]
+  <p>Теперь подставляем всё в многочлен:</p>
+  \[ x^4-10x^2+1=\bigl(49+20\sqrt6\bigr)-10\bigl(5+2\sqrt6\bigr)+1 . \]
+  <p>Раскрываем скобку с десяткой: \(10\cdot 5=50\), \(10\cdot 2\sqrt6=20\sqrt6\),
+  и всё это со знаком минус:</p>
+  \[ =49+20\sqrt6-50-20\sqrt6+1 . \]
+  <p>Складываем отдельно «обычные» числа и отдельно «корневые»:</p>
+  <ul>
+    <li>обычные: \(49-50+1=0\);</li>
+    <li>корневые: \(20\sqrt6-20\sqrt6=0\).</li>
+  </ul>
+  \[ x^4-10x^2+1=0 . \;\checkmark \]
+  <p>Число \(\sqrt2+\sqrt3\) действительно является корнем.</p>
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">Численная проверка на калькуляторе</div>
+  <p>Полезно убедиться ещё и «на пальцах».</p>
+  \[ x\approx 3{,}146264\ ;\qquad x^2\approx 9{,}898979\ ;\qquad
+     x^4\approx 97{,}989795 . \]
+  \[ x^4-10x^2+1\approx 97{,}989795-98{,}989795+1=0 . \;\checkmark \]
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">Откуда взялась степень 4: три «двойника» нашего числа</div>
+  <p>Этот шаг не обязателен для ответа, но объясняет, почему нельзя было
+  обойтись многочленом степени 2 или 3.</p>
+  <p>Заметьте: каждый раз, когда мы возводили в квадрат, мы «забывали» знак.
+  Например, из \(x^2-5=2\sqrt6\) после возведения в квадрат получается то же
+  самое уравнение, что и из \(x^2-5=-2\sqrt6\). Поэтому наш многочлен ловит
+  в сеть не одно число, а сразу четыре:</p>
+  \[ \sqrt2+\sqrt3,\qquad \sqrt2-\sqrt3,\qquad -\sqrt2+\sqrt3,\qquad
+     -\sqrt2-\sqrt3 . \]
+  <p>Проверим на одном из них, например на \(\sqrt2-\sqrt3\):</p>
+  \[ \left(\sqrt2-\sqrt3\right)^2=2-2\sqrt6+3=5-2\sqrt6 , \]
+  \[ \left(5-2\sqrt6\right)^2=25-20\sqrt6+24=49-20\sqrt6 , \]
+  \[ x^4-10x^2+1=(49-20\sqrt6)-10(5-2\sqrt6)+1=49-20\sqrt6-50+20\sqrt6+1=0 .
+     \;\checkmark \]
+  <p>Четыре корня — значит, степень не меньше четырёх. Именно поэтому
+  многочлен получился четвёртой степени, и меньше уже не выйдет.</p>
+  <p>В официальном решении сборника этот же ответ получают, перемножив
+  все четыре скобки:</p>
+  \[ P(x)=\bigl(x-\sqrt2-\sqrt3\bigr)\bigl(x-\sqrt2+\sqrt3\bigr)
+          \bigl(x+\sqrt2-\sqrt3\bigr)\bigl(x+\sqrt2+\sqrt3\bigr). \]
+  <p>Считать это удобно, группируя скобки по парам и применяя разность
+  квадратов. Первая пара — самая крайняя левая и самая крайняя правая:</p>
+  \[ \bigl(x-(\sqrt2+\sqrt3)\bigr)\bigl(x+(\sqrt2+\sqrt3)\bigr)
+     =x^2-\left(\sqrt2+\sqrt3\right)^2=x^2-\left(5+2\sqrt6\right). \]
+  <p>Вторая пара — две средние:</p>
+  \[ \bigl(x-(\sqrt2-\sqrt3)\bigr)\bigl(x+(\sqrt2-\sqrt3)\bigr)
+     =x^2-\left(\sqrt2-\sqrt3\right)^2=x^2-\left(5-2\sqrt6\right). \]
+  <p>Осталось перемножить два результата. Обозначим \(u=x^2-5\) и
+  \(v=2\sqrt6\); тогда это \((u-v)(u+v)=u^2-v^2\):</p>
+  \[ \left(x^2-5\right)^2-\left(2\sqrt6\right)^2=x^4-10x^2+25-24=x^4-10x^2+1 . \]
+  <p>Тот же ответ. \(\checkmark\)</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <p>Подходит многочлен</p>
+  \[ P(x)=x^4-10x^2+1 . \]
+  <p>Все его коэффициенты (\(1\), \(0\), \(-10\), \(0\), \(1\)) — целые числа,
+  многочлен ненулевой, и \(P\!\left(\sqrt2+\sqrt3\right)=0\).</p>
+  <p>Его четыре корня: \(\pm\sqrt2\pm\sqrt3\) во всех четырёх комбинациях
+  знаков.</p>
+  <p>Разумеется, годится и любой многочлен, полученный из этого умножением на
+  целое число, например \(2x^4-20x^2+2\) — задача просит найти <em>какой-нибудь</em>
+  подходящий, и \(x^4-10x^2+1\) — самый простой из них.</p>
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+  <p><b>1. Считают, что \(\left(\sqrt2+\sqrt3\right)^2=2+3\).</b> Это самая
+  частая ошибка вообще во всей алгебре. Квадрат суммы <em>не равен</em> сумме
+  квадратов: есть ещё среднее слагаемое \(2uv\). Проверьте на простых числах:
+  \((1+1)^2=4\), а \(1^2+1^2=2\). Не то же самое.</p>
+
+  <p><b>2. Возводят в квадрат, не изолировав корень.</b> Если из
+  \(x^2=5+2\sqrt6\) сразу возвести всё в квадрат, справа получится
+  \(\left(5+2\sqrt6\right)^2=49+20\sqrt6\) — корень никуда не делся, стало
+  только хуже. Именно шаг «перенести 5 налево» делает второе возведение в
+  квадрат чистым.</p>
+
+  <p><b>3. Забывают, что \(2\sqrt6\) возводится в квадрат целиком.</b>
+  \(\left(2\sqrt6\right)^2=2^2\cdot\left(\sqrt6\right)^2=4\cdot 6=24\), а не
+  \(2\cdot 6=12\). Двойка тоже возводится в квадрат.</p>
+
+  <p><b>4. Не доводят до нуля.</b> Равенство \(x^4-10x^2+25=24\) — ещё не ответ.
+  Многочлен — это то, что стоит слева, когда справа ноль. Надо перенести 24.</p>
+
+  <p><b>5. Оставляют в ответе дробные или иррациональные коэффициенты.</b>
+  Условие требует именно целых. Проверьте глазами каждый коэффициент готового
+  ответа.</p>
+
+  <p><b>6. Думают, что раз мы шли «в одну сторону», доказательство неполно.</b>
+  Формально это верное беспокойство — поэтому шаг 6 (прямая подстановка)
+  обязателен. Он превращает «наводящее рассуждение» в полноценную проверку.</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

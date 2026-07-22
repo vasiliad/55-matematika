@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>55 задач — Lycée Henri-IV, подготовка к Terminale</title>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:40px 16px 90px;background:var(--bg);color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif;font-size:18px;line-height:1.7}
+.wrap{max-width:900px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:20px;margin-bottom:14px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+h1{font-size:34px;line-height:1.2;margin:0 0 12px}
+.lede{color:var(--muted);font-size:17px;margin:0}
+.howto{background:var(--accent-soft);border:1px solid var(--line);border-left:5px solid var(--accent);
+  border-radius:10px;padding:16px 22px;margin:26px 0 34px}
+.howto p{margin:8px 0}
+h2{font-size:24px;margin:44px 0 6px;padding-bottom:8px;border-bottom:2px solid var(--accent)}
+.sechint{font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);margin:0 0 16px}
+ol.list{list-style:none;padding:0;margin:0}
+ol.list li{margin:0 0 8px}
+a.item{display:flex;align-items:baseline;gap:14px;background:var(--card);
+  border:1px solid var(--line);border-radius:9px;padding:12px 18px;
+  text-decoration:none;color:var(--ink);transition:.14s}
+a.item:hover{border-color:var(--accent);background:var(--accent-soft);transform:translateX(3px)}
+.n{font-family:system-ui,sans-serif;font-weight:700;font-size:15px;color:var(--accent);
+  min-width:34px;flex-shrink:0}
+.t{flex:1}
+.t small{display:block;font-family:system-ui,sans-serif;font-size:13.5px;color:var(--muted);
+  margin-top:1px;line-height:1.45}
+.st{font-family:system-ui,sans-serif;font-size:13px;color:var(--accent);
+  letter-spacing:1px;flex-shrink:0;white-space:nowrap}
+footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+@media(max-width:620px){
+  body{font-size:17px;padding:24px 12px 60px}
+  h1{font-size:26px}
+  a.item{flex-wrap:wrap;gap:8px}
+  .st{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Lycée Henri-IV · Livret de travail 1<sup>ère</sup> → Terminale</div>
+  <h1>55 задач с подробным разбором</h1>
+  <p class="lede">Полный сборник, переведённый на русский и разобранный с нуля — от простых вычислений до производных, вероятностей и векторов.</p>
+</header>
+
+<div class="howto">
+  <p><strong>Как этим пользоваться.</strong> Каждая задача — отдельная страница. Внутри всегда одинаковая структура: условие по-русски, оригинал по-французски, пересказ простыми словами, блок «что нужно знать заранее» (все понятия объясняются с нуля), решение по шагам, ответ и разбор типичных ошибок.</p>
+  <p>Звёздочки показывают сложность из оригинального сборника: ★☆☆☆ — разминка, ★★★☆ — задача со звёздочкой.</p>
+  <p>Идти можно по порядку, а можно сразу в нужный раздел — задачи между собой почти не связаны.</p>
+</div>
+
+<h2>I. Вычисления, уравнения и неравенства</h2>
+<p class="sechint">Скобки, дроби, корни, квадратные уравнения, тригонометрия. База, на которой держится всё остальное.</p>
+<ol class="list">
+<li><a class="item" href="01-bazovye-vychisleniya.html"><span class="n">01</span><span class="t">Базовые вычисления<small>Раскрыть скобки и разложить на множители — 12 многочленов</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="02-uproshchenie-chisel.html"><span class="n">02</span><span class="t">Упрощение числовых выражений<small>Многоэтажные дроби и корни: привести к одной дроби без корня в знаменателе</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="03-uproshchenie-vyrazhenij.html"><span class="n">03</span><span class="t">Упрощение буквенных выражений<small>Десять выражений с буквой x — свести каждое к одной дроби</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="04-tablica-znakov.html"><span class="n">04</span><span class="t">Таблица знаков<small>Где выражение положительное, где отрицательное, где обращается в ноль</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="05-vozrasty.html"><span class="n">05</span><span class="t">Возрасты<small>Элен родилась в двадцатилетие матери. Сколько раз её возраст будет делителем возраста матери?</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="06-sinij-belyj-krasnyj.html"><span class="n">06</span><span class="t">Синий-белый-красный<small>60 билетиков трёх цветов и два условия. Сколько синих?</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="07-rebus-vacances.html"><span class="n">07</span><span class="t">Каникулы (числовой ребус)<small>SOLEIL + SABLE = BIKINI. Каждая буква — своя цифра</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="08-lipovyj-opros.html"><span class="n">08</span><span class="t">Липовый опрос<small>Семь процентов из газеты. Почему они не могут быть правдой</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="09-mnogochlen-2-stepeni.html"><span class="n">09</span><span class="t">Многочлен второй степени<small>Восстановить многочлен по его корням и одному значению</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="10-lyubimyj-uchitel.html"><span class="n">10</span><span class="t">Любимый учитель<small>Подарок за 600 €. Если бы скинувшихся было на 10 меньше, каждый платил бы на 3 € больше</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="11-parametr.html"><span class="n">11</span><span class="t">Уравнение с параметром<small>Дискриминант, произведение корней и заданный корень −2</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="12-vyzov-koren-2-plus-koren-3.html"><span class="n">12</span><span class="t">Вызов<small>Найти многочлен с целыми коэффициентами, корень которого — сумма двух корней</small></span><span class="st">★★★☆</span></a></li>
+<li><a class="item" href="13-bolshoe-uravnenie.html"><span class="n">13</span><span class="t">Большое уравнение<small>Восемь слагаемых подряд: суммы прогрессий вместо лобового решения</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="14-pryamougolnyj-treugolnik.html"><span class="n">14</span><span class="t">Прямоугольный треугольник<small>Пифагор работает для квадратов. А что будет для более высоких степеней?</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="15-evarist-i-blez.html"><span class="n">15</span><span class="t">Эварист и Блез<small>Знаменитая задача о трёх квадратах. Спорят двое — и оба неправы</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="16-trig-uravneniya.html"><span class="n">16</span><span class="t">Тригонометрические уравнения<small>Четыре уравнения с синусом и косинусом на заданных промежутках</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="17-trig-neravenstva.html"><span class="n">17</span><span class="t">Тригонометрические неравенства<small>Пять неравенств: читаем ответ прямо с единичной окружности</small></span><span class="st">★★☆☆</span></a></li>
+</ol>
+
+<h2>II. Последовательности</h2>
+<p class="sechint">Числа по ступенькам: арифметические и геометрические прогрессии, рекуррентные формулы, пределы и доказательство по индукции.</p>
+<ol class="list">
+<li><a class="item" href="18-arifmeticheskaya-progressiya.html"><span class="n">18</span><span class="t">Арифметическая прогрессия<small>Пять задач на общий член и сумму. С выводом трюка Гаусса</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="19-geometricheskaya-progressiya.html"><span class="n">19</span><span class="t">Геометрическая прогрессия<small>Знаменатель, общий член и формула суммы</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="20-exp-ot-progressii.html"><span class="n">20</span><span class="t">Экспонента от прогрессии<small>Почему e в степени арифметической прогрессии даёт геометрическую</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="21-rekurrentnaya-3-5.html"><span class="n">21</span><span class="t">Каждый раз три пятых плюс два<small>Классический приём: сдвинуть последовательность и получить геометрическую</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="22-dve-suti-un-vn.html"><span class="n">22</span><span class="t">Две переплетённые последовательности<small>Разность и хитрая комбинация распутывают систему</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="23-suita-un-na-un-plus-1.html"><span class="n">23</span><span class="t">Перевернуть последовательность<small>Сама по себе сложная, а обратные к ней числа — простая арифметическая прогрессия</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="24-suita-un-plus-8.html"><span class="n">24</span><span class="t">Лесенка к двойке<small>Графический метод «паутины» и подстановка, превращающая всё в прогрессию</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="25-rekursiya-vtorogo-poryadka.html"><span class="n">25</span><span class="t">Рекурсия через два шага<small>Каждый член зависит от двух предыдущих. Большая задача в шесть пунктов</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="26-monotonnost-u2-plus-u.html"><span class="n">26</span><span class="t">Возрастает, но не убегает<small>Последовательность растёт, но заперта между −1 и 0. Куда она придёт?</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="27-koren-n-plus-1-minus-koren-n.html"><span class="n">27</span><span class="t">Разность соседних корней<small>Зажать между двумя оценками и сложить телескопическую сумму</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="28-dve-suti-dn-an.html"><span class="n">28</span><span class="t">Две связанные последовательности<small>Самая тяжёлая в разделе. Плюс разбор опечатки в оригинальном сборнике</small></span><span class="st">★★★☆</span></a></li>
+</ol>
+
+<h2>III. Вероятности</h2>
+<p class="sechint">Деревья вероятностей и условная вероятность. Приём «представим 1000 человек» решает почти всё.</p>
+<ol class="list">
+<li><a class="item" href="29-protezy.html"><span class="n">29</span><span class="t">Протезы от трёх поставщиков<small>Формула полной вероятности на бытовом примере</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="30-test-na-bolezn.html"><span class="n">30</span><span class="t">Тест на редкую болезнь<small>Тест положительный — и всё же вероятность болезни всего 15 %. Почему</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="31-pyat-klyuchej.html"><span class="n">31</span><span class="t">Пять ключей<small>Два ключа сломаны, пробуем по очереди без возврата</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="32-igra-zhyuletty.html"><span class="n">32</span><span class="t">Игра Жюльетты<small>Вероятности сами образуют последовательность и сходятся к 3/7</small></span><span class="st">★★☆☆</span></a></li>
+</ol>
+
+<h2>IV. Функции</h2>
+<p class="sechint">Производная как спидометр, пределы, асимптоты, поиск наибольшего и наименьшего. Самый большой раздел сборника.</p>
+<ol class="list">
+<li><a class="item" href="33-tablicy-izmeneniya.html"><span class="n">33</span><span class="t">Таблицы изменения<small>Где функция растёт, где падает — и как это записать таблицей</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="34-proizvodnye.html"><span class="n">34</span><span class="t">Двадцать шесть производных<small>Полный тренажёр: все правила с выводом и 26 разобранных примеров</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="35-predely-v-tochke.html"><span class="n">35</span><span class="t">Пределы в точке<small>Неопределённость 0/0: сокращаем множитель и умножаем на сопряжённое</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="36-predely-raznye.html"><span class="n">36</span><span class="t">Пределы: разные случаи<small>Пять коротких примеров, включая один, где предела нет вовсе</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="37-predely-na-beskonechnosti.html"><span class="n">37</span><span class="t">Пределы на бесконечности<small>Горизонтальные асимптоты и главная ловушка с корнем из квадрата</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="38-vertikalnye-asimptoty.html"><span class="n">38</span><span class="t">Вертикальные асимптоты<small>Слева и справа предел разный. Когда это стена, а когда просто дырка</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="39-operacii-s-predelami.html"><span class="n">39</span><span class="t">Операции с пределами<small>Что можно сложить и поделить, а где выходит неопределённость</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="40-funkciya-ex-na-ex-minus-x.html"><span class="n">40</span><span class="t">Дробь с экспонентой<small>Полное исследование: область определения, пределы, две асимптоты, максимум</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="41-ploshchad-treugolnika-omn.html"><span class="n">41</span><span class="t">Самый маленький треугольник<small>Прямая скользит через точку (1;1). Когда отсекаемый треугольник минимален</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="42-naklonnaya-asimptota.html"><span class="n">42</span><span class="t">Наклонная асимптота<small>Деление многочленов уголком — и кривая распадается на прямую плюс мелочь</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="43-funkciya-x-koren-x.html"><span class="n">43</span><span class="t">Функция с корнем<small>Дифференцируемость в нуле и касательная, совпадающая с осью</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="44-polya-knigi.html"><span class="n">44</span><span class="t">Поля книжной страницы<small>Печатное поле 600 см². При каком размере страницы уходит меньше бумаги</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="45-kompoziciya-funkcij.html"><span class="n">45</span><span class="t">Композиция функций<small>Две машинки подряд: читаем g∘f и f∘g прямо по графикам и строим таблицу изменения</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="46-neravenstvo-1-plus-x-n.html"><span class="n">46</span><span class="t">Неравенство через минимум функции<small>Как из поиска минимума получается алгебраическое неравенство</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="47-kvadrat-i-kasatelnaya.html"><span class="n">47</span><span class="t">Квадрат и касательная к дуге<small>Геометрия сводится к функции, функция — к производной</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="48-bolshoe-issledovanie-e-x-na-x-plus-1.html"><span class="n">48</span><span class="t">Большое исследование в трёх частях<small>Самая объёмная задача сборника: вторая производная, продолжение функции в точку</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="49-kasatelnaya-cherez-nachalo.html"><span class="n">49</span><span class="t">Касательная через начало координат<small>Найти точку, касательная в которой проходит ровно через ноль</small></span><span class="st">★★☆☆</span></a></li>
+</ol>
+
+<h2>V. Координаты и векторы</h2>
+<p class="sechint">Стрелки вместо чертежа. Скалярное произведение равно нулю ровно тогда, когда прямые перпендикулярны — на этом держится почти весь раздел.</p>
+<ol class="list">
+<li><a class="item" href="50-kvadrat-i-pryamougolnik.html"><span class="n">50</span><span class="t">Квадрат и вписанный прямоугольник<small>Два способа доказать перпендикулярность: геометрический и через координаты</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="51-korabl-i-dva-goroda.html"><span class="n">51</span><span class="t">Корабль и два города<small>Теорема синусов и теорема косинусов на практике</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="52-ugol-ibj.html"><span class="n">52</span><span class="t">Угол в квадрате<small>Скалярное произведение считаем двумя способами и находим угол</small></span><span class="st">★★☆☆</span></a></li>
+<li><a class="item" href="53-okruzhnost-ortocentr-centroid.html"><span class="n">53</span><span class="t">Окружность, ортоцентр, центр тяжести<small>Три замечательные точки треугольника лежат на одной прямой — прямой Эйлера</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="54-kvadrat-i-ravnobedrennyj.html"><span class="n">54</span><span class="t">Квадрат и приставленный треугольник<small>Удачно выбранные координаты превращают доказательство в одну строчку</small></span><span class="st">★☆☆☆</span></a></li>
+<li><a class="item" href="55-mediana-i-vysota.html"><span class="n">55</span><span class="t">Медиана оказывается высотой<small>Поворот на 90° связывает два треугольника</small></span><span class="st">★★☆☆</span></a></li>
+</ol>
+
+<footer>
+  Источник задач: Lycée Henri-IV, «Livret de travail 1<sup>ère</sup> → Terminale», версия от 7 июля 2024 г.<br>
+  Разборы написаны на русском языке и рассчитаны на читателя без математической подготовки.
+</footer>
+
+</div>
+</body>
+</html>

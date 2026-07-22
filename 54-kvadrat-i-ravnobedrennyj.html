@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 54 — Квадрат и равнобедренный треугольник</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+figure{margin:22px 0;text-align:center}
+figure svg{max-width:100%;height:auto;background:var(--card);
+  border:1px solid var(--line);border-radius:10px}
+figcaption{font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);margin-top:8px}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Раздел V · Координаты и векторы · Задача 54 из 55</div>
+  <h1>Квадрат и равнобедренный треугольник: две перпендикулярные прямые</h1>
+  <div class="stars">★☆☆☆ — простой уровень</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>\(ABCD\) — квадрат, \(M\) — произвольная точка отрезка \([BC]\).
+  \(BMN\) — треугольник, равнобедренный в вершине \(B\) (то есть \(BM=BN\)),
+  расположенный вне квадрата \(ABCD\).</p>
+  <p>Доказать, что прямые \((AM)\) и \((NC)\) перпендикулярны.</p>
+</div>
+
+<div class="box trap">
+  <span class="lbl">Важно: какую конфигурацию мы принимаем и почему</span>
+  <p>В сборнике конфигурация задавалась <b>рисунком</b>, который при
+  распознавании PDF пропал. В тексте осталось только «triangle isocèle en B»
+  («равнобедренный в вершине \(B\)»), то есть \(BM=BN\).</p>
+  <p><b>Одного этого условия недостаточно</b>, и вот проверка. Возьмём
+  квадрат со стороной \(1\) и точку \(M\), совпадающую с \(C\). Пусть \(N\)
+  таков, что \(BN=BM=1\), но угол \(\widehat{MBN}\) равен не \(90^\circ\),
+  а \(60^\circ\). Тогда в системе с началом в \(B\) (см. ниже) получим
+  \(N\approx(0{,}5;\,-0{,}87)\), и скалярное произведение
+  \(\vec{AM}\cdot\vec{NC}\approx 0{,}5-0{,}87=-0{,}37\ne 0\) — прямые
+  <em>не</em> перпендикулярны.</p>
+  <p>Значит на утерянном рисунке был указан ещё и <b>прямой угол при \(B\)</b>.
+  Полное условие такое:</p>
+  <ul>
+    <li>\(BMN\) — <b>прямоугольный равнобедренный треугольник с прямым углом
+    при вершине \(B\)</b>: \(BM=BN\) и \(\widehat{MBN}=90^\circ\)
+    (по-французски это «triangle <em>rectangle</em> isocèle en B» — слово
+    «rectangle» при распознавании потерялось);</li>
+    <li>слово «вне квадрата» (extérieur) определяет, в какую из двух сторон
+    отложен отрезок \(BN\): точка \(N\) лежит на продолжении стороны \(AB\)
+    за точку \(B\), то есть по другую сторону от \(B\), чем \(A\).</li>
+  </ul>
+  <p>При такой (и только такой) расстановке утверждение задачи выполняется
+  точно, при любом положении \(M\) на \([BC]\). Дальше работаем с ней.</p>
+</div>
+
+<figure>
+<svg viewBox="50 45 265 335" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="Квадрат ABCD, точка M на стороне BC, треугольник BMN вне квадрата">
+  <!-- square -->
+  <polygon points="100,80 260,80 260,240 100,240" fill="#fdf3e3"
+           stroke="#25211c" stroke-width="2.5"/>
+  <!-- triangle BMN -->
+  <polygon points="100,240 196,240 100,336" fill="#eaf6ec"
+           stroke="#166534" stroke-width="2.5"/>
+  <!-- line AM extended -->
+  <line x1="100" y1="80" x2="196" y2="240" stroke="#1e4e79" stroke-width="2.5"/>
+  <line x1="196" y1="240" x2="215" y2="272" stroke="#1e4e79" stroke-width="2"
+        stroke-dasharray="6 4"/>
+  <!-- segment NC -->
+  <line x1="100" y1="336" x2="260" y2="240" stroke="#b45309" stroke-width="2.5"/>
+  <!-- right angle marker at B (inside triangle) -->
+  <polyline points="114,240 114,254 100,254" fill="none" stroke="#166534" stroke-width="1.8"/>
+  <!-- right angle marker at intersection -->
+  <polyline points="206.8,258.0 217.1,251.8 223.2,262.1" fill="none"
+            stroke="#9a3412" stroke-width="2"/>
+  <!-- points -->
+  <circle cx="100" cy="80"  r="5" fill="#25211c"/>
+  <circle cx="260" cy="80"  r="5" fill="#25211c"/>
+  <circle cx="260" cy="240" r="5" fill="#25211c"/>
+  <circle cx="100" cy="240" r="5" fill="#25211c"/>
+  <circle cx="196" cy="240" r="5" fill="#b45309"/>
+  <circle cx="100" cy="336" r="5" fill="#166534"/>
+  <!-- labels -->
+  <g font-family="Georgia,serif" font-size="20" fill="#25211c">
+    <text x="80"  y="74">A</text>
+    <text x="266" y="74">D</text>
+    <text x="266" y="256">C</text>
+    <text x="78"  y="258">B</text>
+  </g>
+  <text x="192" y="228" font-family="Georgia,serif" font-size="20" fill="#b45309">M</text>
+  <text x="78"  y="346" font-family="Georgia,serif" font-size="20" fill="#166534">N</text>
+  <g font-family="system-ui,sans-serif" font-size="13" fill="#6b6257">
+    <text x="132" y="256">m</text>
+    <text x="60"  y="296">m</text>
+    <text x="140" y="150">(AM)</text>
+    <text x="186" y="300">(NC)</text>
+  </g>
+</svg>
+<figcaption>Квадрат \(ABCD\); точка \(M\) на стороне \([BC]\);
+треугольник \(BMN\) с прямым углом при \(B\) и \(BM=BN=m\), лежащий
+вне квадрата. Синяя прямая \((AM)\), оранжевая \((NC)\); красный уголок —
+прямой угол между ними.</figcaption>
+</figure>
+
+<details>
+  <summary>Оригинал по-французски</summary>
+  <p class="orig"><b>Ex 54 ★✩✩✩</b><br>
+  ABCD est un carré et M un point quelconque de [BC]. BMN est un triangle
+  isocèle en B, extérieur au carré ABCD. Démontrer que les droites (AM) et (NC)
+  sont perpendiculaires. <i>(le triangle rectangle isocèle et la position de N
+  étaient précisés par la figure)</i></p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Нарисуйте квадрат. Поставьте точку \(M\) где-нибудь на одной из сторон.
+Теперь снаружи квадрата пристройте прямоугольный «уголок» — треугольник
+\(BMN\), у которого при вершине \(B\) прямой угол, а две стороны при этом
+углу одинаковы: \(BM=BN\).</p>
+
+<p>Проведите две линии: от угла \(A\) до точки \(M\), и от точки \(N\) до
+угла \(C\). Утверждение: <b>эти линии всегда пересекаются под прямым углом</b>
+— куда бы ни попала точка \(M\).</p>
+
+<p>Доказывать будем не построениями, а вычислением. Есть инструмент —
+<b>скалярное произведение (produit scalaire)</b>, которое по двум стрелкам
+выдаёт одно число, и это число равно нулю ровно тогда, когда стрелки
+перпендикулярны. Нам останется посчитать это число и увидеть ноль.</p>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><b>1. Квадрат \(ABCD\) — как читать буквы.</b></p>
+  <p>Буквы идут по кругу, вершина за вершиной. Значит стороны — это
+  \([AB]\), \([BC]\), \([CD]\), \([DA]\); а \([AC]\) и \([BD]\) — диагонали.
+  Все четыре стороны равны, все четыре угла прямые.</p>
+  <p>Отсюда важное: \(AB\perp BC\) — стороны, сходящиеся в вершине \(B\),
+  перпендикулярны.</p>
+
+  <p><b>2. Вектор (vecteur) — стрелка «куда и насколько сдвинуться».</b></p>
+  <p>Запись \(\vec{AM}\) означает: сдвиг, переводящий точку \(A\) в точку
+  \(M\). У стрелки есть направление и длина — и больше ничего.</p>
+
+  <p><b>3. Система координат.</b></p>
+  <p>Чтобы считать, а не рисовать, введём координаты. Выберем:</p>
+  <ul>
+    <li><b>начало</b> — точку \(B\);</li>
+    <li><b>первую ось</b> — вдоль стороны \(BC\);</li>
+    <li><b>вторую ось</b> — вдоль стороны \(BA\).</li>
+  </ul>
+  <p>Так можно делать, потому что \(BC\perp BA\) (угол квадрата прямой) и
+  \(BC=BA\) (стороны квадрата равны). Такая система называется
+  <b>ортонормированной</b> — оси перпендикулярны, единицы одинаковы.
+  Это обязательное условие для формулы скалярного произведения.</p>
+  <p>Координаты точки \((x;y)\) читаются так: «пройти \(x\) вдоль первой оси,
+  потом \(y\) вдоль второй». Отрицательное число означает «в обратную
+  сторону».</p>
+
+  <p><b>4. Координаты вектора по двум точкам.</b></p>
+  \[ \vec{MN}=\bigl(x_N-x_M;\;y_N-y_M\bigr)
+     \quad\text{— «конец минус начало».} \]
+
+  <p><b>5. Скалярное произведение — главный инструмент.</b></p>
+  <p>Для векторов \(\vec u=(x;y)\) и \(\vec v=(x';y')\) в ортонормированной
+  системе:</p>
+  \[ \vec u\cdot\vec v=x\,x'+y\,y' . \]
+  <p>Перемножили первые координаты, перемножили вторые, сложили. Получилось
+  <em>число</em>, а не стрелка.</p>
+  <p><b>Главное свойство:</b></p>
+  \[ \vec u\cdot\vec v=0
+     \iff \vec u\ \text{и}\ \vec v\ \text{перпендикулярны} \]
+  <p>(для ненулевых векторов). Проверим на очевидном:
+  \(\vec u=(1;0)\) — «вправо», \(\vec v=(0;1)\) — «вверх». Считаем:
+  \(1\cdot 0+0\cdot 1=0\). ✔ И правда перпендикулярны.</p>
+  <p>Ещё пример, менее очевидный: \(\vec u=(2;-5)\), \(\vec v=(5;2)\).
+  Считаем: \(2\cdot 5+(-5)\cdot 2=10-10=0\). Значит перпендикулярны.
+  Заметьте закономерность: второй вектор получен из первого перестановкой
+  координат со сменой одного знака — это и есть поворот на прямой угол.</p>
+
+  <p><b>6. Прямоугольный равнобедренный треугольник.</b></p>
+  <p>«Равнобедренный в вершине \(B\)» значит: две стороны, выходящие из \(B\),
+  равны: \(BM=BN\). «Прямоугольный в \(B\)» значит: угол при \(B\) прямой,
+  то есть \(BM\perp BN\). Вместе: это «половинка квадрата, разрезанного по
+  диагонали».</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">Ставим систему координат и записываем квадрат</div>
+  <p><em>Почему так делаем.</em> Задача «на любую точку \(M\)» — значит
+  проверять по одной картинке бессмысленно, надо считать в общем виде.
+  Координаты позволяют записать «любую точку» одной буквой.</p>
+  <p>Обозначим сторону квадрата за \(a\) (это положительное число).
+  Ставим начало координат в \(B\), первую ось вдоль \(BC\), вторую вдоль
+  \(BA\). Тогда:</p>
+  <ul>
+    <li>\(B=(0;\,0)\) — начало координат;</li>
+    <li>\(C=(a;\,0)\) — прошли \(a\) вдоль первой оси;</li>
+    <li>\(A=(0;\,a)\) — прошли \(a\) вдоль второй оси;</li>
+    <li>\(D\) — четвёртая вершина. Чтобы попасть из \(B\) в \(D\), надо
+    пройти \(a\) вдоль первой оси и \(a\) вдоль второй:
+    \(D=(a;\,a)\).</li>
+  </ul>
+  <p><b>Проверка, что это действительно квадрат \(ABCD\):</b>
+  \(AB=a\) (от \((0;a)\) до \((0;0)\)), \(BC=a\), \(CD=a\) (от \((a;0)\) до
+  \((a;a)\)), \(DA=a\). Все четыре стороны равны, соседние перпендикулярны. ✔</p>
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">Записываем произвольную точку \(M\)</div>
+  <p><em>Почему так делаем.</em> \(M\) — «любая точка отрезка \([BC]\)».
+  Обозначим её положение одной буквой и посмотрим, что получится.</p>
+  <p>Отрезок \([BC]\) идёт от \((0;0)\) до \((a;0)\) — это кусок первой оси.
+  Значит вторая координата у \(M\) равна нулю, а первая — какое-то число
+  между \(0\) и \(a\). Обозначим его \(m\):</p>
+  \[ M=(m;\,0),\qquad 0\leqslant m\leqslant a . \]
+  <p>Заметьте: \(m\) — это в точности длина \(BM\), потому что \(M\) удалена
+  от начала координат ровно на \(m\) вдоль первой оси.</p>
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">Находим координаты точки \(N\)</div>
+  <p><em>Почему так делаем.</em> Это самый содержательный шаг: надо
+  превратить словесное описание треугольника в числа.</p>
+  <p>Три требования к точке \(N\):</p>
+  <ol>
+    <li><b>\(BN\perp BM\).</b> Вектор \(\vec{BM}=(m;0)\) идёт вдоль первой
+    оси. Перпендикулярно ему — вторая ось. Значит \(N\) лежит на второй оси,
+    то есть \(N=(0;\,t)\) для какого-то числа \(t\).</li>
+    <li><b>\(BN=BM\).</b> Длина \(BM\) равна \(m\). Длина \(BN\) равна
+    \(|t|\). Значит \(|t|=m\), то есть либо \(t=m\), либо \(t=-m\).
+    Два варианта.</li>
+    <li><b>Треугольник лежит вне квадрата.</b> Вот что решает выбор.</li>
+  </ol>
+  <p>Разберём оба варианта.</p>
+  <ul>
+    <li><b>Если \(t=+m\)</b>, то \(N=(0;m)\). Но \(A=(0;a)\) и \(0\leqslant m
+    \leqslant a\), значит \(N\) лежит <em>на стороне</em> \([BA]\) квадрата.
+    Весь треугольник \(BMN\) оказался бы <em>внутри</em> квадрата. Это
+    противоречит условию «вне квадрата».</li>
+    <li><b>Если \(t=-m\)</b>, то \(N=(0;-m)\). Вторая координата
+    отрицательна — точка лежит по другую сторону от прямой \((BC)\), чем
+    квадрат. Треугольник \(BMN\) целиком снаружи, соприкасаясь с квадратом
+    только по отрезку \([BM]\). ✔ Это и есть нужный случай.</li>
+  </ul>
+  \[ \boxed{\;N=(0;\,-m)\;} \]
+  <p>Иначе говоря: \(N\) лежит на продолжении стороны \(AB\) за точку \(B\),
+  на расстоянии \(BM\) от \(B\).</p>
+</div>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">Считаем вектор \(\vec{AM}\)</div>
+  <p><em>Почему так делаем.</em> Прямая \((AM)\) задаётся стрелкой из \(A\)
+  в \(M\). Считаем «конец минус начало».</p>
+  <p>Точки: \(A=(0;\,a)\), \(M=(m;\,0)\).</p>
+  <ul>
+    <li>первая координата: \(m-0=m\);</li>
+    <li>вторая координата: \(0-a=-a\).</li>
+  </ul>
+  \[ \vec{AM}=(m;\,-a). \]
+  <p>Смысл: «идём на \(m\) вперёд и на \(a\) назад по второй оси»,
+  то есть по картинке — вправо и вниз. ✔</p>
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">Считаем вектор \(\vec{NC}\)</div>
+  <p>Точки: \(N=(0;\,-m)\), \(C=(a;\,0)\).</p>
+  <ul>
+    <li>первая координата: \(a-0=a\);</li>
+    <li>вторая координата: \(0-(-m)=0+m=m\).</li>
+  </ul>
+  <p>Обратите особое внимание на второй расчёт: минус на минус даёт плюс.</p>
+  \[ \vec{NC}=(a;\,m). \]
+  <p>Смысл: «идём на \(a\) вперёд и на \(m\) вверх». ✔</p>
+</div>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">Считаем скалярное произведение</div>
+  <p><em>Почему так делаем.</em> Это финальная проверка: если получится ноль,
+  прямые перпендикулярны.</p>
+  \[ \vec{AM}\cdot\vec{NC}=\underbrace{m\cdot a}_{\text{первые координаты}}
+     +\underbrace{(-a)\cdot m}_{\text{вторые координаты}} . \]
+  <p>Считаем каждое слагаемое:</p>
+  <ul>
+    <li>\(m\cdot a=ma\);</li>
+    <li>\((-a)\cdot m=-am\).</li>
+  </ul>
+  <p>Складываем. Так как \(ma\) и \(am\) — одно и то же число (от перестановки
+  множителей произведение не меняется):</p>
+  \[ \vec{AM}\cdot\vec{NC}=ma-am=0 . \]
+  \[ \boxed{\;\vec{AM}\cdot\vec{NC}=0\;} \]
+  <p><b>Вывод: векторы \(\vec{AM}\) и \(\vec{NC}\) перпендикулярны, значит
+  прямые \((AM)\) и \((NC)\) перпендикулярны.</b> ✔</p>
+  <p>Причём в ответе не осталось ни \(a\), ни \(m\) — значит утверждение верно
+  для квадрата любого размера и при любом положении точки \(M\) на \([BC]\).
+  Это ровно то, что требовалось доказать.</p>
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">Проверяем на конкретных числах</div>
+  <p><em>Почему так делаем.</em> Буквенное вычисление легко испортить одной
+  опечаткой. Подставим числа и убедимся, что всё сходится.</p>
+
+  <p><b>Пример 1.</b> Пусть сторона \(a=4\), а \(M\) в середине стороны:
+  \(m=2\).</p>
+  <ul>
+    <li>\(A=(0;4)\), \(B=(0;0)\), \(C=(4;0)\), \(D=(4;4)\), \(M=(2;0)\),
+    \(N=(0;-2)\);</li>
+    <li>\(\vec{AM}=(2-0;\ 0-4)=(2;\,-4)\);</li>
+    <li>\(\vec{NC}=(4-0;\ 0-(-2))=(4;\,2)\);</li>
+    <li>\(\vec{AM}\cdot\vec{NC}=2\cdot 4+(-4)\cdot 2=8-8=0\). ✔</li>
+  </ul>
+
+  <p><b>Пример 2.</b> Пусть \(a=4\), а \(M\) близко к \(C\): \(m=3{,}5\).</p>
+  <ul>
+    <li>\(M=(3{,}5;0)\), \(N=(0;-3{,}5)\);</li>
+    <li>\(\vec{AM}=(3{,}5;\,-4)\), \(\;\vec{NC}=(4;\,3{,}5)\);</li>
+    <li>\(3{,}5\cdot 4+(-4)\cdot 3{,}5=14-14=0\). ✔</li>
+  </ul>
+
+  <p><b>Пример 3 (крайний случай).</b> Пусть \(m=a\), то есть \(M\) совпадает
+  с \(C\). Тогда \(\vec{AM}=\vec{AC}=(a;-a)\), \(N=(0;-a)\),
+  \(\vec{NC}=(a;a)\), и \(a\cdot a+(-a)\cdot a=a^{2}-a^{2}=0\). ✔
+  Диагональ \(AC\) перпендикулярна прямой \(NC\).</p>
+
+  <p><b>Контрпример (зачем нужен прямой угол при \(B\)).</b> Возьмём \(a=1\),
+  \(m=1\), но пусть угол \(\widehat{MBN}\) равен \(60^\circ\), а не
+  \(90^\circ\). Тогда \(N\approx(0{,}5;\,-0{,}866)\), и</p>
+  \[ \vec{AM}=(1;-1),\quad \vec{NC}=(1-0{,}5;\ 0+0{,}866)=(0{,}5;\ 0{,}866), \]
+  \[ \vec{AM}\cdot\vec{NC}=1\cdot 0{,}5+(-1)\cdot 0{,}866=0{,}5-0{,}866
+     =-0{,}366\ne 0 . \]
+  <p>Не ноль — значит прямые не перпендикулярны. Прямой угол при \(B\)
+  действительно необходим.</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <p><b>Принятая конфигурация:</b> \(BMN\) — прямоугольный равнобедренный
+  треугольник с прямым углом при \(B\) (\(BM=BN\), \(BM\perp BN\)),
+  расположенный вне квадрата, то есть \(N\) на продолжении \(AB\) за \(B\).</p>
+  <p>В системе координат с началом в \(B\), первой осью вдоль \(BC\) и второй
+  вдоль \(BA\) (она ортонормированная, так как \(BC\perp BA\) и \(BC=BA\)):</p>
+  \[ B=(0;0),\quad C=(a;0),\quad A=(0;a),\quad D=(a;a),
+     \quad M=(m;0),\quad N=(0;-m), \]
+  <p>где \(a\) — сторона квадрата, \(0\leqslant m\leqslant a\). Тогда</p>
+  \[ \vec{AM}=(m;\,-a),\qquad \vec{NC}=(a;\,m), \]
+  \[ \vec{AM}\cdot\vec{NC}=m\cdot a+(-a)\cdot m=ma-am=0 . \]
+  <p>Скалярное произведение равно нулю, следовательно</p>
+  \[ \boxed{\;(AM)\perp(NC)\;} \]
+  <p>причём это верно для квадрата любого размера и при любом положении
+  \(M\) на отрезке \([BC]\).</p>
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+
+  <p><b>1. Ставят \(N\) внутрь квадрата.</b> Если взять \(N=(0;+m)\),
+  скалярное произведение будет \(\vec{AM}\cdot\vec{NC}=(m;-a)\cdot(a;-m)
+  =ma+am=2am\ne 0\) — и утверждение окажется неверным. Слово «вне квадрата»
+  (extérieur) в условии не украшение, а необходимая часть.</p>
+
+  <p><b>2. Забывают, что квадрат \(ABCD\) читается по кругу.</b> Если
+  ошибочно считать \([AC]\) стороной, а \([BC]\) диагональю, вся расстановка
+  координат рассыплется.</p>
+
+  <p><b>3. Ошибаются в знаке при вычитании отрицательного числа.</b>
+  В \(\vec{NC}\) вторая координата равна \(0-(-m)=+m\), а не \(-m\).
+  Это самая частая арифметическая ошибка в задаче.</p>
+
+  <p><b>4. Берут неортонормированную систему.</b> Формула \(xx'+yy'\)
+  работает только когда оси перпендикулярны и единицы по ним одинаковы.
+  Здесь это обеспечено тем, что \(ABCD\) — квадрат. В прямоугольнике
+  (стороны разной длины) формулу пришлось бы менять.</p>
+
+  <p><b>5. Проверяют утверждение на одном рисунке и считают доказанным.</b>
+  Точка \(M\) произвольна, значит нужна буква \(m\), а не конкретное число.
+  Числовые примеры (шаг 7) — только контроль, а не доказательство.</p>
+
+  <p><b>6. Пытаются доказать через равенство треугольников.</b> Это тоже
+  возможно (треугольники \(ABM\) и \(NBC\) равны по двум сторонам и углу
+  между ними, откуда следует нужный поворот на \(90^\circ\)), но требует
+  аккуратной работы с углами. Векторный счёт короче и не зависит от того,
+  как именно нарисована картинка.</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

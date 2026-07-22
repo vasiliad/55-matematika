@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 16 — Тригонометрические уравнения</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Раздел I · Тригонометрия · Задача 16 из 55</div>
+  <h1>Тригонометрические уравнения</h1>
+  <div class="stars">★★☆☆ — средний уровень</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>Решить каждое уравнение на указанном промежутке \(I\):</p>
+  <p><b>1)</b> \(I=\left]-\pi,\ \pi\right]\), &nbsp; \(\sqrt2\cos(2x)-1=0\).</p>
+  <p><b>2)</b> \(I=\left[0;\ \pi\right]\), &nbsp;
+     \(\cos 3x=\sin\!\left(x+\frac{\pi}{4}\right)\).</p>
+  <p><b>3)</b> \(I=\left]-\pi;\ \pi\right]\), &nbsp;
+     \(\sin^2 x-\sin x-\frac34=0\).</p>
+  <p><b>4)</b> \(I=\mathbb{R}\), &nbsp;
+     \(\cos^2(x)=\dfrac{1+\sin(x)}{2}\).</p>
+</div>
+
+<details>
+  <summary>Оригинал по-французски</summary>
+  <p class="orig"><b>Ex 16 ★★✩✩ — Équations trigonométriques.</b><br>
+  Résoudre l’équation suivante dans l’intervalle I donné :<br>
+  1) \(I=\left]-\pi,\pi\right]\), \(\sqrt2\cos(2x)-1=0\).<br>
+  2) \(I=[0;\pi]\), \(\cos 3x=\sin\!\left(x+\frac{\pi}{4}\right)\)<br>
+  3) \(I=\left]-\pi;\pi\right]\), \(\sin^2 x-\sin x-\frac34=0\).<br>
+  4) \(I=\mathbb{R}\), \(\cos^2(x)=\frac{1+\sin(x)}{2}\).</p>
+  <p class="orig"><b>О прочтении пункта 4.</b> В PDF-исходнике дробь
+  «разъехалась» по строкам и выглядит двусмысленно. Официальное решение
+  сборника начинает с шага «\(2\cos^2(x)=1+\sin(x)\)», а значит правая часть —
+  это вся сумма, делённая на 2: \(\frac{1+\sin x}{2}\). Именно так мы и
+  понимаем условие.</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Косинус и синус — это два «прибора», которые превращают поворот в число.
+Мы поворачиваем стрелку на угол \(x\) и смотрим, куда она попала: насколько
+вправо (это косинус) и насколько вверх (это синус).</p>
+
+<p>В обычных уравнениях мы ищем неизвестное <b>число</b>. Здесь мы ищем
+неизвестный <b>поворот</b>: «на сколько нужно повернуть стрелку, чтобы прибор
+показал такое-то значение?»</p>
+
+<p>Главная особенность: у таких уравнений почти всегда <b>бесконечно много</b>
+решений. Ведь если повернуть стрелку ещё на полный круг, она вернётся ровно
+туда же, и приборы покажут то же самое. Поэтому решения всегда идут «сериями»
+с шагом в полный круг.</p>
+
+<p>Именно поэтому в каждом пункте указан промежуток \(I\): из бесконечной серии
+надо отобрать только те решения, что попали в заданное окно. В пункте 4 окно
+не ограничено (\(I=\mathbb{R}\) — все действительные числа), и ответом будет
+как раз вся бесконечная серия.</p>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><b>1. Единичная окружность (cercle trigonométrique).</b></p>
+  <p>Нарисуйте окружность радиуса 1 с центром в точке \(O\). Поставьте точку
+  \(M\) на неё справа — в положение «3 часа». Это стартовая позиция,
+  ей отвечает угол 0.</p>
+  <p>Дальше точка \(M\) едет по окружности <b>против часовой стрелки</b>.
+  Насколько она проехала — это и есть угол \(x\). Если ехать по часовой
+  стрелке, угол считается отрицательным.</p>
+
+  <p><b>2. Радианы: как меряют поворот.</b></p>
+  <p>Мера поворота в радианах — это длина пути, который проехала точка по
+  окружности радиуса 1.</p>
+  <p>Длина всей окружности радиуса 1 равна \(2\pi\) (число
+  \(\pi\approx 3{,}14159\)). Значит:</p>
+  <table>
+    <tr><th>Доля круга</th><th>Радианы</th><th>Градусы</th><th>Где оказалась точка</th></tr>
+    <tr><td>весь круг</td><td>\(2\pi\)</td><td>\(360^\circ\)</td><td>вернулась в старт</td></tr>
+    <tr><td>половина</td><td>\(\pi\)</td><td>\(180^\circ\)</td><td>слева, «9 часов»</td></tr>
+    <tr><td>четверть</td><td>\(\frac{\pi}{2}\)</td><td>\(90^\circ\)</td><td>сверху, «12 часов»</td></tr>
+    <tr><td>восьмая</td><td>\(\frac{\pi}{4}\)</td><td>\(45^\circ\)</td><td>вверх-вправо, по диагонали</td></tr>
+    <tr><td>двенадцатая</td><td>\(\frac{\pi}{6}\)</td><td>\(30^\circ\)</td><td>чуть выше старта</td></tr>
+  </table>
+  <p>Проще всего запомнить: <b>полный круг \(=2\pi\)</b>, а всё остальное —
+  доли от него.</p>
+
+  <p><b>3. Косинус и синус — это координаты точки.</b></p>
+  <p>Когда точка \(M\) отъехала на угол \(x\):</p>
+  <ul>
+    <li>\(\cos x\) — её <b>сдвиг вправо-влево</b> от центра. Вправо — плюс,
+    влево — минус.</li>
+    <li>\(\sin x\) — её <b>сдвиг вверх-вниз</b>. Вверх — плюс, вниз — минус.</li>
+  </ul>
+  <p>Оба числа всегда лежат в отрезке от \(-1\) до \(1\): точка не может
+  отойти от центра дальше, чем на радиус.</p>
+  <p>Проверьте по картинке: при \(x=0\) точка справа, значит
+  \(\cos 0=1\), \(\sin 0=0\). При \(x=\frac{\pi}{2}\) точка сверху:
+  \(\cos\frac{\pi}{2}=0\), \(\sin\frac{\pi}{2}=1\). При \(x=\pi\) точка слева:
+  \(\cos\pi=-1\), \(\sin\pi=0\).</p>
+
+  <p><b>4. Таблица значений, которые надо знать наизусть.</b></p>
+  <table>
+    <tr><th>\(x\)</th><th>\(0\)</th><th>\(\frac{\pi}{6}\)</th>
+        <th>\(\frac{\pi}{4}\)</th><th>\(\frac{\pi}{3}\)</th>
+        <th>\(\frac{\pi}{2}\)</th></tr>
+    <tr><th>\(\cos x\)</th><td>\(1\)</td><td>\(\frac{\sqrt3}{2}\)</td>
+        <td>\(\frac{\sqrt2}{2}\)</td><td>\(\frac12\)</td><td>\(0\)</td></tr>
+    <tr><th>\(\sin x\)</th><td>\(0\)</td><td>\(\frac12\)</td>
+        <td>\(\frac{\sqrt2}{2}\)</td><td>\(\frac{\sqrt3}{2}\)</td><td>\(1\)</td></tr>
+  </table>
+  <p>Для справки: \(\frac{\sqrt2}{2}\approx 0{,}707\),
+  \(\frac{\sqrt3}{2}\approx 0{,}866\).</p>
+
+  <p><b>5. Полный круг ничего не меняет.</b></p>
+  <p>Прибавили к углу \(2\pi\) — точка сделала лишний полный оборот и вернулась
+  туда же. Поэтому для любого целого \(k\):</p>
+  \[ \cos(x+2k\pi)=\cos x,\qquad \sin(x+2k\pi)=\sin x . \]
+  <p>Здесь \(k\in\mathbb{Z}\) означает: \(k\) — любое целое число
+  (\(\ldots,-2,-1,0,1,2,\ldots\)).</p>
+
+  <p><b>6. Два главных правила решения.</b></p>
+  <p>Пусть \(a\) — какой-то известный угол.</p>
+  <p style="padding-left:18px;border-left:3px solid var(--note)">
+  <b>Правило для косинуса:</b>
+  \[ \cos x=\cos a\iff
+     \left\{\begin{array}{l} x=a+2k\pi\\ x=-a+2k\pi\end{array}\right.
+     \quad k\in\mathbb{Z}. \]
+  <em>Почему два варианта?</em> Косинус — это сдвиг вправо-влево. На окружности
+  есть ровно две точки с одинаковым сдвигом вправо: одна сверху, другая
+  снизу — они зеркальны относительно горизонтальной оси. Верхней отвечает
+  угол \(a\), нижней — угол \(-a\).</p>
+  <p style="padding-left:18px;border-left:3px solid var(--note)">
+  <b>Правило для синуса:</b>
+  \[ \sin x=\sin a\iff
+     \left\{\begin{array}{l} x=a+2k\pi\\ x=\pi-a+2k\pi\end{array}\right.
+     \quad k\in\mathbb{Z}. \]
+  <em>Почему?</em> Синус — сдвиг вверх-вниз. Две точки на одной высоте
+  расположены зеркально относительно вертикальной оси. Отражение угла \(a\)
+  относительно вертикали — это угол \(\pi-a\).</p>
+
+  <p><b>7. Мостик между синусом и косинусом.</b></p>
+  \[ \sin\theta=\cos\!\left(\frac{\pi}{2}-\theta\right). \]
+  <p>Смысл: «вверх» для одного угла — то же, что «вправо» для дополняющего его
+  до прямого. Проверим на \(\theta=\frac{\pi}{6}\):
+  \(\sin\frac{\pi}{6}=\frac12\), а
+  \(\cos\!\left(\frac{\pi}{2}-\frac{\pi}{6}\right)=\cos\frac{\pi}{3}=\frac12\).
+  \(\checkmark\)</p>
+
+  <p><b>8. Главное тождество.</b></p>
+  \[ \cos^2 x+\sin^2 x=1 . \]
+  <p>Это теорема Пифагора для треугольника со сторонами \(\cos x\), \(\sin x\)
+  и гипотенузой 1 (радиусом). Запись \(\cos^2 x\) означает
+  \((\cos x)\cdot(\cos x)\).</p>
+  <p>Отсюда полезное следствие:
+  \(\cos^2 x=1-\sin^2 x\) — им мы воспользуемся в пункте 4.</p>
+
+  <p><b>9. Как читать запись промежутка.</b></p>
+  <ul>
+    <li>\(\left]-\pi,\ \pi\right]\) — от \(-\pi\) до \(\pi\), причём
+    \(-\pi\) <b>не входит</b> (скобка развёрнута наружу), а \(\pi\)
+    <b>входит</b>.</li>
+    <li>\(\left[0;\ \pi\right]\) — оба конца входят.</li>
+    <li>\(\mathbb{R}\) — все действительные числа, никаких ограничений.</li>
+  </ul>
+  <p>Промежуток \(\left]-\pi,\pi\right]\) — это ровно один полный оборот:
+  его длина \(\pi-(-\pi)=2\pi\). Один конец исключён именно затем, чтобы
+  каждое положение точки попадало в промежуток ровно один раз.</p>
+
+  <p><b>10. Как решать квадратное уравнение (готовый инструмент).</b></p>
+  <p>В пунктах 3 и 4 после замены получится обычное квадратное уравнение вида
+  \(aX^2+bX+c=0\). Решают его так: сначала считают <b>дискриминант</b>
+  \(\Delta=b^2-4ac\), а затем находят корни по формуле</p>
+  \[ X=\frac{-b\pm\sqrt{\Delta}}{2a}\qquad(\text{годится при }\Delta\geqslant0). \]
+  <p>Значок \(\pm\) даёт сразу два корня: один со знаком «плюс» перед \(\sqrt{\Delta}\),
+  другой со знаком «минус». Подробный разбор этой формулы, с выводом и примерами, —
+  в <a href="11-parametr.html">задаче 11</a>; здесь мы просто ею пользуемся как готовым
+  инструментом.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<h3>Пункт 1: \(\sqrt2\cos(2x)-1=0\) на \(\left]-\pi,\pi\right]\)</h3>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">Приводим к виду «косинус равен числу»</div>
+  <p>Наша цель на первом этапе всегда одна: оставить косинус слева, а число
+  справа.</p>
+  <p>Прибавляем 1 к обеим частям:</p>
+  \[ \sqrt2\cos(2x)=1 . \]
+  <p>Делим обе части на \(\sqrt2\) (это положительное число, делить можно):</p>
+  \[ \cos(2x)=\frac{1}{\sqrt2}. \]
+  <p>Дробь с корнем в знаменателе принято переписывать. Домножим числитель и
+  знаменатель на \(\sqrt2\) и вспомним, что \(\sqrt2\cdot\sqrt2=2\):</p>
+  \[ \frac{1}{\sqrt2}=\frac{1\cdot\sqrt2}{\sqrt2\cdot\sqrt2}=\frac{\sqrt2}{2}. \]
+  \[ \cos(2x)=\frac{\sqrt2}{2}. \]
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">Узнаём число в таблице</div>
+  <p>Смотрим в таблицу из пункта 4 раздела «Что нужно знать»: значение
+  \(\frac{\sqrt2}{2}\) стоит под углом \(\frac{\pi}{4}\).</p>
+  \[ \cos(2x)=\cos\frac{\pi}{4}. \]
+  <p>Теперь у нас в точности та ситуация, для которой есть правило.</p>
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">Применяем правило для косинуса</div>
+  <p>Внимание: правило работает с тем, что стоит <em>внутри</em> косинуса.
+  А внутри у нас не \(x\), а \(2x\). Значит, сначала находим \(2x\):</p>
+  \[ 2x=\frac{\pi}{4}+2k\pi\qquad\text{или}\qquad 2x=-\frac{\pi}{4}+2k\pi,
+     \qquad k\in\mathbb{Z}. \]
+  <p>Теперь делим обе части каждого равенства на 2. Делить надо
+  <b>всё</b>, включая шаг \(2k\pi\):</p>
+  \[ \text{①}\quad x=\frac{\pi}{8}+k\pi
+     \qquad\qquad
+     \text{②}\quad x=-\frac{\pi}{8}+k\pi . \]
+  <p>Обратите внимание: шаг серии стал \(\pi\), а не \(2\pi\). Это важное
+  следствие «двойки внутри»: решений вдвое больше, чем обычно, потому что
+  внутренняя стрелка крутится вдвое быстрее.</p>
+</div>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">Отбираем решения, попавшие в промежуток \(\left]-\pi,\pi\right]\)</div>
+  <p>Подставляем целые \(k\) подряд и смотрим, что укладывается между
+  \(-\pi\) и \(\pi\). Удобно всё выражать в восьмых долях \(\pi\):
+  \(-\pi=-\frac{8\pi}{8}\), \(\pi=\frac{8\pi}{8}\).</p>
+  <p><b>Серия ①: \(x=\frac{\pi}{8}+k\pi\)</b></p>
+  <table>
+    <tr><th>\(k\)</th><th>\(x\)</th><th>В промежутке?</th></tr>
+    <tr><td>\(-2\)</td><td>\(\frac{\pi}{8}-2\pi=-\frac{15\pi}{8}\)</td>
+        <td>нет, меньше \(-\pi\)</td></tr>
+    <tr><td>\(-1\)</td><td>\(\frac{\pi}{8}-\pi=\frac{\pi-8\pi}{8}=-\frac{7\pi}{8}\)</td>
+        <td><b>да</b></td></tr>
+    <tr><td>\(0\)</td><td>\(\frac{\pi}{8}\)</td><td><b>да</b></td></tr>
+    <tr><td>\(1\)</td><td>\(\frac{\pi}{8}+\pi=\frac{9\pi}{8}\)</td>
+        <td>нет, больше \(\pi\)</td></tr>
+  </table>
+  <p><b>Серия ②: \(x=-\frac{\pi}{8}+k\pi\)</b></p>
+  <table>
+    <tr><th>\(k\)</th><th>\(x\)</th><th>В промежутке?</th></tr>
+    <tr><td>\(-1\)</td><td>\(-\frac{\pi}{8}-\pi=-\frac{9\pi}{8}\)</td>
+        <td>нет, меньше \(-\pi\)</td></tr>
+    <tr><td>\(0\)</td><td>\(-\frac{\pi}{8}\)</td><td><b>да</b></td></tr>
+    <tr><td>\(1\)</td><td>\(-\frac{\pi}{8}+\pi=\frac{7\pi}{8}\)</td>
+        <td><b>да</b></td></tr>
+    <tr><td>\(2\)</td><td>\(-\frac{\pi}{8}+2\pi=\frac{15\pi}{8}\)</td>
+        <td>нет, больше \(\pi\)</td></tr>
+  </table>
+  <p>Собираем всё и расставляем по возрастанию:</p>
+  \[ \boxed{\ S=\left\{-\frac{7\pi}{8},\ -\frac{\pi}{8},\
+     \frac{\pi}{8},\ \frac{7\pi}{8}\right\}\ } \]
+  <p><b>Проверка одного корня.</b> Возьмём \(x=\frac{7\pi}{8}\). Тогда
+  \(2x=\frac{7\pi}{4}\). Это на \(\frac{\pi}{4}\) меньше полного круга
+  \(2\pi=\frac{8\pi}{4}\), то есть точка стоит там же, где при угле
+  \(-\frac{\pi}{4}\) — внизу справа. Её сдвиг вправо равен
+  \(\frac{\sqrt2}{2}\). Значит,
+  \(\sqrt2\cdot\frac{\sqrt2}{2}-1=\frac{2}{2}-1=0\). \(\checkmark\)</p>
+</div>
+
+<h3>Пункт 2: \(\cos 3x=\sin\!\left(x+\frac{\pi}{4}\right)\) на \(\left[0;\pi\right]\)</h3>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">Приводим оба прибора к одному виду</div>
+  <p>Слева косинус, справа синус. Правила у нас есть отдельно для косинуса
+  и отдельно для синуса, но нет правила «косинус равен синусу». Поэтому
+  сначала переведём всё на один язык.</p>
+  <p>Пользуемся мостиком \(\sin\theta=\cos\!\left(\frac{\pi}{2}-\theta\right)\),
+  где \(\theta=x+\frac{\pi}{4}\):</p>
+  \[ \sin\!\left(x+\frac{\pi}{4}\right)
+     =\cos\!\left(\frac{\pi}{2}-\left(x+\frac{\pi}{4}\right)\right). \]
+  <p>Раскрываем скобку. Минус перед скобкой меняет знак каждому слагаемому:</p>
+  \[ \frac{\pi}{2}-x-\frac{\pi}{4}. \]
+  <p>Считаем числовую часть, приводя к четвертям:
+  \(\frac{\pi}{2}=\frac{2\pi}{4}\), поэтому
+  \(\frac{2\pi}{4}-\frac{\pi}{4}=\frac{\pi}{4}\). Получаем:</p>
+  \[ \cos 3x=\cos\!\left(\frac{\pi}{4}-x\right). \]
+</div>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">Применяем правило для косинуса</div>
+  <p>Оба угла нам известны как выражения: слева \(3x\), справа
+  \(\frac{\pi}{4}-x\). Правило даёт два варианта:</p>
+  \[ 3x=\frac{\pi}{4}-x+2k\pi
+     \qquad\text{или}\qquad
+     3x=-\left(\frac{\pi}{4}-x\right)+2k\pi . \]
+  <p><b>Разбираем первый вариант.</b> Прибавляем \(x\) к обеим частям:</p>
+  \[ 4x=\frac{\pi}{4}+2k\pi . \]
+  <p>Делим всё на 4:</p>
+  \[ \text{①}\quad x=\frac{\pi}{16}+\frac{k\pi}{2}. \]
+  <p><b>Разбираем второй вариант.</b> Сначала раскроем скобку справа:
+  \(-\left(\frac{\pi}{4}-x\right)=-\frac{\pi}{4}+x\). Значит,</p>
+  \[ 3x=-\frac{\pi}{4}+x+2k\pi . \]
+  <p>Вычитаем \(x\) из обеих частей:</p>
+  \[ 2x=-\frac{\pi}{4}+2k\pi . \]
+  <p>Делим всё на 2:</p>
+  \[ \text{②}\quad x=-\frac{\pi}{8}+k\pi . \]
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">Отбираем решения серии ① на промежутке \([0;\pi]\)</div>
+  <p>Здесь шаг серии равен \(\frac{\pi}{2}\), поэтому решений может оказаться
+  несколько. Действуем аккуратно — решим двойное неравенство.</p>
+  \[ 0\leqslant\frac{\pi}{16}+\frac{k\pi}{2}\leqslant\pi . \]
+  <p>Разделим всё на \(\pi\) (это положительное число, знаки не меняются):</p>
+  \[ 0\leqslant\frac{1}{16}+\frac{k}{2}\leqslant 1 . \]
+  <p>Вычтем \(\frac{1}{16}\) из всех трёх частей:</p>
+  \[ -\frac{1}{16}\leqslant\frac{k}{2}\leqslant 1-\frac{1}{16}=\frac{15}{16}. \]
+  <p>Умножим всё на 2:</p>
+  \[ -\frac{1}{8}\leqslant k\leqslant\frac{15}{8}. \]
+  <p>Переведём границы в десятичные, чтобы было нагляднее:
+  \(-\frac18=-0{,}125\) и \(\frac{15}{8}=1{,}875\). Целые числа между ними —
+  это \(k=0\) и \(k=1\).</p>
+  <ul>
+    <li>\(k=0\): \(x=\frac{\pi}{16}\).</li>
+    <li>\(k=1\): \(x=\frac{\pi}{16}+\frac{\pi}{2}
+        =\frac{\pi}{16}+\frac{8\pi}{16}=\frac{9\pi}{16}\).</li>
+  </ul>
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">Отбираем решения серии ② на промежутке \([0;\pi]\)</div>
+  <p>Шаг здесь \(\pi\), поэтому просто переберём \(k\).</p>
+  <table>
+    <tr><th>\(k\)</th><th>\(x=-\frac{\pi}{8}+k\pi\)</th><th>В промежутке \([0;\pi]\)?</th></tr>
+    <tr><td>\(0\)</td><td>\(-\frac{\pi}{8}\)</td><td>нет, меньше 0</td></tr>
+    <tr><td>\(1\)</td><td>\(-\frac{\pi}{8}+\pi=\frac{7\pi}{8}\)</td><td><b>да</b></td></tr>
+    <tr><td>\(2\)</td><td>\(-\frac{\pi}{8}+2\pi=\frac{15\pi}{8}\)</td>
+        <td>нет, больше \(\pi\)</td></tr>
+  </table>
+</div>
+
+<div class="step">
+  <div class="num">9</div>
+  <div class="head">Собираем ответ и проверяем</div>
+  \[ \boxed{\ S=\left\{\frac{\pi}{16},\ \frac{9\pi}{16},\
+     \frac{7\pi}{8}\right\}\ } \]
+  <p><b>Проверим \(x=\frac{\pi}{16}\).</b> Левая часть:
+  \(\cos\frac{3\pi}{16}\). Правая часть:</p>
+  \[ \sin\!\left(\frac{\pi}{16}+\frac{\pi}{4}\right)
+     =\sin\!\left(\frac{\pi}{16}+\frac{4\pi}{16}\right)=\sin\frac{5\pi}{16}. \]
+  <p>По мостику \(\sin\frac{5\pi}{16}
+  =\cos\!\left(\frac{\pi}{2}-\frac{5\pi}{16}\right)
+  =\cos\!\left(\frac{8\pi}{16}-\frac{5\pi}{16}\right)=\cos\frac{3\pi}{16}\).
+  Части совпали. \(\checkmark\)</p>
+  <p><b>Проверим \(x=\frac{7\pi}{8}\).</b> Левая часть:
+  \(\cos\frac{21\pi}{8}\). Вычтем полный круг \(2\pi=\frac{16\pi}{8}\):
+  это то же, что \(\cos\frac{5\pi}{8}\).</p>
+  <p>Правая часть: \(\sin\!\left(\frac{7\pi}{8}+\frac{2\pi}{8}\right)
+  =\sin\frac{9\pi}{8}\). По мостику
+  \(\sin\frac{9\pi}{8}=\cos\!\left(\frac{4\pi}{8}-\frac{9\pi}{8}\right)
+  =\cos\!\left(-\frac{5\pi}{8}\right)\). А косинус не различает знак угла
+  (сдвиг вправо у зеркальных точек одинаковый), поэтому это \(\cos\frac{5\pi}{8}\).
+  Совпало. \(\checkmark\)</p>
+</div>
+
+<h3>Пункт 3: \(\sin^2 x-\sin x-\frac34=0\) на \(\left]-\pi;\pi\right]\)</h3>
+
+<div class="step">
+  <div class="num">10</div>
+  <div class="head">Замена переменной: превращаем в обычное квадратное уравнение</div>
+  <p>Посмотрите на уравнение внимательно: в нём есть \(\sin x\) и
+  \(\sin^2 x=(\sin x)^2\). То есть встречается одна и та же величина —
+  просто в первой и во второй степени. Значит, можно дать ей имя.</p>
+  <p>Положим \(X=\sin x\). Тогда уравнение превращается в</p>
+  \[ X^2-X-\frac34=0 . \]
+  <p>Это обычное квадратное уравнение, которое мы решать умеем.</p>
+  <p><b>Важное ограничение:</b> синус всегда лежит между \(-1\) и \(1\).
+  Значит, годятся только те \(X\), для которых
+  \(-1\leqslant X\leqslant 1\). Остальные придётся отбросить.</p>
+</div>
+
+<div class="step">
+  <div class="num">11</div>
+  <div class="head">Решаем квадратное уравнение</div>
+  <p>Сначала избавимся от дроби — умножим обе части на 4:</p>
+  \[ 4X^2-4X-3=0 . \]
+  <p>Считаем дискриминант \(\Delta=b^2-4ac\), где \(a=4\), \(b=-4\), \(c=-3\):</p>
+  \[ b^2=(-4)\cdot(-4)=16, \]
+  \[ 4ac=4\cdot 4\cdot(-3)=-48, \]
+  \[ \Delta=16-(-48)=16+48=64 . \]
+  <p>Ищем \(\sqrt{64}\): \(8\cdot 8=64\), значит \(\sqrt{64}=8\).</p>
+  \[ X_1=\frac{4-8}{2\cdot 4}=\frac{-4}{8}=-\frac12,\qquad
+     X_2=\frac{4+8}{8}=\frac{12}{8}=\frac32 . \]
+  <p><b>Отбор.</b> Значение \(X_2=\frac32=1{,}5\) больше единицы. Синус таким
+  быть не может — точка на окружности не поднимается выше радиуса. Отбрасываем.</p>
+  <p>Остаётся \(X=-\frac12\), то есть надо решить</p>
+  \[ \sin x=-\frac12 . \]
+</div>
+
+<div class="step">
+  <div class="num">12</div>
+  <div class="head">Решаем \(\sin x=-\frac12\)</div>
+  <p>Нужно найти угол, у которого синус равен \(-\frac12\). Из таблицы
+  \(\sin\frac{\pi}{6}=\frac12\). А нам нужно значение с минусом, то есть точка
+  должна быть на такой же глубине <em>ниже</em> оси. Это угол
+  \(-\frac{\pi}{6}\):</p>
+  \[ \sin\!\left(-\frac{\pi}{6}\right)=-\frac12 . \]
+  <p>Применяем правило для синуса с \(a=-\frac{\pi}{6}\):</p>
+  \[ x=-\frac{\pi}{6}+2k\pi
+     \qquad\text{или}\qquad
+     x=\pi-\left(-\frac{\pi}{6}\right)+2k\pi . \]
+  <p>Во втором варианте два минуса дают плюс:</p>
+  \[ \pi+\frac{\pi}{6}=\frac{6\pi}{6}+\frac{\pi}{6}=\frac{7\pi}{6}. \]
+  <p>Итого две серии:</p>
+  \[ \text{①}\quad x=-\frac{\pi}{6}+2k\pi
+     \qquad\qquad
+     \text{②}\quad x=\frac{7\pi}{6}+2k\pi . \]
+</div>
+
+<div class="step">
+  <div class="num">13</div>
+  <div class="head">Отбираем решения на \(\left]-\pi;\pi\right]\)</div>
+  <p><b>Серия ①.</b> При \(k=0\) получаем \(x=-\frac{\pi}{6}\approx-0{,}52\).
+  Это между \(-\pi\approx-3{,}14\) и \(\pi\). Подходит. При \(k=1\) получится
+  \(-\frac{\pi}{6}+2\pi=\frac{11\pi}{6}\) — больше \(\pi\), не подходит.
+  При \(k=-1\) получится ещё меньше \(-\pi\), не подходит.</p>
+  <p><b>Серия ②.</b> При \(k=0\) получаем \(\frac{7\pi}{6}\approx 3{,}67\) —
+  это больше \(\pi\approx 3{,}14\), не подходит. Возьмём \(k=-1\):</p>
+  \[ \frac{7\pi}{6}-2\pi=\frac{7\pi}{6}-\frac{12\pi}{6}=-\frac{5\pi}{6}
+     \approx-2{,}62 . \]
+  <p>Это между \(-\pi\) и \(\pi\). Подходит.</p>
+  \[ \boxed{\ S=\left\{-\frac{5\pi}{6},\ -\frac{\pi}{6}\right\}\ } \]
+  <p><b>Проверка.</b> Подставим \(X=\sin x=-\frac12\) в исходное уравнение:</p>
+  \[ \left(-\frac12\right)^2-\left(-\frac12\right)-\frac34
+     =\frac14+\frac12-\frac34=\frac{1}{4}+\frac{2}{4}-\frac{3}{4}=0 .
+     \;\checkmark \]
+  <p>И оба найденных угла действительно дают синус \(-\frac12\): точка при
+  повороте на \(-\frac{\pi}{6}\) находится внизу справа, а при повороте на
+  \(-\frac{5\pi}{6}\) — внизу слева, но <em>на той же глубине</em>.</p>
+</div>
+
+<h3>Пункт 4: \(\cos^2 x=\dfrac{1+\sin x}{2}\) на \(\mathbb{R}\)</h3>
+
+<div class="step">
+  <div class="num">14</div>
+  <div class="head">Как мы понимаем условие</div>
+  <p>В исходном PDF дробь «разъехалась» на две строки, и запись можно прочесть
+  двояко. Официальное решение сборника первым же действием пишет
+  «\(2\cos^2(x)=1+\sin(x)\)» — значит, на два делится вся сумма. Принимаем
+  прочтение:</p>
+  \[ \cos^2 x=\frac{1+\sin x}{2}. \]
+</div>
+
+<div class="step">
+  <div class="num">15</div>
+  <div class="head">Сводим всё к синусу</div>
+  <p>В уравнении есть и косинус, и синус. Это неудобно: замену переменной так
+  не сделать. Но у нас есть тождество \(\cos^2 x=1-\sin^2 x\) — оно позволяет
+  избавиться от косинуса полностью.</p>
+  <p>Сначала уберём дробь: умножим обе части на 2.</p>
+  \[ 2\cos^2 x=1+\sin x . \]
+  <p>Теперь заменяем \(\cos^2 x\) на \(1-\sin^2 x\):</p>
+  \[ 2\left(1-\sin^2 x\right)=1+\sin x . \]
+  <p>Раскрываем скобку:</p>
+  \[ 2-2\sin^2 x=1+\sin x . \]
+  <p>Переносим всё в правую часть, чтобы старший коэффициент был
+  положительным. Прибавим \(2\sin^2 x\) к обеим частям и вычтем 2:</p>
+  \[ 0=1+\sin x-2+2\sin^2 x, \]
+  \[ 2\sin^2 x+\sin x-1=0 . \]
+</div>
+
+<div class="step">
+  <div class="num">16</div>
+  <div class="head">Замена и решение квадратного уравнения</div>
+  <p>Полагаем \(X=\sin x\), где обязательно \(-1\leqslant X\leqslant 1\):</p>
+  \[ 2X^2+X-1=0 . \]
+  <p>Дискриминант: \(a=2\), \(b=1\), \(c=-1\).</p>
+  \[ \Delta=1^2-4\cdot 2\cdot(-1)=1+8=9 . \]
+  <p>\(\sqrt9=3\), потому что \(3\cdot 3=9\).</p>
+  \[ X_1=\frac{-1-3}{2\cdot 2}=\frac{-4}{4}=-1,\qquad
+     X_2=\frac{-1+3}{4}=\frac{2}{4}=\frac12 . \]
+  <p><b>Оба значения годятся:</b> \(-1\) и \(\frac12\) лежат в отрезке
+  от \(-1\) до \(1\). Значит, придётся решать два уравнения.</p>
+</div>
+
+<div class="step">
+  <div class="num">17</div>
+  <div class="head">Решаем \(\sin x=-1\) и \(\sin x=\frac12\)</div>
+  <p><b>Случай \(\sin x=-1\).</b> Синус равен \(-1\), когда точка на окружности
+  находится в самой нижней позиции — «6 часов». Это поворот на
+  \(-\frac{\pi}{2}\) (четверть круга по часовой стрелке) или, что то же самое,
+  на \(\frac{3\pi}{2}\). Такая точка на окружности одна, поэтому серия одна:</p>
+  \[ x=-\frac{\pi}{2}+2k\pi,\qquad k\in\mathbb{Z}. \]
+  <p><b>Случай \(\sin x=\frac12\).</b> Из таблицы: \(\sin\frac{\pi}{6}=\frac12\).
+  Применяем правило для синуса с \(a=\frac{\pi}{6}\):</p>
+  \[ x=\frac{\pi}{6}+2k\pi
+     \qquad\text{или}\qquad
+     x=\pi-\frac{\pi}{6}+2k\pi=\frac{6\pi-\pi}{6}+2k\pi=\frac{5\pi}{6}+2k\pi . \]
+  <p>Так как \(I=\mathbb{R}\), никакого отбора делать не нужно — все серии
+  целиком входят в ответ.</p>
+  \[ \boxed{\ x=-\frac{\pi}{2}+2k\pi\quad\text{или}\quad
+     x=\frac{\pi}{6}+2k\pi\quad\text{или}\quad
+     x=\frac{5\pi}{6}+2k\pi,\qquad k\in\mathbb{Z}\ } \]
+  <p><b>Проверка обоих случаев.</b></p>
+  <p>При \(\sin x=-1\): тогда \(\cos^2 x=1-(-1)^2=1-1=0\), а правая часть
+  \(\frac{1+(-1)}{2}=\frac{0}{2}=0\). Совпало. \(\checkmark\)</p>
+  <p>При \(\sin x=\frac12\): тогда
+  \(\cos^2 x=1-\left(\frac12\right)^2=1-\frac14=\frac34\), а правая часть</p>
+  \[ \frac{1+\frac12}{2}=\frac{\frac32}{2}=\frac{3}{2}\cdot\frac12=\frac34 . \]
+  <p>Совпало. \(\checkmark\)</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <p><b>1)</b> \(\displaystyle S=\left\{-\frac{7\pi}{8},\ -\frac{\pi}{8},\
+  \frac{\pi}{8},\ \frac{7\pi}{8}\right\}\) — четыре решения.</p>
+
+  <p><b>2)</b> \(\displaystyle S=\left\{\frac{\pi}{16},\ \frac{9\pi}{16},\
+  \frac{7\pi}{8}\right\}\) — три решения.</p>
+
+  <p><b>3)</b> \(\displaystyle S=\left\{-\frac{5\pi}{6},\ -\frac{\pi}{6}\right\}\)
+  — два решения.</p>
+
+  <p><b>4)</b> На всей числовой прямой:</p>
+  \[ x=-\frac{\pi}{2}+2k\pi,\qquad
+     x=\frac{\pi}{6}+2k\pi,\qquad
+     x=\frac{5\pi}{6}+2k\pi,\qquad k\in\mathbb{Z}. \]
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+  <p><b>1. Забывают второй вариант в правилах.</b> Из \(\cos t=\cos a\)
+  следует не только \(t=a+2k\pi\), но и \(t=-a+2k\pi\). Потеряв вторую серию,
+  вы потеряете половину ответов — в пункте 1 вместо четырёх решений останется
+  два.</p>
+
+  <p><b>2. При делении на 2 забывают поделить шаг серии.</b> Из
+  \(2x=\frac{\pi}{4}+2k\pi\) следует \(x=\frac{\pi}{8}+k\pi\), а не
+  \(x=\frac{\pi}{8}+2k\pi\). Делить надо все слагаемые. Именно из-за
+  «двойки внутри косинуса» в пункте 1 решений вдвое больше обычного.</p>
+
+  <p><b>3. Отбрасывают корень \(X=\frac32\) без объяснения — или, наоборот,
+  оставляют его.</b> Причина отброса конкретна: синус не бывает больше 1,
+  потому что точка не выходит за пределы окружности радиуса 1. Это надо писать.</p>
+
+  <p><b>4. Путают \(\sin^2 x\) и \(\sin(x^2)\).</b> Первое — это
+  \((\sin x)\cdot(\sin x)\), синус берётся от \(x\), а потом результат
+  умножается сам на себя. Второе — совсем другая функция, здесь она не
+  встречается.</p>
+
+  <p><b>5. В пункте 4 «сокращают» уравнение, деля на \(\cos x\) или
+  подобное.</b> Делить на выражение, которое может обращаться в ноль, нельзя —
+  потеряются решения. Здесь как раз есть серия, где \(\cos x=0\)
+  (при \(\sin x=-1\)), и она бы пропала.</p>
+
+  <p><b>6. Неправильно читают скобки промежутка.</b> В
+  \(\left]-\pi,\pi\right]\) точка \(-\pi\) исключена, а \(\pi\) включена.
+  Проверяйте граничные значения отдельно и внимательно.</p>
+
+  <p><b>7. Проверяют не все найденные решения.</b> Особенно легко ошибиться,
+  когда серий несколько и шаги у них разные. Хотя бы по одному представителю
+  из каждой серии стоит подставить в исходное уравнение.</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

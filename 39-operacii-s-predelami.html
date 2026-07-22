@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 39 — Операции с пределами</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Функции · Задача 39 из 55</div>
+  <h1>Операции с пределами: когда ответ известен, а когда нет</h1>
+  <div class="stars">★★☆☆ — средний уровень</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>Рассматриваются три функции \(f\), \(g\) и \(h\), определённые на всей числовой прямой.
+  Известны их пределы на краях:</p>
+  <table>
+    <tr><th></th><th>при \(x\to-\infty\)</th><th>при \(x\to+\infty\)</th></tr>
+    <tr><th>\(f\)</th><td>\(+\infty\)</td><td>\(0\)</td></tr>
+    <tr><th>\(g\)</th><td>\(0\)</td><td>\(0\)</td></tr>
+    <tr><th>\(h\)</th><td>\(+\infty\)</td><td>\(-\infty\)</td></tr>
+  </table>
+  <p>Определить, где это возможно, пределы при \(x\to-\infty\) и \(x\to+\infty\) для функций</p>
+  \[f+g\ ;\quad h-f\ ;\quad f\cdot g\ ;\quad f\cdot h\ ;\quad g+h\ ;\quad
+  \frac fg\ ;\quad \frac fh\ ;\quad \frac hg\ ;\quad \frac{f+g}{h}\ ;\quad \frac{h+g}{f}.\]
+  <p>Там, где получается неопределённость, писать <b>НФ</b> (по-французски FI,
+  forme indéterminée).</p>
+  <p><b>Дополнительно:</b> привести примеры, показывающие, что в этих случаях
+  заключить действительно нельзя.</p>
+</div>
+
+<details>
+  <summary>Оригинал по-французски</summary>
+  <p class="orig">Ex 39. On considère trois fonctions \(f\), \(g\) et \(h\) définies sur
+  \(\mathbb R\), dont on donne ci-dessous les limites aux bornes de cet intervalle :
+  \(\lim_{x\to-\infty}f(x)=+\infty\), \(\lim_{x\to-\infty}g(x)=0\),
+  \(\lim_{x\to-\infty}h(x)=+\infty\) ; \(\lim_{x\to+\infty}f(x)=0\),
+  \(\lim_{x\to+\infty}g(x)=0\), \(\lim_{x\to+\infty}h(x)=-\infty\).
+  Déterminer, lorsque c'est possible, les limites en \(\pm\infty\) des fonctions suivantes :
+  \(f+g\) ; \(h-f\) ; \(f.g\) ; \(f.h\) ; \(g+h\) ; \(\frac fg\) ; \(\frac fh\) ;
+  \(\frac hg\) ; \(\frac{f+g}{h}\) ; \(\frac{h+g}{f}\).
+  On notera FI s'il s'agit d'une forme indéterminée.
+  Extension : on pourra essayer de proposer des exemples justifiant qu'il est impossible
+  de conclure dans ces cas.</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Нам не сказали, что это за функции. Нам сказали только, <b>куда они уходят</b>
+на краях. И спрашивают: можно ли, зная только это, предсказать, куда уйдут их сумма,
+разность, произведение и частное?</p>
+
+<p>Бытовая аналогия. Вам сказали: «Аня очень богата, у Бори денег почти ноль».
+Вопрос: сколько денег у них вместе? Ответ известен: очень много — Борины копейки
+ничего не меняют. А теперь другой вопрос: <b>во сколько раз Аня богаче Бори?</b>
+Ответ неизвестен! Смотря насколько «почти ноль» у Бори — рубль или сотая копейки.
+Вот это и называется <b>неопределённость</b>.</p>
+
+<p>То есть часть ответов вычисляется сразу, а часть — принципиально не вычисляется
+без дополнительной информации. Наша работа — разделить их и честно объяснить, почему.</p>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><b>Что означает запись \(\lim\limits_{x\to+\infty}f(x)=0\).</b> «Когда \(x\) уезжает
+  далеко вправо, значения \(f(x)\) подбираются к нулю всё ближе». Обратите внимание:
+  <b>подбираются к нулю</b>, но не обязательно становятся нулём и даже не обязательно
+  положительны. Они могут быть \(0{,}01\), а могут быть \(-0{,}01\). Это окажется важно.</p>
+
+  <p><b>Что означает \(\lim=+\infty\).</b> «Значения растут без остановки, обгоняя любое
+  наперёд названное число».</p>
+
+  <p><b>Правила, которые работают всегда</b> (тут ответ определён, ничего выяснять не надо):</p>
+  <table>
+    <tr><th>Операция</th><th>Результат</th><th>Житейское объяснение</th></tr>
+    <tr><td>\((+\infty)+(+\infty)\)</td><td>\(+\infty\)</td>
+        <td>две растущие кучи вместе растут ещё быстрее</td></tr>
+    <tr><td>\((+\infty)+\text{число}\)</td><td>\(+\infty\)</td>
+        <td>прибавить к горе ведро — гора не изменится</td></tr>
+    <tr><td>\(0+0\)</td><td>\(0\)</td><td>две почти пустоты в сумме почти пустота</td></tr>
+    <tr><td>\((+\infty)\cdot(+\infty)\)</td><td>\(+\infty\)</td>
+        <td>много умножить на много — очень много</td></tr>
+    <tr><td>\(0\cdot0\)</td><td>\(0\)</td><td>крошка умножить на крошку — ещё меньше</td></tr>
+    <tr><td>\(\dfrac{0}{\pm\infty}\)</td><td>\(0\)</td>
+        <td>почти ничего разделить на огромное — совсем ничего</td></tr>
+    <tr><td>\(\dfrac{\text{число}}{\pm\infty}\)</td><td>\(0\)</td>
+        <td>пирог на бесконечное число гостей — каждому ничего</td></tr>
+    <tr><td>\(\dfrac{\pm\infty}{\text{число}\neq0}\)</td><td>\(\pm\infty\)</td>
+        <td>гора, поделённая на 5, — всё ещё гора</td></tr>
+  </table>
+
+  <p><b>Знаки при умножении и делении</b> работают как в обычной арифметике:
+  плюс на плюс — плюс, плюс на минус — минус, минус на минус — плюс.
+  Например, \((+\infty)\cdot(-\infty)=-\infty\).</p>
+
+  <p><b>А теперь четыре случая, где ответа нет.</b> Это и есть неопределённости (НФ):</p>
+  \[\infty-\infty\ ;\qquad 0\cdot\infty\ ;\qquad \frac00\ ;\qquad \frac{\infty}{\infty}.\]
+
+  <p><b>Почему \(\infty-\infty\) — неопределённость.</b> Представьте два счётчика,
+  оба крутятся вверх без остановки. Разность их показаний может быть какой угодно:</p>
+  <ul>
+    <li>первый крутится вдвое быстрее второго: разность растёт до бесконечности;</li>
+    <li>оба крутятся одинаково, но первый стартовал на 100 больше:
+    разность всегда ровно 100;</li>
+    <li>второй быстрее: разность уходит в минус бесконечность.</li>
+  </ul>
+  <p>На числах: при \(x\to+\infty\) выражение \(2x-x=x\to+\infty\);
+  выражение \((x+100)-x=100\) — постоянное;
+  выражение \(x-2x=-x\to-\infty\). Слева во всех трёх случаях
+  «бесконечность минус бесконечность», а ответы разные. Значит по одной только записи
+  \(\infty-\infty\) заключить нельзя.</p>
+
+  <p><b>Почему \(0\cdot\infty\) — неопределённость.</b> Представьте прямоугольник,
+  у которого ширина сжимается к нулю, а длина растёт до бесконечности.
+  Чему равна площадь? Смотря как быстро одно сжимается, а другое растёт:</p>
+  <ul>
+    <li>ширина \(\frac1x\), длина \(x\): площадь \(\frac1x\cdot x=1\) — всегда единица;</li>
+    <li>ширина \(\frac{1}{x^2}\), длина \(x\): площадь \(\frac1x\to0\);</li>
+    <li>ширина \(\frac1x\), длина \(x^2\): площадь \(x\to+\infty\).</li>
+  </ul>
+
+  <p><b>Почему \(\frac00\) — неопределённость.</b> Две лужи высыхают. Обе исчезнут.
+  Но отношение их площадей может стремиться к чему угодно, потому что важна
+  <i>скорость</i> высыхания, а не сам факт исчезновения:
+  \(\frac xx=1\), \(\frac{x^2}{x}=x\to0\), \(\frac{x}{x^2}=\frac1x\to+\infty\)
+  (при \(x\to0^+\)).</p>
+
+  <p><b>Почему \(\frac{\infty}{\infty}\) — неопределённость.</b> Ровно та же история,
+  только величины растут, а не тают. При \(x\to+\infty\):
+  \(\frac{x}{x}=1\), \(\frac{x^2}{x}=x\to+\infty\), \(\frac{x}{x^2}=\frac1x\to0\).</p>
+
+  <p><b>Отдельный, пятый случай: \(\dfrac{\text{ненулевое число или }\infty}{0}\).</b>
+  Это <i>не</i> неопределённость в обычном смысле: величина дроби обязательно улетает
+  в бесконечность. Но вот <b>знак</b> определить нельзя, если мы не знаем, с какой
+  стороны знаменатель подходит к нулю — сверху (оставаясь положительным) или снизу.
+  А в нашей задаче про \(g\) сказано только «стремится к нулю», и ничего про знак.
+  Поэтому такие клетки мы будем помечать особо.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<p>Метод для каждой клетки одинаковый: подставляем известные пределы, смотрим,
+какая «форма» получилась, и решаем — определённая она или нет.</p>
+
+<h3>Сумма и разность</h3>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">\(f+g\)</div>
+  <p><b>При \(x\to-\infty\):</b> \(f\to+\infty\), \(g\to0\). Форма
+  «бесконечность плюс ноль» — определённая. Крошка ничего не меняет:</p>
+  \[\lim_{x\to-\infty}(f+g)=+\infty.\]
+  <p><b>При \(x\to+\infty\):</b> \(f\to0\), \(g\to0\). Форма \(0+0\) — определённая:</p>
+  \[\lim_{x\to+\infty}(f+g)=0.\]
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">\(h-f\)</div>
+  <p><b>При \(x\to-\infty\):</b> \(h\to+\infty\) и \(f\to+\infty\). Получается
+  \((+\infty)-(+\infty)\) — <b>это НФ</b>. Кто из двоих растёт быстрее, из условия
+  не видно.</p>
+  <p><b>При \(x\to+\infty\):</b> \(h\to-\infty\), \(f\to0\). Форма «минус бесконечность
+  минус ноль» — определённая:</p>
+  \[\lim_{x\to+\infty}(h-f)=-\infty.\]
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">\(g+h\)</div>
+  <p><b>При \(x\to-\infty\):</b> \(0+(+\infty)=+\infty\). Определённая.</p>
+  <p><b>При \(x\to+\infty\):</b> \(0+(-\infty)=-\infty\). Определённая.</p>
+  <p>Здесь НФ не возникает никогда, потому что \(g\) стремится к нулю, а не
+  к бесконечности — складывать две бесконечности противоположных знаков нам не приходится.</p>
+</div>
+
+<h3>Произведения</h3>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">\(f\cdot g\)</div>
+  <p><b>При \(x\to-\infty\):</b> \(f\to+\infty\), \(g\to0\). Это \(\infty\cdot0\) —
+  <b>НФ</b> (тот самый прямоугольник с растущей длиной и сжимающейся шириной).</p>
+  <p><b>При \(x\to+\infty\):</b> \(0\cdot0=0\). Определённая:</p>
+  \[\lim_{x\to+\infty}(f\cdot g)=0.\]
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">\(f\cdot h\)</div>
+  <p><b>При \(x\to-\infty\):</b> \((+\infty)\cdot(+\infty)=+\infty\). Определённая.</p>
+  <p><b>При \(x\to+\infty\):</b> \(f\to0\), \(h\to-\infty\). Это \(0\cdot\infty\) —
+  <b>НФ</b>.</p>
+</div>
+
+<h3>Частные</h3>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">\(\dfrac fg\)</div>
+  <p><b>При \(x\to-\infty\):</b> сверху \(+\infty\), снизу \(0\).
+  Величина дроби обязательно улетает в бесконечность (делим огромное на почти ничего).
+  Но <b>знак зависит от знака \(g\)</b>, а его нам не сообщили:</p>
+  <ul>
+    <li>если \(g\) вблизи \(-\infty\) положительна — предел \(+\infty\);</li>
+    <li>если \(g\) отрицательна — предел \(-\infty\);</li>
+    <li>если \(g\) бесконечно много раз меняет знак — предела нет вовсе
+    (а в точках, где \(g=0\), дробь вообще не определена).</li>
+  </ul>
+  <p>Вывод: заключить нельзя, но по другой причине, чем в НФ — тут не хватает
+  информации о знаке.</p>
+  <p><b>При \(x\to+\infty\):</b> \(\dfrac00\) — <b>НФ</b>.</p>
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">\(\dfrac fh\)</div>
+  <p><b>При \(x\to-\infty\):</b> \(\dfrac{+\infty}{+\infty}\) — <b>НФ</b>.</p>
+  <p><b>При \(x\to+\infty\):</b> сверху \(0\), снизу \(-\infty\).
+  Почти ничего разделить на огромное — совсем ничего. Определённая:</p>
+  \[\lim_{x\to+\infty}\frac fh=0.\]
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">\(\dfrac hg\)</div>
+  <p><b>При \(x\to-\infty\):</b> \(\dfrac{+\infty}{0}\) — величина бесконечна,
+  знак зависит от знака \(g\) (та же ситуация, что в пункте 6).</p>
+  <p><b>При \(x\to+\infty\):</b> \(\dfrac{-\infty}{0}\) — величина снова бесконечна,
+  знак зависит от знака \(g\), только теперь всё перевёрнуто:
+  при \(g\gt0\) предел \(-\infty\), при \(g\lt0\) предел \(+\infty\).</p>
+</div>
+
+<div class="step">
+  <div class="num">9</div>
+  <div class="head">\(\dfrac{f+g}{h}\)</div>
+  <p><b>Сначала считаем числитель</b> — мы уже сделали это в пункте 1:
+  \(f+g\to+\infty\) при \(x\to-\infty\) и \(f+g\to0\) при \(x\to+\infty\).</p>
+  <p><b>При \(x\to-\infty\):</b> \(\dfrac{+\infty}{+\infty}\) — <b>НФ</b>.</p>
+  <p><b>При \(x\to+\infty\):</b> \(\dfrac{0}{-\infty}=0\). Определённая.</p>
+</div>
+
+<div class="step">
+  <div class="num">10</div>
+  <div class="head">\(\dfrac{h+g}{f}\)</div>
+  <p><b>Числитель</b> (пункт 3): \(h+g\to+\infty\) при \(x\to-\infty\)
+  и \(h+g\to-\infty\) при \(x\to+\infty\).</p>
+  <p><b>При \(x\to-\infty\):</b> \(\dfrac{+\infty}{+\infty}\) — <b>НФ</b>.</p>
+  <p><b>При \(x\to+\infty\):</b> \(\dfrac{-\infty}{0}\) — величина бесконечна,
+  знак зависит от знака \(f\) вблизи \(+\infty\)
+  (при \(f\gt0\) предел \(-\infty\), при \(f\lt0\) предел \(+\infty\)).</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <table>
+    <tr><th>Функция</th>
+        <th>Форма при \(x\to-\infty\)</th><th>Предел при \(x\to-\infty\)</th>
+        <th>Форма при \(x\to+\infty\)</th><th>Предел при \(x\to+\infty\)</th></tr>
+    <tr><td>\(f+g\)</td><td>\(\infty+0\)</td><td>\(+\infty\)</td>
+        <td>\(0+0\)</td><td>\(0\)</td></tr>
+    <tr><td>\(h-f\)</td><td>\(\infty-\infty\)</td><td><b>НФ</b></td>
+        <td>\(-\infty-0\)</td><td>\(-\infty\)</td></tr>
+    <tr><td>\(f\cdot g\)</td><td>\(\infty\cdot0\)</td><td><b>НФ</b></td>
+        <td>\(0\cdot0\)</td><td>\(0\)</td></tr>
+    <tr><td>\(f\cdot h\)</td><td>\(\infty\cdot\infty\)</td><td>\(+\infty\)</td>
+        <td>\(0\cdot\infty\)</td><td><b>НФ</b></td></tr>
+    <tr><td>\(g+h\)</td><td>\(0+\infty\)</td><td>\(+\infty\)</td>
+        <td>\(0-\infty\)</td><td>\(-\infty\)</td></tr>
+    <tr><td>\(\dfrac fg\)</td><td>\(\dfrac{\infty}{0}\)</td>
+        <td>бесконечность, знак по знаку \(g\)</td>
+        <td>\(\dfrac00\)</td><td><b>НФ</b></td></tr>
+    <tr><td>\(\dfrac fh\)</td><td>\(\dfrac{\infty}{\infty}\)</td><td><b>НФ</b></td>
+        <td>\(\dfrac{0}{-\infty}\)</td><td>\(0\)</td></tr>
+    <tr><td>\(\dfrac hg\)</td><td>\(\dfrac{+\infty}{0}\)</td>
+        <td>бесконечность, знак по знаку \(g\)</td>
+        <td>\(\dfrac{-\infty}{0}\)</td><td>бесконечность, знак противоположен знаку \(g\)</td></tr>
+    <tr><td>\(\dfrac{f+g}{h}\)</td><td>\(\dfrac{\infty}{\infty}\)</td><td><b>НФ</b></td>
+        <td>\(\dfrac{0}{-\infty}\)</td><td>\(0\)</td></tr>
+    <tr><td>\(\dfrac{h+g}{f}\)</td><td>\(\dfrac{\infty}{\infty}\)</td><td><b>НФ</b></td>
+        <td>\(\dfrac{-\infty}{0}\)</td><td>бесконечность, знак противоположен знаку \(f\)</td></tr>
+  </table>
+  <p>Итого: <b>семь клеток — настоящие неопределённости</b>
+  (\(h-f\) и \(\frac fh\), \(\frac{f+g}{h}\), \(\frac{h+g}{f}\) слева;
+  \(f\cdot g\) слева; \(f\cdot h\) и \(\frac fg\) справа),
+  <b>четыре клетки требуют знания знака</b> знаменателя,
+  остальные девять вычисляются сразу.</p>
+</div>
+
+<h2>Дополнительно: примеры, доказывающие, что заключить нельзя</h2>
+
+<p>Сказать «это неопределённость» мало — надо <b>доказать</b>, что информации правда
+не хватает. Способ доказательства такой: построить несколько разных троек функций
+\(f,g,h\), у которых все шесть заданных пределов совпадают с условием, а ответ
+в интересующей нас клетке получается <b>разный</b>. Тогда ясно, что по условию
+предсказать ответ невозможно.</p>
+
+<div class="box know">
+  <span class="lbl">Заготовка: три функции-кирпича</span>
+
+  <p>Чтобы не выдумывать примеры каждый раз заново, соберём один универсальный набор.</p>
+
+  <p><b>Кирпич первый:</b></p>
+  \[u(x)=\sqrt{x^2+1}-x.\]
+  <p>Это в точности функция \(f_7\) из задачи 37. Напомним её поведение:</p>
+  <ul>
+    <li>она определена при любом \(x\) и всегда положительна;</li>
+    <li>умножив на сопряжённое, получаем полезное тождество
+    \(u(x)\cdot\left(\sqrt{x^2+1}+x\right)=\left(x^2+1\right)-x^2=1\), то есть
+    \(u(x)=\dfrac{1}{\sqrt{x^2+1}+x}\);</li>
+    <li><b>при \(x\to-\infty\)</b> корень \(\sqrt{x^2+1}\) ведёт себя как \(|x|=-x\),
+    поэтому \(u(x)\approx-x-x=-2x=2|x|\to+\infty\).
+    Проверка при \(x=-1000\): \(1000{,}0005+1000=2000{,}0005\);</li>
+    <li><b>при \(x\to+\infty\)</b> знаменатель \(\sqrt{x^2+1}+x\approx2x\),
+    поэтому \(u(x)\approx\dfrac{1}{2x}\to0\).
+    Проверка при \(x=1000\): \(u\approx0{,}0005\).</li>
+  </ul>
+  <p>То есть \(u\) уходит в \(+\infty\) слева и сходит к нулю справа — <b>ровно то,
+  что требуется от \(f\)</b>. И то же верно для \(u^2\), \(u^3\), \(\sqrt u\),
+  \(\frac u2\), \(\frac u4\) — все они годятся на роль \(f\). Меняя степень, мы будем
+  менять «скорость» и получать разные ответы.</p>
+
+  <p><b>Кирпич второй:</b> \(g(x)=\dfrac{1}{1+x^2}\).
+  Она положительна, и при \(x\to\pm\infty\) стремится к нулю (снизу растёт знаменатель).
+  Требования для \(g\) выполнены.</p>
+
+  <p><b>Кирпич третий:</b> \(h(x)=-x\).
+  При \(x\to-\infty\) получаем \(-x\to+\infty\), при \(x\to+\infty\) получаем
+  \(-x\to-\infty\). Требования для \(h\) выполнены.</p>
+</div>
+
+<div class="step">
+  <div class="num">A</div>
+  <div class="head">Пример для \(h-f\) при \(x\to-\infty\) (форма \(\infty-\infty\))</div>
+  <p>Берём \(h(x)=-x\) и меняем только \(f\).</p>
+  <ul>
+    <li><b>\(f=u\):</b> \(h-f=-x-\left(\sqrt{x^2+1}-x\right)=-\sqrt{x^2+1}\).
+    Корень растёт, перед ним минус, значит предел \(\;-\infty\).</li>
+    <li><b>\(f=\frac u2\):</b>
+    \(h-f=-x-\dfrac{\sqrt{x^2+1}-x}{2}=-\dfrac{x+\sqrt{x^2+1}}{2}\).
+    А по нашему тождеству \(x+\sqrt{x^2+1}=\dfrac{1}{u(x)}\), и раз \(u\to+\infty\),
+    то \(\frac1u\to0\). Значит предел \(\;0\).</li>
+    <li><b>\(f=\frac u4\):</b>
+    \(h-f=-x-\dfrac{\sqrt{x^2+1}-x}{4}=-\dfrac{3x}{4}-\dfrac{\sqrt{x^2+1}}{4}\).
+    При \(x\to-\infty\) корень примерно равен \(-x\), поэтому всё выражение примерно
+    \(-\dfrac{3x}{4}+\dfrac{x}{4}=-\dfrac x2\to+\infty\).</li>
+  </ul>
+  <p><b>Три законные тройки — три разных ответа: \(-\infty\), \(0\), \(+\infty\).</b>
+  Значит по одному лишь условию задачи ответ найти нельзя. Что и требовалось.</p>
+</div>
+
+<div class="step">
+  <div class="num">B</div>
+  <div class="head">Пример для \(f\cdot g\) при \(x\to-\infty\) (форма \(\infty\cdot0\))</div>
+  <p>Берём \(g(x)=\dfrac{1}{1+x^2}\) и меняем \(f\). Напомним: при \(x\to-\infty\)
+  величина \(u\approx2|x|\), а \(1+x^2\approx x^2\).</p>
+  <ul>
+    <li><b>\(f=u\):</b> \(f\cdot g\approx\dfrac{2|x|}{x^2}=\dfrac{2}{|x|}\to0\).</li>
+    <li><b>\(f=u^2\):</b> \(f\cdot g\approx\dfrac{4x^2}{x^2}=4\to4\).
+    Проверка при \(x=-1000\): \(u\approx2000{,}0005\), \(u^2\approx4\,000\,002\),
+    \(1+x^2=1\,000\,001\), отношение \(\approx4{,}000\).</li>
+    <li><b>\(f=u^3\):</b> \(f\cdot g\approx\dfrac{8|x|^3}{x^2}=8|x|\to+\infty\).</li>
+  </ul>
+  <p><b>Ответы: \(0\), \(4\), \(+\infty\).</b> Причём вместо \(u^2\) можно взять
+  \(\frac{u^2}{4}\cdot c\) и получить в качестве предела любое наперёд заданное
+  положительное число. Заключить нельзя.</p>
+</div>
+
+<div class="step">
+  <div class="num">C</div>
+  <div class="head">Пример для \(f\cdot h\) при \(x\to+\infty\) (форма \(0\cdot\infty\))</div>
+  <p>Берём \(h(x)=-x\). При \(x\to+\infty\) величина \(u\approx\dfrac{1}{2x}\).</p>
+  <ul>
+    <li><b>\(f=u\):</b> \(f\cdot h\approx-x\cdot\dfrac{1}{2x}=-\dfrac12\).</li>
+    <li><b>\(f=u^2\):</b> \(f\cdot h\approx-x\cdot\dfrac{1}{4x^2}=-\dfrac{1}{4x}\to0\).</li>
+    <li><b>\(f=\sqrt u\):</b> \(f\cdot h\approx-x\cdot\dfrac{1}{\sqrt{2x}}
+    =-\sqrt{\dfrac{x}{2}}\to-\infty\).</li>
+  </ul>
+  <p><b>Ответы: \(-\frac12\), \(0\), \(-\infty\).</b></p>
+</div>
+
+<div class="step">
+  <div class="num">D</div>
+  <div class="head">Пример для \(\dfrac fg\) при \(x\to+\infty\) (форма \(\frac00\))</div>
+  <p>Берём \(g=\dfrac{1}{1+x^2}\); тогда деление на \(g\) — это умножение
+  на \(\left(1+x^2\right)\). При \(x\to+\infty\) величина \(u\approx\dfrac{1}{2x}\).</p>
+  <ul>
+    <li><b>\(f=u\):</b> \(\dfrac fg\approx\dfrac{x^2}{2x}=\dfrac x2\to+\infty\).</li>
+    <li><b>\(f=u^2\):</b> \(\dfrac fg\approx\dfrac{x^2}{4x^2}=\dfrac14\).</li>
+    <li><b>\(f=u^3\):</b> \(\dfrac fg\approx\dfrac{x^2}{8x^3}=\dfrac{1}{8x}\to0\).</li>
+  </ul>
+  <p><b>Ответы: \(+\infty\), \(\frac14\), \(0\).</b></p>
+</div>
+
+<div class="step">
+  <div class="num">E</div>
+  <div class="head">Примеры для трёх клеток вида \(\frac{\infty}{\infty}\) при \(x\to-\infty\)</div>
+  <p>Речь о \(\dfrac fh\), \(\dfrac{f+g}{h}\) и \(\dfrac{h+g}{f}\).
+  Берём \(h=-x\), \(g=\dfrac{1}{1+x^2}\), и меняем \(f\).
+  Напомним: слева \(u\approx2|x|\), \(-x=|x|\), а \(g\) стремится к нулю
+  и на итог не влияет — поэтому для \(\frac{f+g}{h}\) ответы те же, что для \(\frac fh\).</p>
+  <p><b>Для \(\dfrac fh\) (и для \(\dfrac{f+g}{h}\)):</b></p>
+  <ul>
+    <li>\(f=u\): \(\dfrac{2|x|}{|x|}=2\to2\);</li>
+    <li>\(f=u^2\): \(\dfrac{4x^2}{|x|}=4|x|\to+\infty\);</li>
+    <li>\(f=\sqrt u\): \(\dfrac{\sqrt{2|x|}}{|x|}=\dfrac{\sqrt2}{\sqrt{|x|}}\to0\).</li>
+  </ul>
+  <p><b>Для \(\dfrac{h+g}{f}\)</b> (дробь переворачивается, ответы тоже):</p>
+  <ul>
+    <li>\(f=u\): \(\dfrac{|x|}{2|x|}=\dfrac12\);</li>
+    <li>\(f=u^2\): \(\dfrac{|x|}{4x^2}=\dfrac{1}{4|x|}\to0\);</li>
+    <li>\(f=\sqrt u\): \(\dfrac{|x|}{\sqrt{2|x|}}=\sqrt{\dfrac{|x|}{2}}\to+\infty\).</li>
+  </ul>
+  <p>В каждой клетке — три разных ответа при выполнении всех условий задачи.</p>
+</div>
+
+<div class="step">
+  <div class="num">F</div>
+  <div class="head">Почему в клетках \(\frac fg\) и \(\frac hg\) всё решает знак \(g\)</div>
+  <p>Возьмём \(f=u\), \(h=-x\) и три разные функции \(g\), каждая из которых честно
+  стремится к нулю на обоих концах:</p>
+  <ul>
+    <li><b>\(g_1(x)=\dfrac{1}{1+x^2}\)</b> — всегда положительна.
+    Тогда при \(x\to-\infty\): \(\dfrac{f}{g_1}=u\left(1+x^2\right)\approx2|x|\cdot x^2\to+\infty\).</li>
+    <li><b>\(g_2(x)=-\dfrac{1}{1+x^2}\)</b> — всегда отрицательна, но тоже стремится
+    к нулю. Тогда \(\dfrac{f}{g_2}=-u\left(1+x^2\right)\to-\infty\).</li>
+    <li><b>\(g_3(x)=\dfrac{\sin x}{1+x^2}\)</b> — стремится к нулю (числитель зажат
+    между \(-1\) и \(1\), знаменатель растёт), но бесконечно много раз меняет знак
+    и бесконечно много раз обращается в ноль. Тогда \(\dfrac{f}{g_3}\) в одних точках
+    огромна и положительна, в других огромна и отрицательна, а в точках \(x=k\pi\)
+    вообще не определена. Предела нет.</li>
+  </ul>
+  <p>Вывод: <b>условие «\(g\) стремится к нулю» слишком бедное</b>. Чтобы ответить,
+  нужно знать не только куда, но и <i>с какой стороны</i>.</p>
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+
+  <p><b>1. Считают \(\infty-\infty=0\).</b> Это самая распространённая ошибка.
+  Бесконечность — не число, вычитать её из себя нельзя.
+  Проверьте: \((x+100)-x=100\), а не 0, хотя обе части уходят в бесконечность.</p>
+
+  <p><b>2. Считают \(0\cdot\infty=0\)</b> («ведь на ноль умножить — ноль»).
+  Ноль здесь не настоящий ноль, а «величина, тающая к нулю». Произведение
+  \(\frac1x\cdot x\) равно 1 при любом \(x\), хотя первый множитель тает,
+  а второй растёт.</p>
+
+  <p><b>3. Путают «НФ» и «предела не существует».</b> НФ означает: «по имеющимся данным
+  ответ не определён; для конкретных функций он, скорее всего, существует, просто
+  надо считать дальше». В задаче 35, например, все дроби давали \(\frac00\),
+  и почти у всех предел прекрасно нашёлся после упрощения.</p>
+
+  <p><b>4. Забывают, что «стремится к нулю» не значит «положительна».</b>
+  Из-за этого клетки \(\frac fg\) и \(\frac hg\) объявляют равными \(+\infty\).
+  Правильный ответ — «бесконечность, но знак не определён».</p>
+
+  <p><b>5. Считают числитель составной дроби заново вместо того, чтобы использовать
+  уже готовый результат.</b> В пунктах 9 и 10 числители \(f+g\) и \(h+g\) мы посчитали
+  раньше — надо просто взять оттуда, а не начинать с нуля.</p>
+
+  <p><b>6. Приводят «примеры», которые не удовлетворяют условию.</b>
+  Если вы берёте \(f(x)=x^2\), проверьте: при \(x\to+\infty\) она стремится к \(+\infty\),
+  а по условию должна стремиться к нулю. Такой пример ничего не доказывает.
+  <b>Каждая предложенная тройка обязана выполнять все шесть заданных пределов.</b></p>
+
+  <p><b>7. Пишут один ответ на обе бесконечности.</b> Функция \(h\) уходит в \(+\infty\)
+  слева и в \(-\infty\) справа — стороны совершенно разные, и считать их надо отдельно.
+  В таблице для этого две отдельные колонки.</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 34 — Производные (26 функций)</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Функции · Задача 34 из 55</div>
+  <h1>Двадцать шесть производных подряд</h1>
+  <div class="stars">★☆☆☆ — базовый уровень, но очень длинный</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>Найти (упрощённое) выражение производной следующих функций:</p>
+  <p>\(f_1(x)=x^3-5x^7+\dfrac3x\);&nbsp;&nbsp;
+     \(f_2(x)=\dfrac12x^4-x\sqrt3+3\sqrt x\);&nbsp;&nbsp;
+     \(f_3(x)=(x^2+3)\,x^5\);&nbsp;&nbsp;
+     \(f_4(x)=(3x-2)^2\);</p>
+  <p>\(f_5(x)=x^2\sqrt x\);&nbsp;&nbsp;
+     \(f_6(x)=(x+3)x^2\sqrt x\);&nbsp;&nbsp;
+     \(f_7(x)=\left(x+\dfrac1x\right)x\);&nbsp;&nbsp;
+     \(f_8(x)=\left(x+\dfrac{2}{x^2}\right)x\);</p>
+  <p>\(f_9(x)=\dfrac{3}{x+1}\);&nbsp;&nbsp;
+     \(f_{10}(x)=-2\cdot\dfrac{5}{x^2+3}\);&nbsp;&nbsp;
+     \(f_{11}(x)=\dfrac{5x}{x^2+3}\);&nbsp;&nbsp;
+     \(f_{12}(x)=\dfrac{x+2}{x+3}\);</p>
+  <p>\(f_{13}(x)=\dfrac{x^2+1}{x^3+1}\);&nbsp;&nbsp;
+     \(f_{14}(x)=\dfrac{\sqrt x}{x^2+3}\);&nbsp;&nbsp;
+     \(f_{15}(x)=\dfrac{x-\frac1x}{x+\frac1x}\);&nbsp;&nbsp;
+     \(f_{16}(x)=\dfrac{x^2+\frac3x}{x^2+\frac x3}\);</p>
+  <p>\(f_{17}(x)=\dfrac{5\sqrt x}{1+\frac2x}\);&nbsp;&nbsp;
+     \(f_{18}(x)=\dfrac{x\left(1+\frac1x\right)}{3+\frac3x}\);&nbsp;&nbsp;
+     \(f_{19}(x)=\left(1+\dfrac{1}{\sqrt x}\right)\left(1-\dfrac{1}{\sqrt x}\right)\);&nbsp;&nbsp;
+     \(f_{20}(x)=\dfrac13x\cdot\dfrac{3+\frac9x}{x^2+2}\);</p>
+  <p>\(f_{21}(x)=e^{4x-5}\);&nbsp;&nbsp;
+     \(f_{22}(x)=\cos(2x+3)\);&nbsp;&nbsp;
+     \(f_{23}(x)=\sin\left(3x+\dfrac{\pi}{6}\right)\);&nbsp;&nbsp;
+     \(f_{24}(x)=(7x+5)e^{-x}\);</p>
+  <p>\(f_{25}(x)=\dfrac{e^{3x}+2x^2}{e^x+1}\);&nbsp;&nbsp;
+     \(f_{26}(x)=\dfrac{e^{3-2x}}{x^4-3x+1}\).</p>
+</div>
+
+<details>
+  <summary>Оригинал по-французски</summary>
+  <p class="orig">Ex 34. Déterminer l'expression (simplifiée) de la dérivée des fonctions suivantes :
+  \(f_1(x)=x^3-5x^7+\frac3x\) ; \(f_2(x)=\frac12x^4-x\sqrt3+3\sqrt x\) ; \(f_3(x)=(x^2+3)x^5\) ;
+  \(f_4(x)=(3x-2)^2\) ; \(f_5(x)=x^2\sqrt x\) ; \(f_6(x)=(x+3)x^2\sqrt x\) ;
+  \(f_7(x)=\left(x+\frac1x\right)x\) ; \(f_8(x)=\left(x+\frac2{x^2}\right)x\) ;
+  \(f_9(x)=\frac3{x+1}\) ; \(f_{10}(x)=-2\,\frac{5}{x^2+3}\) ; \(f_{11}(x)=\frac{5x}{x^2+3}\) ;
+  \(f_{12}(x)=\frac{x+2}{x+3}\) ; \(f_{13}(x)=\frac{x^2+1}{x^3+1}\) ; \(f_{14}(x)=\frac{\sqrt x}{x^2+3}\) ;
+  \(f_{15}\dots f_{20}\) ; \(f_{21}(x)=e^{4x-5}\) ; \(f_{22}(x)=\cos(2x+3)\) ;
+  \(f_{23}(x)=\sin\left(3x+\frac\pi6\right)\) ; \(f_{24}(x)=(7x+5)e^{-x}\) ;
+  \(f_{25}(x)=\frac{e^{3x}+2x^2}{e^x+1}\) ; \(f_{26}(x)=\frac{e^{3-2x}}{x^4-3x+1}\).</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Дано двадцать шесть формул. Для каждой надо посчитать её <b>производную</b> —
+и по возможности привести результат к аккуратному виду.</p>
+
+<p>Это упражнение на отработку навыка, как гаммы у пианиста. Здесь нет хитрой идеи —
+есть шесть правил, которые надо применять механически и без ошибок. Поэтому сначала
+мы разберём эти правила по-человечески, а потом двадцать шесть раз их применим.</p>
+
+<p>Ещё одна обязательная часть: для каждой функции надо сказать, <b>какие числа \(x\)
+в неё можно подставлять</b> (область определения). Это не формальность: например,
+\(f_7\) после упрощения выглядит как \(x^2+1\), но подставить \(x=0\) в неё нельзя,
+потому что в исходной записи стоит \(\frac1x\).</p>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><b>Что такое производная — на пальцах.</b> Пусть \(x\) — это время, а \(f(x)\) —
+  сколько километров проехала машина к моменту \(x\). Тогда производная \(f'(x)\) —
+  это <b>показание спидометра</b> в момент \(x\): насколько быстро меняется \(f\).</p>
+
+  <p>Как её считают по определению? Берут маленький промежуток времени \(h\), смотрят,
+  на сколько изменилось значение, и делят на \(h\) — получают среднюю скорость:</p>
+  \[\frac{f(x+h)-f(x)}{h}.\]
+  <p>Затем берут \(h\) всё меньше и меньше и смотрят, к какому числу подбирается эта дробь.
+  Это число и есть \(f'(x)\).</p>
+
+  <p><b>Проверим на \(f(x)=x^2\).</b> Тогда \(f(x+h)=(x+h)^2=x^2+2xh+h^2\), значит</p>
+  \[\frac{f(x+h)-f(x)}{h}=\frac{x^2+2xh+h^2-x^2}{h}=\frac{2xh+h^2}{h}=2x+h.\]
+  <p>При крошечном \(h\) это почти \(2x\). Вот откуда берётся знаменитое \((x^2)'=2x\).
+  Все остальные формулы получаются похожим счётом; мы примем их готовыми.</p>
+
+  <h3>Таблица базовых производных</h3>
+  <table>
+    <tr><th>Функция</th><th>Её производная</th><th>Где это верно</th></tr>
+    <tr><td>\(k\) (любое число)</td><td>\(0\)</td><td>везде</td></tr>
+    <tr><td>\(x\)</td><td>\(1\)</td><td>везде</td></tr>
+    <tr><td>\(x^2\)</td><td>\(2x\)</td><td>везде</td></tr>
+    <tr><td>\(x^3\)</td><td>\(3x^2\)</td><td>везде</td></tr>
+    <tr><td>\(x^n\)</td><td>\(n\,x^{n-1}\)</td><td>везде (для целых \(n\geqslant1\))</td></tr>
+    <tr><td>\(\dfrac1x\)</td><td>\(-\dfrac{1}{x^2}\)</td><td>при \(x\neq0\)</td></tr>
+    <tr><td>\(\dfrac{1}{x^n}=x^{-n}\)</td><td>\(-\dfrac{n}{x^{n+1}}\)</td><td>при \(x\neq0\)</td></tr>
+    <tr><td>\(\sqrt x\)</td><td>\(\dfrac{1}{2\sqrt x}\)</td><td>при \(x\gt0\)</td></tr>
+    <tr><td>\(e^x\)</td><td>\(e^x\)</td><td>везде</td></tr>
+    <tr><td>\(\sin x\)</td><td>\(\cos x\)</td><td>везде</td></tr>
+    <tr><td>\(\cos x\)</td><td>\(-\sin x\)</td><td>везде</td></tr>
+  </table>
+
+  <p><b>Про \(e^x\) (экспонента, exponentielle).</b> Это особая функция. Число
+  \(e\approx2{,}718\) выбрано ровно так, чтобы производная функции \(e^x\) равнялась
+  ей самой. Смысл: величина растёт со скоростью, равной своему текущему размеру —
+  так растут деньги под сложный процент или популяция бактерий. Важные факты:
+  \(e^0=1\), \(e^x\gt0\) всегда, \(e^{a}\cdot e^{b}=e^{a+b}\).</p>
+
+  <p><b>Про \(\sqrt x\).</b> Обратите внимание, что в формуле \((\sqrt x)'=\frac{1}{2\sqrt x}\)
+  корень стоит внизу — значит при \(x=0\) формула не работает (деление на ноль).
+  Смысл понятен: график \(\sqrt x\) в нуле идёт вертикально вверх, «скорость бесконечная».</p>
+
+  <h3>Пять правил, как собирать сложные производные</h3>
+
+  <p><b>Правило 1 — сумма.</b> \((u+v)'=u'+v'\), \((u-v)'=u'-v'\).<br>
+  <i>Почему:</i> если две машины едут рядом, суммарное расстояние меняется со скоростью,
+  равной сумме скоростей. Никакой хитрости.</p>
+
+  <p><b>Правило 2 — число-множитель.</b> \((k\cdot u)'=k\cdot u'\).<br>
+  <i>Почему:</i> если мерить расстояние не в километрах, а в сотнях метров (то есть всё
+  умножить на 10), то и скорость вырастет ровно в 10 раз.</p>
+
+  <p><b>Правило 3 — произведение (produit).</b>
+  \[(u\cdot v)'=u'\,v+u\,v'.\]
+  <i>Почему:</i> представьте прямоугольник со сторонами \(u\) и \(v\); его площадь \(uv\).
+  За крошечное время сторона \(u\) подросла на \(u'h\), а сторона \(v\) — на \(v'h\).
+  Площадь приросла двумя тонкими полосками: одна размером \(u'h\times v\), другая
+  \(u\times v'h\) (плюс совсем крошечный уголок \(u'h\cdot v'h\), которым можно пренебречь —
+  он «маленький в квадрате»). Делим прирост на \(h\) и получаем \(u'v+uv'\).</p>
+
+  <p><b>Правило 4 — дробь (quotient).</b>
+  \[\left(\frac{u}{v}\right)'=\frac{u'\,v-u\,v'}{v^2}.\]
+  <i>Как запомнить:</i> «производная верха на низ <b>минус</b> верх на производную низа,
+  всё делить на низ в квадрате». Порядок здесь важен, поменять местами нельзя.<br>
+  <i>Проверка формулы:</i> возьмём \(u=1,\ v=x\). Тогда
+  \(\left(\frac1x\right)'=\frac{0\cdot x-1\cdot1}{x^2}=-\frac{1}{x^2}\) — совпало с таблицей.<br>
+  Частный случай, который экономит время: если сверху стоит просто число \(k\), то
+  \(\left(\dfrac{k}{v}\right)'=-\dfrac{k\,v'}{v^2}\).</p>
+
+  <p><b>Правило 5 — сложная функция (composée), она же «цепное правило».</b>
+  Если внутрь функции подставлена не сама \(x\), а какая-то «начинка» \(u(x)\), то</p>
+  \[\big(F(u)\big)'=u'\cdot F'(u).\]
+  <i>Почему:</i> два зубчатых колеса. Первое (начинка) крутится в \(u'\) раз быстрее, чем \(x\);
+  второе (внешняя функция) реагирует со скоростью \(F'\). Скорости <b>перемножаются</b>.
+  Пример из жизни: если рубль дорожает вдвое быстрее, а цена в рублях растёт со скоростью
+  \(F'\), то итоговая скорость — произведение.<br>
+  Готовые частные случаи, которые нам нужны:
+  <ul>
+    <li>\(\big(u^n\big)'=n\,u'\,u^{n-1}\); например \(\big((3x-2)^2\big)'=2\cdot3\cdot(3x-2)\);</li>
+    <li>\(\big(\sqrt u\big)'=\dfrac{u'}{2\sqrt u}\);</li>
+    <li>\(\big(e^{u}\big)'=u'\,e^{u}\); например \(\big(e^{4x-5}\big)'=4e^{4x-5}\);</li>
+    <li>\(\big(\sin u\big)'=u'\cos u\), \(\big(\cos u\big)'=-u'\sin u\).</li>
+  </ul>
+  </p>
+
+  <p><b>Про степень с дробным показателем.</b> Запись \(x^{1/2}\) означает \(\sqrt x\),
+  а \(x^{3/2}\) означает \(x\sqrt x\). Правило \((x^n)'=nx^{n-1}\) работает и для таких
+  показателей. Например \(\left(x^{5/2}\right)'=\frac52x^{3/2}\).
+  Мы будем этим пользоваться, но каждый раз переводить ответ обратно в корни.</p>
+
+  <p><b>Как проверять ответ.</b> Возьмите удобное число, например \(x=1\), и посчитайте
+  два раза: (а) по вашей формуле производной; (б) численно, взяв
+  \(\dfrac{f(1{,}001)-f(0{,}999)}{0{,}002}\). Числа должны почти совпасть.
+  Мы такую проверку проделали для всех неочевидных пунктов.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<p>Дальше идут все 26 пунктов. Для каждого: область определения, какое правило применяем,
+все подстановки и упрощённый ответ.</p>
+
+<h3>Группа A. Просто сумма степеней (пункты 1–2)</h3>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">\(f_1(x)=x^3-5x^7+\dfrac3x\)</div>
+  <p><b>Область определения.</b> Мешает только \(\frac3x\): нужен \(x\neq0\).
+  Значит \(D=\mathbb R\setminus\{0\}\) (все числа, кроме нуля).</p>
+  <p><b>Считаем по слагаемым</b> (правила 1 и 2):</p>
+  <ul>
+    <li>\((x^3)'=3x^2\);</li>
+    <li>\((-5x^7)'=-5\cdot(x^7)'=-5\cdot7x^6=-35x^6\);</li>
+    <li>\(\left(\dfrac3x\right)'=3\cdot\left(\dfrac1x\right)'=3\cdot\left(-\dfrac{1}{x^2}\right)=-\dfrac{3}{x^2}\).</li>
+  </ul>
+  \[\boxed{f_1'(x)=3x^2-35x^6-\frac{3}{x^2}}\]
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">\(f_2(x)=\dfrac12x^4-x\sqrt3+3\sqrt x\)</div>
+  <p><b>Внимание на второе слагаемое:</b> \(x\sqrt3\) — это \(x\), умноженное на постоянное
+  число \(\sqrt3\approx1{,}732\). Это не корень из \(x\)! Поэтому производная от него — просто
+  \(\sqrt3\).</p>
+  <p><b>Область определения.</b> Из-за \(\sqrt x\) нужно \(x\geqslant0\), то есть
+  \(D=[0;+\infty[\). Сама производная содержит \(\sqrt x\) в знаменателе, поэтому формула
+  для производной годится при \(x\gt0\).</p>
+  <ul>
+    <li>\(\left(\dfrac12x^4\right)'=\dfrac12\cdot4x^3=2x^3\);</li>
+    <li>\(\left(-x\sqrt3\right)'=-\sqrt3\cdot(x)'=-\sqrt3\);</li>
+    <li>\(\left(3\sqrt x\right)'=3\cdot\dfrac{1}{2\sqrt x}=\dfrac{3}{2\sqrt x}\).</li>
+  </ul>
+  \[\boxed{f_2'(x)=2x^3-\sqrt3+\frac{3}{2\sqrt x}\quad (x\gt0)}\]
+</div>
+
+<h3>Группа B. Сначала упростить, потом дифференцировать (пункты 3–8)</h3>
+
+<p>Общий совет: <b>прежде чем хвататься за правило дроби или произведения, посмотрите,
+не раскрывается ли выражение в обычную сумму степеней</b>. Часто это в разы короче.</p>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">\(f_3(x)=(x^2+3)\,x^5\)</div>
+  <p><b>Область:</b> здесь нет ни дроби, ни корня — подставить можно любое число,
+  \(D=\mathbb R\).</p>
+  <p><b>Упрощаем:</b> раскрываем скобку, умножая каждое слагаемое на \(x^5\)
+  (при умножении степеней показатели складываются: \(x^2\cdot x^5=x^{7}\)):</p>
+  \[f_3(x)=x^2\cdot x^5+3\cdot x^5=x^7+3x^5.\]
+  <p>Теперь это обычная сумма степеней:</p>
+  \[f_3'(x)=7x^6+3\cdot5x^4=7x^6+15x^4=\boxed{x^4\left(7x^2+15\right)}\]
+  <p><i>Проверка правилом произведения:</i> \(u=x^2+3,\ u'=2x,\ v=x^5,\ v'=5x^4\), тогда
+  \(u'v+uv'=2x\cdot x^5+(x^2+3)\,5x^4=2x^6+5x^6+15x^4=7x^6+15x^4\). Совпало.</p>
+</div>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">\(f_4(x)=(3x-2)^2\)</div>
+  <p><b>Область:</b> любое число, \(D=\mathbb R\).</p>
+  <p><b>Способ 1 (цепное правило).</b> Начинка \(u=3x-2\), значит \(u'=3\). Внешняя функция —
+  квадрат, её производная \(2u\). Перемножаем:</p>
+  \[f_4'(x)=3\cdot2(3x-2)=6(3x-2)=\boxed{18x-12}\]
+  <p><b>Способ 2 (раскрыть скобки).</b> \((3x-2)^2=9x^2-12x+4\), производная
+  \(18x-12\). Совпало — это и есть проверка.</p>
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">\(f_5(x)=x^2\sqrt x\)</div>
+  <p><b>Область:</b> \(x\geqslant0\), то есть \(D=[0;+\infty[\).</p>
+  <p><b>Упрощаем через степени:</b> \(\sqrt x=x^{1/2}\), поэтому
+  \(x^2\sqrt x=x^{2}\cdot x^{1/2}=x^{5/2}\) (при умножении степеней показатели складываются:
+  \(2+\frac12=\frac52\)).</p>
+  \[f_5'(x)=\frac52x^{3/2}=\boxed{\frac52\,x\sqrt x}\]
+  <p><i>Проверка правилом произведения:</i> \(u=x^2,\ v=\sqrt x\), тогда
+  \(u'v+uv'=2x\sqrt x+x^2\cdot\dfrac{1}{2\sqrt x}\). Второе слагаемое упростим,
+  домножив верх и низ на \(\sqrt x\): \(\dfrac{x^2\sqrt x}{2x}=\dfrac{x\sqrt x}{2}\).
+  Итого \(2x\sqrt x+\dfrac{x\sqrt x}{2}=\dfrac{4x\sqrt x+x\sqrt x}{2}=\dfrac{5x\sqrt x}{2}\). Совпало.</p>
+</div>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">\(f_6(x)=(x+3)\,x^2\sqrt x\)</div>
+  <p><b>Область:</b> \(D=[0;+\infty[\).</p>
+  <p><b>Раскрываем скобку</b>, пользуясь предыдущим пунктом (\(x^2\sqrt x=x^{5/2}\)):</p>
+  \[f_6(x)=x\cdot x^{5/2}+3x^{5/2}=x^{7/2}+3x^{5/2}.\]
+  <p>Теперь просто сумма двух степеней:</p>
+  \[f_6'(x)=\frac72x^{5/2}+3\cdot\frac52x^{3/2}=\frac72x^2\sqrt x+\frac{15}{2}x\sqrt x.\]
+  <p>Вынесем общий множитель \(\dfrac{x\sqrt x}{2}\):</p>
+  \[\boxed{f_6'(x)=\frac{x\sqrt x}{2}\,(7x+15)}\]
+  <p><i>Проверка при \(x=1\):</i> по формуле \(\frac{1}{2}(7+15)=11\).
+  Численно: \(f_6(x)=x^{3{,}5}+3x^{2{,}5}\);
+  \(f_6(1{,}001)\approx1{,}003504+3{,}007504=4{,}011008\),
+  \(f_6(0{,}999)\approx0{,}996504+2{,}992503=3{,}989007\);
+  разность делим на \(0{,}002\): \(11{,}0005\). Совпало.</p>
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">\(f_7(x)=\left(x+\dfrac1x\right)x\)</div>
+  <p><b>Область:</b> в записи есть \(\frac1x\), поэтому \(x\neq0\):
+  \(D=\mathbb R\setminus\{0\}\). Это важно запомнить — после упрощения ноль «исчезнет
+  из виду», но подставлять его всё равно нельзя.</p>
+  <p><b>Упрощаем:</b> раскрываем скобку, умножая каждое слагаемое на \(x\):</p>
+  \[f_7(x)=x\cdot x+\frac1x\cdot x=x^2+1.\]
+  \[\boxed{f_7'(x)=2x\quad (x\neq0)}\]
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">\(f_8(x)=\left(x+\dfrac{2}{x^2}\right)x\)</div>
+  <p><b>Область:</b> \(x\neq0\), \(D=\mathbb R\setminus\{0\}\).</p>
+  <p><b>Упрощаем:</b> \(\dfrac{2}{x^2}\cdot x=\dfrac{2x}{x^2}=\dfrac2x\), значит</p>
+  \[f_8(x)=x^2+\frac2x.\]
+  \[f_8'(x)=2x+2\cdot\left(-\frac{1}{x^2}\right)=\boxed{2x-\frac{2}{x^2}}\]
+</div>
+
+<h3>Группа C. Дроби: правило \(\left(\frac uv\right)'\) в чистом виде (пункты 9–14)</h3>
+
+<div class="step">
+  <div class="num">9</div>
+  <div class="head">\(f_9(x)=\dfrac{3}{x+1}\)</div>
+  <p><b>Область:</b> \(x+1=0\) при \(x=-1\), значит \(D=\mathbb R\setminus\{-1\}\).</p>
+  <p>Сверху стоит просто число, поэтому берём короткий вариант
+  \(\left(\frac kv\right)'=-\frac{k\,v'}{v^2}\) с \(k=3\), \(v=x+1\), \(v'=1\):</p>
+  \[\boxed{f_9'(x)=-\frac{3}{(x+1)^2}}\]
+</div>
+
+<div class="step">
+  <div class="num">10</div>
+  <div class="head">\(f_{10}(x)=-2\cdot\dfrac{5}{x^2+3}\)</div>
+  <p><b>Упрощаем запись:</b> \(-2\cdot\dfrac{5}{x^2+3}=\dfrac{-10}{x^2+3}\) — сверху просто
+  число \(-10\).</p>
+  <p><b>Область:</b> знаменатель \(x^2+3\) никогда не равен нулю, потому что \(x^2\geqslant0\)
+  и, добавив 3, получаем не меньше 3. Значит \(D=\mathbb R\).</p>
+  <p>Берём короткий вариант \(\left(\dfrac kv\right)'=-\dfrac{k\,v'}{v^2}\) с \(k=-10\),
+  \(v=x^2+3\), \(v'=2x\):</p>
+  \[f_{10}'(x)=-\frac{(-10)\cdot2x}{\left(x^2+3\right)^2}=\boxed{\frac{20x}{\left(x^2+3\right)^2}}\]
+  <p><i>Смысл проверки знака:</i> при \(x\gt0\) знаменатель \(x^2+3\) растёт, значит дробь
+  \(\frac{-10}{\text{растущее}}\) становится ближе к нулю, то есть растёт (была \(-3{,}33\),
+  стала \(-0{,}5\)). Производная и правда положительна при \(x\gt0\). Сходится.</p>
+</div>
+
+<div class="step">
+  <div class="num">11</div>
+  <div class="head">\(f_{11}(x)=\dfrac{5x}{x^2+3}\)</div>
+  <p><b>Область:</b> \(D=\mathbb R\) (знаменатель не меньше 3).</p>
+  <p>\(u=5x,\ u'=5,\ v=x^2+3,\ v'=2x\):</p>
+  \[f_{11}'(x)=\frac{5\left(x^2+3\right)-5x\cdot2x}{\left(x^2+3\right)^2}
+  =\frac{5x^2+15-10x^2}{\left(x^2+3\right)^2}
+  =\boxed{\frac{15-5x^2}{\left(x^2+3\right)^2}=\frac{5\left(3-x^2\right)}{\left(x^2+3\right)^2}}\]
+</div>
+
+<div class="step">
+  <div class="num">12</div>
+  <div class="head">\(f_{12}(x)=\dfrac{x+2}{x+3}\)</div>
+  <p><b>Область:</b> \(D=\mathbb R\setminus\{-3\}\).</p>
+  <p>\(u=x+2,\ u'=1,\ v=x+3,\ v'=1\):</p>
+  \[f_{12}'(x)=\frac{1\cdot(x+3)-(x+2)\cdot1}{(x+3)^2}=\frac{x+3-x-2}{(x+3)^2}
+  =\boxed{\frac{1}{(x+3)^2}}\]
+</div>
+
+<div class="step">
+  <div class="num">13</div>
+  <div class="head">\(f_{13}(x)=\dfrac{x^2+1}{x^3+1}\)</div>
+  <p><b>Область:</b> \(x^3+1=0\) означает \(x^3=-1\), то есть \(x=-1\).
+  Значит \(D=\mathbb R\setminus\{-1\}\).</p>
+  <p>\(u=x^2+1,\ u'=2x,\ v=x^3+1,\ v'=3x^2\):</p>
+  \[f_{13}'(x)=\frac{2x\left(x^3+1\right)-\left(x^2+1\right)3x^2}{\left(x^3+1\right)^2}.\]
+  <p>Раскрываем числитель по частям:
+  \(2x\cdot x^3=2x^4\), \(2x\cdot1=2x\); \(\left(x^2+1\right)3x^2=3x^4+3x^2\). Тогда</p>
+  \[2x^4+2x-3x^4-3x^2=-x^4-3x^2+2x=-x\left(x^3+3x-2\right).\]
+  \[\boxed{f_{13}'(x)=\frac{-x\left(x^3+3x-2\right)}{\left(x^3+1\right)^2}}\]
+  <p><i>Проверка при \(x=1\):</i> формула даёт \(\dfrac{-1\cdot(1+3-2)}{2^2}=\dfrac{-2}{4}=-0{,}5\).
+  Численно: \(f_{13}(1{,}01)=\dfrac{2{,}0201}{2{,}030301}\approx0{,}994975\),
+  \(f_{13}(0{,}99)=\dfrac{1{,}9801}{1{,}970299}\approx1{,}004975\);
+  \(\dfrac{0{,}994975-1{,}004975}{0{,}02}=-0{,}5\). Совпало.</p>
+</div>
+
+<div class="step">
+  <div class="num">14</div>
+  <div class="head">\(f_{14}(x)=\dfrac{\sqrt x}{x^2+3}\)</div>
+  <p><b>Область:</b> \(x\geqslant0\), значит \(D=[0;+\infty[\); формула производной работает
+  при \(x\gt0\).</p>
+  <p>\(u=\sqrt x,\ u'=\dfrac{1}{2\sqrt x},\ v=x^2+3,\ v'=2x\):</p>
+  \[f_{14}'(x)=\frac{\dfrac{1}{2\sqrt x}\left(x^2+3\right)-\sqrt x\cdot2x}{\left(x^2+3\right)^2}.\]
+  <p><b>Убираем четырёхэтажную дробь.</b> Домножим числитель и знаменатель большой дроби
+  на \(2\sqrt x\) (это разрешено: мы умножаем на единицу вида \(\frac{2\sqrt x}{2\sqrt x}\)).
+  В числителе: первое слагаемое станет просто \(x^2+3\); второе:
+  \(\sqrt x\cdot2x\cdot2\sqrt x=4x\cdot\sqrt x\cdot\sqrt x=4x\cdot x=4x^2\).</p>
+  \[f_{14}'(x)=\frac{x^2+3-4x^2}{2\sqrt x\left(x^2+3\right)^2}
+  =\boxed{\frac{3\left(1-x^2\right)}{2\sqrt x\left(x^2+3\right)^2}}\]
+  <p><i>Проверка при \(x=1\):</i> формула даёт 0 (числитель \(3(1-1)=0\)).
+  И правда: \(f_{14}(1)=\frac14=0{,}25\), а по бокам меньше —
+  \(f_{14}(0{,}9)\approx\frac{0{,}9487}{3{,}81}\approx0{,}2490\),
+  \(f_{14}(1{,}1)\approx\frac{1{,}0488}{4{,}21}\approx0{,}2491\).
+  Значит в \(x=1\) вершина, производная там ноль. Совпало.</p>
+</div>
+
+<h3>Группа D. Сначала обязательно упростить (пункты 15–20)</h3>
+
+<p>Это самая коварная группа. Если броситься считать «в лоб», получатся четырёхэтажные
+дроби и три страницы работы. Если сначала упростить — почти всё сворачивается.
+<b>Главный приём: избавиться от дробей внутри дробей, домножив верх и низ на \(x\)</b>
+(или на \(x^2\), смотря что мешает).</p>
+
+<div class="step">
+  <div class="num">15</div>
+  <div class="head">\(f_{15}(x)=\dfrac{x-\frac1x}{x+\frac1x}\)</div>
+  <p><b>Область.</b> Нужен \(x\neq0\). Ещё знаменатель большой дроби не должен быть нулём:
+  \(x+\frac1x=\frac{x^2+1}{x}\), а \(x^2+1\) никогда не ноль. Значит
+  \(D=\mathbb R\setminus\{0\}\).</p>
+  <p><b>Упрощаем:</b> умножаем верх и низ на \(x\):</p>
+  \[f_{15}(x)=\frac{\left(x-\frac1x\right)\cdot x}{\left(x+\frac1x\right)\cdot x}
+  =\frac{x^2-1}{x^2+1}.\]
+  <p>Теперь правило дроби: \(u=x^2-1,\ u'=2x,\ v=x^2+1,\ v'=2x\):</p>
+  \[f_{15}'(x)=\frac{2x\left(x^2+1\right)-\left(x^2-1\right)2x}{\left(x^2+1\right)^2}
+  =\frac{2x^3+2x-2x^3+2x}{\left(x^2+1\right)^2}=\boxed{\frac{4x}{\left(x^2+1\right)^2}}\]
+</div>
+
+<div class="step">
+  <div class="num">16</div>
+  <div class="head">\(f_{16}(x)=\dfrac{x^2+\frac3x}{x^2+\frac x3}\)</div>
+  <p><b>Внимание:</b> сверху \(\frac3x\) (три делить на икс), снизу \(\frac x3\)
+  (икс делить на три) — это разные вещи.</p>
+  <p><b>Область.</b> Нужен \(x\neq0\). Ещё нижняя часть не должна быть нулём:
+  \(x^2+\frac x3=x\left(x+\frac13\right)=0\) при \(x=0\) или \(x=-\frac13\).
+  Значит \(D=\mathbb R\setminus\left\{-\frac13;\,0\right\}\).</p>
+  <p><b>Упрощаем.</b> Верх: \(x^2+\dfrac3x=\dfrac{x^3+3}{x}\).
+  Низ: \(x^2+\dfrac x3=\dfrac{3x^2+x}{3}\). Делим первое на второе
+  (деление на дробь — умножение на перевёрнутую):</p>
+  \[f_{16}(x)=\frac{x^3+3}{x}\cdot\frac{3}{3x^2+x}=\frac{3\left(x^3+3\right)}{x\cdot x(3x+1)}
+  =\frac{3x^3+9}{3x^3+x^2}.\]
+  <p>(Здесь \(3x^2+x=x(3x+1)\), а \(x\cdot x(3x+1)=x^2(3x+1)=3x^3+x^2\).)</p>
+  <p>Теперь правило дроби с \(u=3x^3+9,\ u'=9x^2,\ v=3x^3+x^2,\ v'=9x^2+2x\):</p>
+  \[\text{числитель}=9x^2\left(3x^3+x^2\right)-\left(3x^3+9\right)\left(9x^2+2x\right).\]
+  <p>Считаем по частям:
+  \(9x^2\cdot3x^3=27x^5\), \(9x^2\cdot x^2=9x^4\) — итого \(27x^5+9x^4\).<br>
+  \(\left(3x^3+9\right)\left(9x^2+2x\right)=27x^5+6x^4+81x^2+18x\).<br>
+  Вычитаем: \(27x^5+9x^4-27x^5-6x^4-81x^2-18x=3x^4-81x^2-18x=3x\left(x^3-27x-6\right)\).</p>
+  <p>Знаменатель: \(\left(3x^3+x^2\right)^2=\left(x^2(3x+1)\right)^2=x^4(3x+1)^2\).
+  Сокращаем на \(x\):</p>
+  \[\boxed{f_{16}'(x)=\frac{3\left(x^3-27x-6\right)}{x^3(3x+1)^2}}\]
+  <p><i>Проверка при \(x=1\):</i> формула даёт \(\dfrac{3(1-27-6)}{1\cdot16}=\dfrac{-96}{16}=-6\).
+  Численно: \(f_{16}(1{,}01)=\dfrac{12{,}090903}{4{,}111003}\approx2{,}941345\),
+  \(f_{16}(0{,}99)=\dfrac{11{,}910897}{3{,}890997}\approx3{,}061147\);
+  разность делим на \(0{,}02\): \(-5{,}99\). Совпало.</p>
+</div>
+
+<div class="step">
+  <div class="num">17</div>
+  <div class="head">\(f_{17}(x)=\dfrac{5\sqrt x}{1+\frac2x}\)</div>
+  <p><b>Область.</b> Корень требует \(x\geqslant0\), дробь \(\frac2x\) требует \(x\neq0\).
+  Знаменатель \(1+\frac2x=\frac{x+2}{x}\) обращается в ноль при \(x=-2\), но такие \(x\)
+  уже исключены. Итог: \(D=\,]0;+\infty[\).</p>
+  <p><b>Упрощаем:</b> \(1+\dfrac2x=\dfrac{x+2}{x}\), значит деление на эту дробь —
+  умножение на \(\dfrac{x}{x+2}\):</p>
+  \[f_{17}(x)=5\sqrt x\cdot\frac{x}{x+2}=\frac{5x\sqrt x}{x+2}.\]
+  <p>Верх \(u=5x\sqrt x=5x^{3/2}\), значит \(u'=5\cdot\frac32x^{1/2}=\frac{15}{2}\sqrt x\).
+  Низ \(v=x+2\), \(v'=1\).</p>
+  \[f_{17}'(x)=\frac{\frac{15}{2}\sqrt x\,(x+2)-5x\sqrt x}{(x+2)^2}.\]
+  <p>В числителе выносим \(\sqrt x\):</p>
+  \[\sqrt x\left(\frac{15}{2}(x+2)-5x\right)=\sqrt x\left(\frac{15x}{2}+15-5x\right)
+  =\sqrt x\left(\frac{15x-10x}{2}+15\right)=\sqrt x\left(\frac{5x}{2}+15\right).\]
+  <p>Вынесем \(\frac52\): \(\frac{5}{2}\sqrt x\,(x+6)\). Итого</p>
+  \[\boxed{f_{17}'(x)=\frac{5\sqrt x\,(x+6)}{2(x+2)^2}}\]
+  <p><i>Проверка при \(x=1\):</i> формула даёт \(\dfrac{5\cdot1\cdot7}{2\cdot9}=\dfrac{35}{18}\approx1{,}944\).
+  Численно: \(f_{17}(1{,}01)\approx1{,}686109\), \(f_{17}(0{,}99)\approx1{,}647220\);
+  разность на \(0{,}02\) даёт \(1{,}9444\). Совпало.</p>
+</div>
+
+<div class="step">
+  <div class="num">18</div>
+  <div class="head">\(f_{18}(x)=\dfrac{x\left(1+\frac1x\right)}{3+\frac3x}\)</div>
+  <p><b>Область.</b> Нужен \(x\neq0\). Знаменатель \(3+\frac3x=\frac{3(x+1)}{x}\)
+  обращается в ноль при \(x=-1\). Значит \(D=\mathbb R\setminus\{-1;\,0\}\).</p>
+  <p><b>Упрощаем верх:</b> \(x\left(1+\frac1x\right)=x+1\).</p>
+  <p><b>Упрощаем низ:</b> \(3+\dfrac3x=\dfrac{3x+3}{x}=\dfrac{3(x+1)}{x}\).</p>
+  <p>Делим:</p>
+  \[f_{18}(x)=(x+1)\cdot\frac{x}{3(x+1)}=\frac{x}{3}.\]
+  <p>Множитель \((x+1)\) сократился (это законно, потому что \(x\neq-1\)).
+  Осталась прямая линия!</p>
+  \[\boxed{f_{18}'(x)=\frac13\quad (x\neq-1,\ x\neq0)}\]
+  <p>Это тот самый случай, ради которого условие просит «упрощённое выражение»:
+  считать в лоб здесь было бы наказанием.</p>
+</div>
+
+<div class="step">
+  <div class="num">19</div>
+  <div class="head">\(f_{19}(x)=\left(1+\dfrac{1}{\sqrt x}\right)\left(1-\dfrac{1}{\sqrt x}\right)\)</div>
+  <p><b>Область.</b> Корень в знаменателе, значит \(x\gt0\): \(D=\,]0;+\infty[\).</p>
+  <p><b>Упрощаем</b> по формуле «разность квадратов» \((A+B)(A-B)=A^2-B^2\),
+  где \(A=1\), \(B=\dfrac{1}{\sqrt x}\):</p>
+  \[f_{19}(x)=1^2-\left(\frac{1}{\sqrt x}\right)^2=1-\frac{1}{x}.\]
+  <p>(Потому что \(\sqrt x\cdot\sqrt x=x\).)</p>
+  <p>Производная: единица даёт 0, а \(\left(-\frac1x\right)'=-\left(-\frac{1}{x^2}\right)=\frac{1}{x^2}\):</p>
+  \[\boxed{f_{19}'(x)=\frac{1}{x^2}\quad(x\gt0)}\]
+</div>
+
+<div class="step">
+  <div class="num">20</div>
+  <div class="head">\(f_{20}(x)=\dfrac13x\cdot\dfrac{3+\frac9x}{x^2+2}\)</div>
+  <p><b>Область.</b> \(x\neq0\) из-за \(\frac9x\); знаменатель \(x^2+2\) никогда не ноль.
+  Значит \(D=\mathbb R\setminus\{0\}\).</p>
+  <p><b>Упрощаем.</b> Множитель \(\frac13x\) удобно занести в верхнюю часть — умножаем его
+  на каждое слагаемое скобки \(\left(3+\frac9x\right)\):</p>
+  \[\frac13x\left(3+\frac9x\right)=\frac13x\cdot3+\frac13x\cdot\frac9x=x+\frac{9}{3}=x+3.\]
+  <p>(Во втором слагаемом \(x\) сократился: \(\frac13\cdot\frac{9x}{x}=\frac93=3\).)
+  Значит вся функция сворачивается в аккуратную дробь:</p>
+  \[f_{20}(x)=\frac{x+3}{x^2+2}.\]
+  <p>Теперь правило дроби: \(u=x+3,\ u'=1,\ v=x^2+2,\ v'=2x\):</p>
+  \[f_{20}'(x)=\frac{1\cdot\left(x^2+2\right)-(x+3)\cdot2x}{\left(x^2+2\right)^2}
+  =\frac{x^2+2-2x^2-6x}{\left(x^2+2\right)^2}=\boxed{\frac{-x^2-6x+2}{\left(x^2+2\right)^2}}\]
+  <p>Это снова случай из группы D, ради которого просят «упрощённое выражение»:
+  считать производную в лоб от четырёхэтажной дроби было бы куда длиннее.</p>
+  <p><i>Проверка при \(x=1\):</i> формула даёт \(\dfrac{-1-6+2}{(1+2)^2}=\dfrac{-5}{9}\approx-0{,}5556\).
+  Численно: \(f_{20}(1{,}001)\approx1{,}332445\), \(f_{20}(0{,}999)\approx1{,}333556\);
+  разность на \(0{,}002\) даёт \(-0{,}5556\). Совпало.</p>
+</div>
+
+<h3>Группа E. Экспонента и тригонометрия (пункты 21–26)</h3>
+
+<div class="step">
+  <div class="num">21</div>
+  <div class="head">\(f_{21}(x)=e^{4x-5}\)</div>
+  <p><b>Область:</b> \(D=\mathbb R\) (в показатель можно ставить что угодно).</p>
+  <p>Цепное правило: начинка \(u=4x-5\), \(u'=4\); внешняя функция — экспонента,
+  её производная равна ей самой.</p>
+  \[\boxed{f_{21}'(x)=4e^{4x-5}}\]
+</div>
+
+<div class="step">
+  <div class="num">22</div>
+  <div class="head">\(f_{22}(x)=\cos(2x+3)\)</div>
+  <p><b>Область:</b> \(D=\mathbb R\).</p>
+  <p>Начинка \(u=2x+3\), \(u'=2\); \((\cos u)'=-u'\sin u\):</p>
+  \[\boxed{f_{22}'(x)=-2\sin(2x+3)}\]
+  <p><i>Смысл минуса:</i> косинус в начале (при малых углах) убывает, поэтому его
+  производная отрицательна — минус в формуле как раз это и обеспечивает.</p>
+</div>
+
+<div class="step">
+  <div class="num">23</div>
+  <div class="head">\(f_{23}(x)=\sin\left(3x+\dfrac{\pi}{6}\right)\)</div>
+  <p><b>Область:</b> \(D=\mathbb R\).</p>
+  <p>Начинка \(u=3x+\frac{\pi}{6}\), \(u'=3\) (число \(\frac\pi6\) постоянно, его производная 0);
+  \((\sin u)'=u'\cos u\):</p>
+  \[\boxed{f_{23}'(x)=3\cos\left(3x+\frac{\pi}{6}\right)}\]
+</div>
+
+<div class="step">
+  <div class="num">24</div>
+  <div class="head">\(f_{24}(x)=(7x+5)e^{-x}\)</div>
+  <p><b>Область:</b> \(D=\mathbb R\).</p>
+  <p>Здесь произведение двух функций: \(u=7x+5\) (значит \(u'=7\)) и \(v=e^{-x}\).
+  Производная \(v\): начинка \(-x\), её производная \(-1\), поэтому \(v'=-e^{-x}\).</p>
+  \[f_{24}'(x)=7e^{-x}+(7x+5)\left(-e^{-x}\right)=e^{-x}\big(7-(7x+5)\big).\]
+  <p>Внутри скобки: \(7-7x-5=2-7x\).</p>
+  \[\boxed{f_{24}'(x)=(2-7x)\,e^{-x}}\]
+  <p><i>Быстрая проверка при \(x=0\):</i> формула даёт \((2-0)\cdot e^{0}=2\).
+  Численно: \(f_{24}(0{,}01)=(0{,}07+5)\,e^{-0{,}01}=5{,}07\cdot0{,}99005\approx5{,}0186\);
+  \(f_{24}(-0{,}01)=(-0{,}07+5)\,e^{0{,}01}=4{,}93\cdot1{,}01005\approx4{,}9796\).
+  Разность \(0{,}0390\) делим на \(0{,}02\) и получаем \(1{,}95\approx2\). Совпало.</p>
+</div>
+
+<div class="step">
+  <div class="num">25</div>
+  <div class="head">\(f_{25}(x)=\dfrac{e^{3x}+2x^2}{e^x+1}\)</div>
+  <p><b>Область:</b> \(e^x\) всегда положительно, значит \(e^x+1\geqslant1\) и в ноль не
+  обращается. \(D=\mathbb R\).</p>
+  <p>Верх \(u=e^{3x}+2x^2\). Его производная: \(\left(e^{3x}\right)'=3e^{3x}\)
+  (начинка \(3x\), её производная 3), \(\left(2x^2\right)'=4x\). Итого \(u'=3e^{3x}+4x\).<br>
+  Низ \(v=e^x+1\), значит \(v'=e^x\).</p>
+  \[f_{25}'(x)=\frac{\left(3e^{3x}+4x\right)\left(e^x+1\right)-\left(e^{3x}+2x^2\right)e^x}
+  {\left(e^x+1\right)^2}.\]
+  <p>Раскрываем числитель. Помним правило \(e^{a}\cdot e^{b}=e^{a+b}\), поэтому
+  \(e^{3x}\cdot e^{x}=e^{4x}\):</p>
+  <ul>
+    <li>\(3e^{3x}\cdot e^x=3e^{4x}\);</li>
+    <li>\(3e^{3x}\cdot1=3e^{3x}\);</li>
+    <li>\(4x\cdot e^x=4xe^x\);</li>
+    <li>\(4x\cdot1=4x\);</li>
+    <li>\(-e^{3x}\cdot e^x=-e^{4x}\);</li>
+    <li>\(-2x^2e^x\).</li>
+  </ul>
+  <p>Складываем: \(3e^{4x}-e^{4x}=2e^{4x}\), остальное как есть:</p>
+  \[\boxed{f_{25}'(x)=\frac{2e^{4x}+3e^{3x}+\left(4x-2x^2\right)e^{x}+4x}{\left(e^x+1\right)^2}}\]
+  <p><i>Проверка при \(x=0\):</i> формула даёт \(\dfrac{2+3+0+0}{(1+1)^2}=\dfrac54=1{,}25\).
+  Численно: \(f_{25}(0{,}01)\approx0{,}512750\), \(f_{25}(-0{,}01)\approx0{,}487805\);
+  разность на \(0{,}02\) даёт \(1{,}247\). Совпало.</p>
+</div>
+
+<div class="step">
+  <div class="num">26</div>
+  <div class="head">\(f_{26}(x)=\dfrac{e^{3-2x}}{x^4-3x+1}\)</div>
+  <p><b>Область.</b> Надо выбросить те \(x\), при которых \(x^4-3x+1=0\).
+  Это уравнение решается только приближённо. Посчитаем знаки:
+  при \(x=0\) получаем \(1\) (плюс), при \(x=0{,}5\) получаем
+  \(0{,}0625-1{,}5+1=-0{,}4375\) (минус) — значит корень между 0 и 0,5;
+  при \(x=1\) получаем \(-1\) (минус), при \(x=1{,}5\) получаем
+  \(5{,}0625-4{,}5+1=1{,}5625\) (плюс) — значит корень между 1 и 1,5.
+  Уточняя, находим \(x_1\approx0{,}338\) и \(x_2\approx1{,}307\).
+  При больших по модулю \(x\) слагаемое \(x^4\) всё пересиливает, других корней нет.
+  Итог: \(D=\mathbb R\setminus\{x_1;\,x_2\}\).</p>
+  <p>Верх \(u=e^{3-2x}\); начинка \(3-2x\), её производная \(-2\), значит \(u'=-2e^{3-2x}\).<br>
+  Низ \(v=x^4-3x+1\), значит \(v'=4x^3-3\).</p>
+  \[f_{26}'(x)=\frac{-2e^{3-2x}\left(x^4-3x+1\right)-e^{3-2x}\left(4x^3-3\right)}
+  {\left(x^4-3x+1\right)^2}.\]
+  <p>Выносим общий множитель \(-e^{3-2x}\) из числителя:</p>
+  \[\text{в скобке: } 2\left(x^4-3x+1\right)+4x^3-3=2x^4-6x+2+4x^3-3=2x^4+4x^3-6x-1.\]
+  \[\boxed{f_{26}'(x)=\frac{-e^{3-2x}\left(2x^4+4x^3-6x-1\right)}{\left(x^4-3x+1\right)^2}}\]
+  <p><i>Проверка при \(x=0\):</i> формула даёт \(\dfrac{-e^{3}\cdot(-1)}{1}=e^3\approx20{,}09\).
+  Численно: \(f_{26}(0{,}01)\approx\dfrac{19{,}68786}{0{,}97}\approx20{,}2968\),
+  \(f_{26}(-0{,}01)\approx\dfrac{20{,}49134}{1{,}03}\approx19{,}8945\);
+  разность на \(0{,}02\) даёт \(20{,}11\). Совпало.</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <table>
+    <tr><th>№</th><th>Функция</th><th>Область определения</th><th>Производная</th></tr>
+    <tr><td>1</td><td>\(x^3-5x^7+\frac3x\)</td><td>\(x\neq0\)</td>
+        <td>\(3x^2-35x^6-\frac{3}{x^2}\)</td></tr>
+    <tr><td>2</td><td>\(\frac12x^4-x\sqrt3+3\sqrt x\)</td><td>\(x\geqslant0\) (произв. при \(x\gt0\))</td>
+        <td>\(2x^3-\sqrt3+\frac{3}{2\sqrt x}\)</td></tr>
+    <tr><td>3</td><td>\((x^2+3)x^5\)</td><td>\(\mathbb R\)</td>
+        <td>\(x^4\left(7x^2+15\right)\)</td></tr>
+    <tr><td>4</td><td>\((3x-2)^2\)</td><td>\(\mathbb R\)</td><td>\(6(3x-2)=18x-12\)</td></tr>
+    <tr><td>5</td><td>\(x^2\sqrt x\)</td><td>\(x\geqslant0\)</td><td>\(\frac52x\sqrt x\)</td></tr>
+    <tr><td>6</td><td>\((x+3)x^2\sqrt x\)</td><td>\(x\geqslant0\)</td>
+        <td>\(\frac{x\sqrt x}{2}(7x+15)\)</td></tr>
+    <tr><td>7</td><td>\(\left(x+\frac1x\right)x=x^2+1\)</td><td>\(x\neq0\)</td><td>\(2x\)</td></tr>
+    <tr><td>8</td><td>\(\left(x+\frac{2}{x^2}\right)x=x^2+\frac2x\)</td><td>\(x\neq0\)</td>
+        <td>\(2x-\frac{2}{x^2}\)</td></tr>
+    <tr><td>9</td><td>\(\frac{3}{x+1}\)</td><td>\(x\neq-1\)</td><td>\(-\frac{3}{(x+1)^2}\)</td></tr>
+    <tr><td>10</td><td>\(-2\cdot\frac{5}{x^2+3}=\frac{-10}{x^2+3}\)</td><td>\(\mathbb R\)</td>
+        <td>\(\frac{20x}{\left(x^2+3\right)^2}\)</td></tr>
+    <tr><td>11</td><td>\(\frac{5x}{x^2+3}\)</td><td>\(\mathbb R\)</td>
+        <td>\(\frac{5\left(3-x^2\right)}{\left(x^2+3\right)^2}\)</td></tr>
+    <tr><td>12</td><td>\(\frac{x+2}{x+3}\)</td><td>\(x\neq-3\)</td><td>\(\frac{1}{(x+3)^2}\)</td></tr>
+    <tr><td>13</td><td>\(\frac{x^2+1}{x^3+1}\)</td><td>\(x\neq-1\)</td>
+        <td>\(\frac{-x\left(x^3+3x-2\right)}{\left(x^3+1\right)^2}\)</td></tr>
+    <tr><td>14</td><td>\(\frac{\sqrt x}{x^2+3}\)</td><td>\(x\geqslant0\) (произв. при \(x\gt0\))</td>
+        <td>\(\frac{3\left(1-x^2\right)}{2\sqrt x\left(x^2+3\right)^2}\)</td></tr>
+    <tr><td>15</td><td>\(=\frac{x^2-1}{x^2+1}\)</td><td>\(x\neq0\)</td>
+        <td>\(\frac{4x}{\left(x^2+1\right)^2}\)</td></tr>
+    <tr><td>16</td><td>\(=\frac{3x^3+9}{3x^3+x^2}\)</td><td>\(x\neq0,\ x\neq-\frac13\)</td>
+        <td>\(\frac{3\left(x^3-27x-6\right)}{x^3(3x+1)^2}\)</td></tr>
+    <tr><td>17</td><td>\(=\frac{5x\sqrt x}{x+2}\)</td><td>\(x\gt0\)</td>
+        <td>\(\frac{5\sqrt x\,(x+6)}{2(x+2)^2}\)</td></tr>
+    <tr><td>18</td><td>\(=\frac x3\)</td><td>\(x\neq0,\ x\neq-1\)</td><td>\(\frac13\)</td></tr>
+    <tr><td>19</td><td>\(=1-\frac1x\)</td><td>\(x\gt0\)</td><td>\(\frac{1}{x^2}\)</td></tr>
+    <tr><td>20</td><td>\(=\frac{x+3}{x^2+2}\)</td><td>\(x\neq0\)</td>
+        <td>\(\frac{-x^2-6x+2}{\left(x^2+2\right)^2}\)</td></tr>
+    <tr><td>21</td><td>\(e^{4x-5}\)</td><td>\(\mathbb R\)</td><td>\(4e^{4x-5}\)</td></tr>
+    <tr><td>22</td><td>\(\cos(2x+3)\)</td><td>\(\mathbb R\)</td><td>\(-2\sin(2x+3)\)</td></tr>
+    <tr><td>23</td><td>\(\sin\left(3x+\frac\pi6\right)\)</td><td>\(\mathbb R\)</td>
+        <td>\(3\cos\left(3x+\frac\pi6\right)\)</td></tr>
+    <tr><td>24</td><td>\((7x+5)e^{-x}\)</td><td>\(\mathbb R\)</td><td>\((2-7x)e^{-x}\)</td></tr>
+    <tr><td>25</td><td>\(\frac{e^{3x}+2x^2}{e^x+1}\)</td><td>\(\mathbb R\)</td>
+        <td>\(\frac{2e^{4x}+3e^{3x}+\left(4x-2x^2\right)e^x+4x}{\left(e^x+1\right)^2}\)</td></tr>
+    <tr><td>26</td><td>\(\frac{e^{3-2x}}{x^4-3x+1}\)</td>
+        <td>\(x^4-3x+1\neq0\) (то есть \(x\neq0{,}338\dots\) и \(x\neq1{,}307\dots\))</td>
+        <td>\(\frac{-e^{3-2x}\left(2x^4+4x^3-6x-1\right)}{\left(x^4-3x+1\right)^2}\)</td></tr>
+  </table>
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+
+  <p><b>1. Забывают минус в правиле дроби.</b> Формула
+  \(\left(\frac uv\right)'=\frac{u'v-uv'}{v^2}\), а не \(\frac{u'v+uv'}{v^2}\).
+  Быстрая самопроверка: подставьте \(u=1,\ v=x\) и убедитесь, что получается \(-\frac1{x^2}\).</p>
+
+  <p><b>2. Пишут \((uv)'=u'v'\).</b> Это неверно. Проверьте на \(u=v=x\):
+  тогда \(uv=x^2\), производная \(2x\), а \(u'v'=1\cdot1=1\). Правильная формула
+  \(u'v+uv'=1\cdot x+x\cdot1=2x\).</p>
+
+  <p><b>3. Теряют множитель из цепного правила.</b> Производная \(e^{4x-5}\) — это
+  \(4e^{4x-5}\), а не \(e^{4x-5}\). Производная \(\cos(2x+3)\) — это \(-2\sin(2x+3)\),
+  а не \(-\sin(2x+3)\). «Внутренняя скорость» обязана вылезти наружу множителем.</p>
+
+  <p><b>4. Путают \(x\sqrt3\) и \(\sqrt{3x}\), а также \(\frac3x\) и \(\frac x3\).</b>
+  В пункте 2 \(\sqrt3\) — это просто число \(1{,}732\dots\); его производная равна нулю,
+  а вся производная слагаемого \(-x\sqrt3\) равна \(-\sqrt3\).
+  В пункте 16 в числителе \(\frac3x\), а в знаменателе \(\frac x3\) — от перестановки
+  всё меняется.</p>
+
+  <p><b>5. Теряют область определения после упрощения.</b> В пункте 7 после упрощения
+  получилось \(x^2+1\), но ноль подставлять нельзя — исходная формула в нуле бессмысленна.
+  То же в 18: ответ \(\frac13\), но точки \(0\) и \(-1\) выброшены.</p>
+
+  <p><b>6. Не упрощают выражение в группе D и тонут в четырёхэтажных дробях.</b>
+  Правило: увидели дробь внутри дроби — домножьте верх и низ на \(x\) (или на \(x^2\), на 3
+  и т. п.), приведите к нормальной дроби, и только потом дифференцируйте.</p>
+
+  <p><b>7. Забывают, что \((\sqrt x)'\) не определена в нуле.</b> Функция \(\sqrt x\)
+  определена при \(x\geqslant0\), а её производная \(\frac{1}{2\sqrt x}\) — только при
+  \(x\gt0\). В пункте 14 это критично.</p>
+
+  <p><b>8. При проверке числами берут слишком большой шаг.</b> Если взять шаг \(0{,}1\),
+  ответ может разойтись во второй цифре и покажется, что формула неверна.
+  Берите \(0{,}001\) и обязательно симметрично: \(\frac{f(a+h)-f(a-h)}{2h}\).</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

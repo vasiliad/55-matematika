@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 21 — Рекуррентная последовательность u(n+1) = 3/5·u(n) + 2</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Раздел II · Последовательности · Задача 21 из 55</div>
+  <h1>Последовательность \(u_{n+1}=\tfrac35u_n+2\)</h1>
+  <div class="stars">★☆☆☆ — самый простой уровень</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>Дана последовательность \((u_n)\), заданная условиями: \(u_0=1\) и для всякого натурального \(n\)
+  \[u_{n+1}=\frac35u_n+2.\]</p>
+  <p><b>1)</b> Вычислить \(u_1,u_2,u_3\).</p>
+  <p><b>2)</b> Пусть \(a\) — действительное число, а \((v_n)\) задана как \(v_n=u_n+a\). Определить значение \(a\), при котором \((v_n)\) геометрическая. Указать тогда её характеристики.</p>
+  <p><b>3)</b> Далее в задаче полагаем \(v_n=u_n-5\). Дать выражение \(v_n\) через \(n\).</p>
+  <p><b>4)</b> Вывести отсюда выражение \(u_n\) через \(n\).</p>
+  <p><b>5)</b> Найти предел последовательности \((u_n)\).</p>
+  <p><b>6)</b> Положим \(S_n=u_0+u_1+\dots+u_n\) и \(T_n=v_0+v_1+\dots+v_n\). Каково выражение \(T_n\) через \(n\)?</p>
+  <p><b>7)</b> Найти предел последовательности \((T_n)\).</p>
+  <p><b>8)</b> Найти выражение \(S_n\) через \(n\) и предел последовательности \((S_n)\).</p>
+</div>
+
+<details>
+  <summary>Оригинал по-французски</summary>
+  <p class="orig">Soit la suite \((u_n)\) définie par \(u_0=1\) et pour tout \(n\) entier naturel : \(u_{n+1}=\frac35 u_n+2\).<br>
+  1) Calculer \(u_1, u_2, u_3\).<br>
+  2) Soit \(a\) un réel et \((v_n)\) la suite définie par \(v_n=u_n+a\) pour tout \(n\) entier naturel. Déterminer la valeur de \(a\) pour que la suite \((v_n)\) soit géométrique. Donner alors ses éléments caractéristiques.<br>
+  3) Dans la suite de l'exercice, on pose \(v_n=u_n-5\). Donner l'expression de \(v_n\) en fonction de \(n\).<br>
+  4) En déduire l'expression de \(u_n\) en fonction de \(n\).<br>
+  5) Déterminer la limite de la suite \((u_n)\).<br>
+  6) Pour tout \(n\) entier naturel, on pose \(S_n=u_0+u_1+...+u_n\) et \(T_n=v_0+v_1+...+v_n\). Quelle est l'expression de \(T_n\) en fonction de \(n\)?<br>
+  7) Déterminer la limite de la suite \((T_n)\).<br>
+  8) Déterminer l'expression de \(S_n\) en fonction de \(n\) et la limite de la suite \((S_n)\).</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Есть лестница чисел. Первое (нулевое) число равно 1. Дальше действует правило: <b>возьми число со ступеньки, умножь на \(\frac35\), прибавь 2 — получишь число на следующей ступеньке</b>.</p>
+
+<p>Такое правило, где следующее выражается через предыдущее, называется <b>рекуррентная формула</b> (по-французски <i>formule de récurrence</i>). Слово «рекуррентный» означает «возвращающийся»: чтобы узнать очередное число, надо вернуться к предыдущему.</p>
+
+<p>Проблема такой формулы: чтобы узнать, скажем, сотое число, надо честно проделать сто шагов. Нам хочется формулу, куда можно подставить сразу \(n=100\) и получить ответ. Такая формула называется <b>явной</b>.</p>
+
+<p>Вся задача — это дорога от рекуррентной формулы к явной. Хитрость (её подсказывают в пункте 2) в том, чтобы сдвинуть всю лестницу на подходящее число \(a\). Если сдвинуть правильно, кривая формула превратится в простую геометрическую прогрессию, для которой явная формула нам уже известна.</p>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><b>1. Последовательность и обозначение \(u_n\).</b> Лестница чисел с пронумерованными ступеньками: \(u_0,u_1,u_2,\dots\) Запись \(u_n\) читается «у-энное» — число на ступеньке номер \(n\). Маленькое \(n\) внизу — это номер, а не множитель и не степень.</p>
+
+  <p><b>2. Геометрическая прогрессия.</b> Лестница, где каждое следующее число получается умножением предыдущего на одно и то же число \(q\) (знаменатель, по-французски <i>raison</i>):</p>
+  \[v_{n+1}=q\cdot v_n\quad\Longrightarrow\quad v_n=v_0\cdot q^{\,n}.\]
+  <p>«Характеристики» (éléments caractéristiques) геометрической прогрессии — это её первый член \(v_0\) и знаменатель \(q\). Зная эти два числа, можно посчитать любой член.</p>
+
+  <p><b>3. Сумма геометрической прогрессии.</b> Если \(q\neq1\), то</p>
+  \[v_0+v_1+\dots+v_n=v_0\cdot\frac{1-q^{\,n+1}}{1-q}.\]
+  <p>Слагаемых здесь \(n+1\) штука (ступеньки \(0,1,\dots,n\)), поэтому в степени стоит \(n+1\).</p>
+
+  <p><b>4. Что такое предел (limite).</b> Иногда числа на лестнице, чем дальше мы идём, тем ближе подбираются к какому-то одному числу и уже никуда от него не уходят. Это число называется <b>предел</b>, а про лестницу говорят, что она <b>сходится</b> (converge).</p>
+  <p>Пример: \(0{,}9;\;0{,}99;\;0{,}999;\;0{,}9999;\dots\) — числа подбираются к 1. Предел равен 1. Записывают так:</p>
+  \[\lim_{n\to+\infty}u_n=1.\]
+  <p>Значок \(\lim\) — сокращение от «limite», а \(n\to+\infty\) читается «когда \(n\) неограниченно растёт».</p>
+
+  <p><b>5. Главный факт про степени дроби.</b> Если число \(q\) по величине меньше единицы (например \(q=\frac35\)), то степени \(q^n\) неограниченно уменьшаются и стремятся к нулю:</p>
+  \[\left(\frac35\right)^1=0{,}6,\;\left(\frac35\right)^2=0{,}36,\;\left(\frac35\right)^3=0{,}216,\;\left(\frac35\right)^{10}\approx0{,}006,\;\left(\frac35\right)^{50}\approx0{,}0000000000009.\]
+  <p>Общее правило: если \(-1&lt;q&lt;1\), то \(\displaystyle\lim_{n\to+\infty}q^{\,n}=0\). Это нам понадобится в пунктах 5 и 7.</p>
+
+  <p><b>6. Что такое \(+\infty\).</b> Значок \(+\infty\) («плюс бесконечность») — не число. Запись \(\lim u_n=+\infty\) означает «числа растут без всякой границы, обгоняя любое наперёд заданное число». Такая последовательность <b>не</b> сходится.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<h3>Пункт 1. Вычисляем \(u_1,u_2,u_3\)</h3>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">Просто применяем правило три раза</div>
+  <p>Правило: взять текущее число, умножить на \(\frac35\), прибавить 2. Стартуем с \(u_0=1\).</p>
+  \[u_1=\frac35\cdot u_0+2=\frac35\cdot1+2=\frac35+2.\]
+  <p>Чтобы сложить, представим \(2=\dfrac{10}{5}\):</p>
+  \[u_1=\frac35+\frac{10}{5}=\frac{13}{5}.\]
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">Считаем \(u_2\)</div>
+  \[u_2=\frac35\cdot u_1+2=\frac35\cdot\frac{13}{5}+2.\]
+  <p>Умножение дробей: числитель на числитель, знаменатель на знаменатель.</p>
+  \[\frac35\cdot\frac{13}{5}=\frac{3\cdot13}{5\cdot5}=\frac{39}{25}.\]
+  <p>Прибавляем 2, представив его как \(\dfrac{50}{25}\):</p>
+  \[u_2=\frac{39}{25}+\frac{50}{25}=\frac{89}{25}.\]
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">Считаем \(u_3\)</div>
+  \[u_3=\frac35\cdot u_2+2=\frac35\cdot\frac{89}{25}+2=\frac{3\cdot89}{5\cdot25}+2=\frac{267}{125}+2.\]
+  <p>Здесь \(3\cdot89=267\) и \(5\cdot25=125\). Прибавляем \(2=\dfrac{250}{125}\):</p>
+  \[u_3=\frac{267}{125}+\frac{250}{125}=\frac{517}{125}.\]
+  <p>Полезно посмотреть на эти числа в десятичном виде: \(1;\;2{,}6;\;3{,}56;\;4{,}136\). Числа растут, но всё медленнее — как будто подбираются к какому-то потолку. Запомним это наблюдение, оно пригодится в пункте 5.</p>
+</div>
+
+<h3>Пункт 2. Ищем сдвиг \(a\), при котором \((v_n)\) геометрическая</h3>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">Почему вообще нужен сдвиг</div>
+  <p>Наша формула \(u_{n+1}=\frac35u_n+2\) почти геометрическая — если бы не мешающая «\(+2\)». Была бы формула \(u_{n+1}=\frac35u_n\), мы бы сразу написали ответ.</p>
+  <p>Идея: сдвинуть всю лестницу вверх или вниз на некое число \(a\), то есть смотреть не на \(u_n\), а на \(v_n=u_n+a\). При удачном \(a\) надоедливая двойка исчезнет.</p>
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">Выражаем \(v_{n+1}\) через \(v_n\)</div>
+  <p>Пишем определение на следующей ступеньке:</p>
+  \[v_{n+1}=u_{n+1}+a.\]
+  <p>Подставляем известное правило \(u_{n+1}=\frac35u_n+2\):</p>
+  \[v_{n+1}=\frac35u_n+2+a.\]
+  <p>Теперь надо избавиться от \(u_n\) и оставить только \(v_n\). Из определения \(v_n=u_n+a\) следует \(u_n=v_n-a\). Подставляем:</p>
+  \[v_{n+1}=\frac35\,(v_n-a)+2+a.\]
+</div>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">Раскрываем скобки и наводим порядок</div>
+  \[v_{n+1}=\frac35v_n-\frac35a+2+a.\]
+  <p>Соберём отдельно всё, что с \(v_n\), и отдельно все свободные числа. Свободная часть: \(-\dfrac35a+a+2\).</p>
+  <p>Считаем \(-\dfrac35a+a\). Представим \(a=\dfrac55a\):</p>
+  \[-\frac35a+\frac55a=\frac{-3+5}{5}a=\frac25a.\]
+  <p>Итого:</p>
+  \[v_{n+1}=\frac35v_n+\frac25a+2.\]
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">Требуем, чтобы «хвост» обнулился</div>
+  <p>Чтобы \((v_n)\) была геометрической, формула должна выглядеть строго как \(v_{n+1}=q\cdot v_n\), без всяких добавок. Значит, надо потребовать:</p>
+  \[\frac25a+2=0.\]
+  <p>Решаем. Вычитаем 2 из обеих частей:</p>
+  \[\frac25a=-2.\]
+  <p>Умножаем обе части на \(\dfrac52\) (это то же, что разделить на \(\frac25\)):</p>
+  \[a=-2\cdot\frac52=-\frac{10}{2}=-5.\]
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">Указываем характеристики</div>
+  <p>При \(a=-5\) получаем \(v_n=u_n-5\) и</p>
+  \[v_{n+1}=\frac35v_n.\]
+  <p>Это в точности определение геометрической прогрессии. Её характеристики:</p>
+  <ul>
+    <li><b>знаменатель</b> \(q=\dfrac35\);</li>
+    <li><b>первый член</b> \(v_0=u_0-5=1-5=-4\).</li>
+  </ul>
+  <p>Проверим на реальных числах: \(v_1=u_1-5=\frac{13}{5}-\frac{25}{5}=-\frac{12}{5}\). А по формуле должно быть \(v_1=\frac35\cdot(-4)=-\frac{12}{5}\). Совпало.</p>
+</div>
+
+<h3>Пункт 3. Выражаем \(v_n\) через \(n\)</h3>
+
+<div class="step">
+  <div class="num">9</div>
+  <div class="head">Применяем готовую формулу геометрической прогрессии</div>
+  <p>Мы знаем: у геометрической прогрессии \(v_n=v_0\cdot q^{\,n}\). Почему так — потому что от нулевой ступеньки до \(n\)-й делается \(n\) умножений на \(q\).</p>
+  <p>Подставляем \(v_0=-4\) и \(q=\dfrac35\):</p>
+  \[\boxed{\;v_n=-4\left(\frac35\right)^{n}\;}\]
+  <p>Проверка при \(n=0\): \(-4\cdot\left(\frac35\right)^0=-4\cdot1=-4\). Верно.<br>
+  При \(n=1\): \(-4\cdot\frac35=-\frac{12}{5}\). Совпадает с тем, что посчитали выше.</p>
+</div>
+
+<h3>Пункт 4. Выражаем \(u_n\) через \(n\)</h3>
+
+<div class="step">
+  <div class="num">10</div>
+  <div class="head">Возвращаем сдвиг обратно</div>
+  <p>Мы определили \(v_n=u_n-5\). Значит, чтобы вернуться к \(u_n\), надо прибавить 5:</p>
+  \[u_n=v_n+5.\]
+  <p>Подставляем найденное выражение:</p>
+  \[\boxed{\;u_n=-4\left(\frac35\right)^{n}+5\;}\]
+</div>
+
+<div class="step">
+  <div class="num">11</div>
+  <div class="head">Проверяем на посчитанных числах</div>
+  <p>При \(n=0\): \(-4\cdot1+5=1=u_0\). Верно.</p>
+  <p>При \(n=1\): \(-4\cdot\dfrac35+5=-\dfrac{12}{5}+\dfrac{25}{5}=\dfrac{13}{5}=u_1\). Верно.</p>
+  <p>При \(n=2\): \(\left(\dfrac35\right)^2=\dfrac{9}{25}\), значит \(-4\cdot\dfrac{9}{25}+5=-\dfrac{36}{25}+\dfrac{125}{25}=\dfrac{89}{25}=u_2\). Верно.</p>
+  <p>При \(n=3\): \(\left(\dfrac35\right)^3=\dfrac{27}{125}\), значит \(-4\cdot\dfrac{27}{125}+5=-\dfrac{108}{125}+\dfrac{625}{125}=\dfrac{517}{125}=u_3\). Верно.</p>
+  <p>Все четыре значения сошлись — формула правильная.</p>
+</div>
+
+<h3>Пункт 5. Предел \((u_n)\)</h3>
+
+<div class="step">
+  <div class="num">12</div>
+  <div class="head">Смотрим, что происходит с каждым куском</div>
+  <p>В формуле \(u_n=-4\left(\frac35\right)^n+5\) есть две части: слагаемое 5 (оно не меняется) и слагаемое \(-4\left(\frac35\right)^n\).</p>
+  <p>Число \(\dfrac35=0{,}6\) лежит между 0 и 1. Значит, при возведении в растущую степень оно стремится к нулю:</p>
+  \[\lim_{n\to+\infty}\left(\frac35\right)^{n}=0.\]
+  <p>Умножение на постоянное число \(-4\) ничего не меняет: если множитель стремится к нулю, то и произведение стремится к нулю.</p>
+  \[\lim_{n\to+\infty}\left(-4\left(\frac35\right)^{n}\right)=-4\cdot0=0.\]
+</div>
+
+<div class="step">
+  <div class="num">13</div>
+  <div class="head">Складываем</div>
+  \[\lim_{n\to+\infty}u_n=0+5=5.\]
+  <p>Итак, лестница подбирается к числу 5 снизу, никогда его не достигая (потому что \(-4\left(\frac35\right)^n\) всегда строго отрицательно). Это совпадает с наблюдением из пункта 1: числа \(1;\,2{,}6;\,3{,}56;\,4{,}136\) действительно ползли вверх к пятёрке.</p>
+  <p>Посчитаем для убедительности \(u_{10}\): \(\left(\frac35\right)^{10}\approx0{,}00605\), значит \(u_{10}\approx5-4\cdot0{,}00605\approx4{,}976\). Очень близко к 5.</p>
+</div>
+
+<h3>Пункт 6. Выражаем \(T_n\) через \(n\)</h3>
+
+<div class="step">
+  <div class="num">14</div>
+  <div class="head">Почему считаем сначала \(T_n\), а не \(S_n\)</div>
+  <p>Порядок пунктов в задаче не случаен. \(T_n\) — это сумма членов геометрической прогрессии \((v_n)\), для неё есть готовая формула. А \(S_n\) — сумма кривой лестницы \((u_n)\), для неё готовой формулы нет. Поэтому сначала берём то, что умеем.</p>
+  <p>Число слагаемых в \(T_n=v_0+v_1+\dots+v_n\) равно \(n+1\).</p>
+</div>
+
+<div class="step">
+  <div class="num">15</div>
+  <div class="head">Подставляем в формулу суммы</div>
+  <p>Знаменатель \(q=\frac35\), он не равен 1, значит формулой пользоваться можно:</p>
+  \[T_n=v_0\cdot\frac{1-q^{\,n+1}}{1-q}=-4\cdot\frac{1-\left(\dfrac35\right)^{n+1}}{1-\dfrac35}.\]
+  <p>Считаем знаменатель дроби:</p>
+  \[1-\frac35=\frac55-\frac35=\frac25.\]
+  <p>Делить на \(\frac25\) — то же, что умножать на \(\frac52\):</p>
+  \[T_n=-4\cdot\frac52\cdot\left(1-\left(\frac35\right)^{n+1}\right).\]
+  <p>Считаем \(-4\cdot\dfrac52=-\dfrac{20}{2}=-10\):</p>
+  \[\boxed{\;T_n=-10\left(1-\left(\frac35\right)^{n+1}\right)\;}\]
+</div>
+
+<div class="step">
+  <div class="num">16</div>
+  <div class="head">Проверяем формулу</div>
+  <p>При \(n=0\) сумма должна равняться просто \(v_0=-4\). По формуле:</p>
+  \[T_0=-10\left(1-\frac35\right)=-10\cdot\frac25=-\frac{20}{5}=-4.\;\checkmark\]
+  <p>При \(n=1\) сумма равна \(v_0+v_1=-4-\frac{12}{5}=-\frac{20}{5}-\frac{12}{5}=-\frac{32}{5}=-6{,}4\). По формуле:</p>
+  \[T_1=-10\left(1-\frac{9}{25}\right)=-10\cdot\frac{16}{25}=-\frac{160}{25}=-6{,}4.\;\checkmark\]
+</div>
+
+<h3>Пункт 7. Предел \((T_n)\)</h3>
+
+<div class="step">
+  <div class="num">17</div>
+  <div class="head">Снова используем, что \(\left(\frac35\right)^{n}\to0\)</div>
+  <p>В формуле \(T_n=-10\left(1-\left(\frac35\right)^{n+1}\right)\) единственная меняющаяся часть — это \(\left(\frac35\right)^{n+1}\). Показатель \(n+1\) растёт вместе с \(n\), значит и эта степень стремится к нулю:</p>
+  \[\lim_{n\to+\infty}\left(\frac35\right)^{n+1}=0.\]
+  <p>Тогда содержимое скобки стремится к \(1-0=1\), а всё выражение — к \(-10\cdot1\):</p>
+  \[\lim_{n\to+\infty}T_n=-10.\]
+  <p>Значит, сумма бесконечно многих слагаемых \(v_0+v_1+v_2+\dots\) не растёт неограниченно, а подбирается к числу \(-10\). Так бывает: слагаемые становятся всё меньше по величине, и общая сумма упирается в потолок.</p>
+</div>
+
+<h3>Пункт 8. Выражаем \(S_n\) и находим её предел</h3>
+
+<div class="step">
+  <div class="num">18</div>
+  <div class="head">Связываем \(S_n\) и \(T_n\)</div>
+  <p>Мы знаем: \(u_k=v_k+5\) для каждой ступеньки \(k\). Запишем сумму:</p>
+  \[S_n=u_0+u_1+\dots+u_n=(v_0+5)+(v_1+5)+\dots+(v_n+5).\]
+  <p>Раскроем скобки и соберём отдельно все \(v\) и отдельно все пятёрки:</p>
+  \[S_n=(v_0+v_1+\dots+v_n)+\underbrace{(5+5+\dots+5)}_{\text{сколько раз?}}.\]
+  <p>Первая часть — это \(T_n\). Вторая — пятёрка, взятая столько раз, сколько всего слагаемых, то есть \(n+1\) раз. Значит:</p>
+  \[S_n=T_n+5(n+1).\]
+</div>
+
+<div class="step">
+  <div class="num">19</div>
+  <div class="head">Подставляем найденное \(T_n\)</div>
+  \[\boxed{\;S_n=-10\left(1-\left(\frac35\right)^{n+1}\right)+5(n+1)\;}\]
+  <p>Проверим при \(n=0\): сумма должна быть просто \(u_0=1\).</p>
+  \[S_0=-10\left(1-\frac35\right)+5\cdot1=-4+5=1.\;\checkmark\]
+  <p>Проверим при \(n=1\): сумма \(u_0+u_1=1+\dfrac{13}{5}=\dfrac{5}{5}+\dfrac{13}{5}=\dfrac{18}{5}=3{,}6\).</p>
+  \[S_1=-10\left(1-\frac{9}{25}\right)+5\cdot2=-6{,}4+10=3{,}6.\;\checkmark\]
+</div>
+
+<div class="step">
+  <div class="num">20</div>
+  <div class="head">Находим предел \((S_n)\)</div>
+  <p>Разбираем формулу на две части.</p>
+  <p>Первая часть \(-10\left(1-\left(\frac35\right)^{n+1}\right)\) — это \(T_n\), она стремится к \(-10\), то есть остаётся ограниченной.</p>
+  <p>Вторая часть \(5(n+1)\) — растёт вместе с \(n\) без всякой границы: при \(n=100\) она равна 505, при \(n=1000\) — 5005, и так далее.</p>
+  \[\lim_{n\to+\infty}5(n+1)=+\infty.\]
+  <p>Сумма «числа, стремящегося к \(-10\)» и «величины, растущей до бесконечности» растёт до бесконечности:</p>
+  \[\lim_{n\to+\infty}S_n=+\infty.\]
+  <p>Это понятно и по-житейски: каждое слагаемое \(u_k\) подбирается к 5, то есть мы всё время прибавляем примерно по 5. Прибавляя по 5 бесконечно долго, получим бесконечно большую сумму. Последовательность \((S_n)\) <b>не сходится</b>, она расходится к \(+\infty\).</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <p><b>1)</b> \(u_1=\dfrac{13}{5}\), \(u_2=\dfrac{89}{25}\), \(u_3=\dfrac{517}{125}\).</p>
+  <p><b>2)</b> \(a=-5\). Тогда \((v_n)\) — геометрическая прогрессия со знаменателем \(q=\dfrac35\) и первым членом \(v_0=-4\).</p>
+  <p><b>3)</b> \(v_n=-4\left(\dfrac35\right)^{n}\).</p>
+  <p><b>4)</b> \(u_n=-4\left(\dfrac35\right)^{n}+5\).</p>
+  <p><b>5)</b> \(\displaystyle\lim_{n\to+\infty}u_n=5\).</p>
+  <p><b>6)</b> \(T_n=-10\left(1-\left(\dfrac35\right)^{n+1}\right)\).</p>
+  <p><b>7)</b> \(\displaystyle\lim_{n\to+\infty}T_n=-10\).</p>
+  <p><b>8)</b> \(S_n=-10\left(1-\left(\dfrac35\right)^{n+1}\right)+5(n+1)\), и \(\displaystyle\lim_{n\to+\infty}S_n=+\infty\).</p>
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+  <p><b>1. В пункте 2 забывают выразить \(u_n\) через \(v_n\).</b> После подстановки \(u_{n+1}=\frac35u_n+2\) в выражении остаётся \(u_n\). Пока он там стоит, ничего не доказано. Обязательно надо заменить \(u_n=v_n-a\), чтобы формула связывала только члены новой лестницы.</p>
+  <p><b>2. Считают, что «\(+2\)» — просто помеха, и её можно отбросить.</b> Нельзя. Сдвиг на \(a=-5\) — это не отбрасывание, а честное преобразование: число 5 не берётся из воздуха, а вычисляется из уравнения \(\frac25a+2=0\).</p>
+  <p><b>3. В формуле суммы пишут \(q^n\) вместо \(q^{n+1}\).</b> Слагаемых \(n+1\) штука, потому что нумерация начинается с нуля. Если засомневались — подставьте \(n=0\) и проверьте, что получается ровно \(v_0\).</p>
+  <p><b>4. Считают число пятёрок в пункте 8 равным \(n\).</b> Их \(n+1\), по одной на каждое слагаемое. Ошибка на единицу здесь портит и формулу, и проверку.</p>
+  <p><b>5. Думают, что раз \(u_n\) сходится к 5, то и \(S_n\) сходится.</b> Наоборот: именно потому, что слагаемые не стремятся к нулю, а стремятся к 5, сумма растёт бесконечно. Сумма сходится только тогда, когда слагаемые быстро уменьшаются до нуля — как у \((v_n)\) в пункте 7.</p>
+  <p><b>6. Пишут \(\lim S_n=+\infty\) и называют это «пределом \(S_n\) существует».</b> Формально говорят «предел равен \(+\infty\)», но последовательность при этом <b>расходится</b>, а не сходится. Сходимость означает предел, равный конечному числу.</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

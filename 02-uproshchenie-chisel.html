@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 2 — Упрощение числовых выражений</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">I. Вычисления, уравнения и неравенства · Задача 2 из 55</div>
+  <h1>Упрощение числовых выражений</h1>
+  <div class="stars">★☆☆☆ — самый простой уровень</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>«Упростить» запись следующих чисел. В частности: записать каждое в виде <strong>одной-единственной дроби</strong> (или простого числа) и так, чтобы <strong>в знаменателе не осталось квадратного корня</strong>.</p>
+  <p>\[A=\frac{\dfrac13+3}{\dfrac16+6}\qquad B=3\times\frac{2+\dfrac12}{2-\dfrac12}\qquad C=2\times\frac{\dfrac72+1}{\dfrac34-5}-\frac53\]</p>
+  <p>\[D=\left(\sqrt{12}-\sqrt3\right)^2\qquad E=\left(3\sqrt2\right)^2-\left(\sqrt2-1\right)^2\qquad F=\frac{\left(1-\sqrt3\right)^2}{2-\sqrt3}\]</p>
+  <p>\[G=\frac{3\sqrt2-2\sqrt3}{\sqrt6}\qquad H=3-\frac{3+2\sqrt3}{\sqrt3}\qquad I=\frac{\dfrac{\sqrt3}{2}+5}{\sqrt3-\dfrac12}\qquad J=\frac{1}{\sqrt2-1}-\frac{1}{\sqrt2+1}\]</p>
+</div>
+
+<details>
+  <summary>Оригинал по-французски и замечание о чтении условия</summary>
+  <p class="orig">Ex 2 ★✩✩✩ — Simplification numérique. « Simplifier » l’écriture des nombres suivants
+  (entre autre, écrire sous la forme d’une seule fraction, au plus, sans racine carrée au dénominateur).</p>
+  <p><strong>Как я прочитал условие.</strong> Текст сборника был извлечён из PDF, и там степени и дроби «разъехались» по строкам. Например, у выражения \(D\) двойка на отдельной строке могла означать и «делить на 2», и «в квадрате». Я сверился с официальным решением в конце сборника: там написано
+  «\(D=(\sqrt{12})^2+(\sqrt3)^2-2\sqrt{12}\sqrt3=12+3-2\sqrt{36}=15-12=3\)» — это раскрытие <em>квадрата разности</em>. Значит двойка была показателем степени, а не знаменателем. Точно так же восстановлены \(E\) и \(F\). Все ответы ниже совпадают с официальными.</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Каждое из десяти выражений — это просто некоторое число, записанное громоздко и некрасиво. Нас просят записать это же самое число кратко и опрятно.</p>
+
+<p>Бытовое сравнение: число \(\frac{50}{100}\) и число \(\frac12\) — это одно и то же количество (половина пирога), но вторая запись понятнее. Задача — сделать такую «уборку» в десяти выражениях.</p>
+
+<p>Требований к готовому ответу два:</p>
+<ul>
+  <li><strong>Одна дробь, а не этажерка из дробей.</strong> Запись «дробь, у которой внутри ещё дроби» считается неопрятной.</li>
+  <li><strong>Никаких корней внизу дроби.</strong> Запись \(\frac{1}{\sqrt2}\) не считается упрощённой; её надо переделать так, чтобы корень оказался наверху.</li>
+</ul>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><strong>1. Что такое дробь.</strong> Запись \(\frac{3}{4}\) означает «пирог разрезали на \(4\) равные части и взяли \(3\) из них». Число внизу (\(4\)) называется <strong>знаменателем</strong> — оно говорит, на сколько кусков режем. Число наверху (\(3\)) — <strong>числитель</strong> — говорит, сколько кусков берём.</p>
+
+  <p><strong>2. Дробь — это просто деление.</strong> \(\frac34\) — это то же самое, что «\(3\) разделить на \(4\)». Это важно помнить: всё, что мы знаем про деление, работает и для дробей.</p>
+
+  <p><strong>3. Как превратить целое число в дробь с нужным знаменателем.</strong> Умножаем это число на знаменатель. Например, \(3=\frac{3\cdot 3}{3}=\frac93\), а \(5=\frac{5\cdot 2}{2}=\frac{10}{2}\). Проверка: девять третей — это девять кусочков по трети, то есть три целых пирога. Верно.</p>
+
+  <p><strong>4. Как складывать дроби.</strong> Только с одинаковыми знаменателями. Нельзя сложить трети с четвертями, пока не превратишь и то и другое в двенадцатые: \(\frac13+\frac14=\frac{4}{12}+\frac{3}{12}=\frac{7}{12}\). Это как складывать сантиметры с дюймами — сначала переводим в одни единицы.</p>
+
+  <p><strong>5. Как делить одну дробь на другую.</strong> Главное правило всей этой задачи:
+  \[\frac{\;\dfrac{a}{b}\;}{\dfrac{c}{d}}=\frac{a}{b}\times\frac{d}{c}.\]
+  На словах: <em>деление на дробь заменяется умножением на перевёрнутую дробь</em>.</p>
+  <p>Почему это работает? Спросим «сколько половинок помещается в \(3\)?». Ответ — шесть. То есть \(3:\frac12=6=3\times 2\). Делить на половинку — то же самое, что умножать на два. Перевернули \(\frac12\), получили \(\frac21=2\).</p>
+
+  <p><strong>6. Что такое квадратный корень (racine carrée).</strong> Запись \(\sqrt{9}\) означает «то положительное число, которое при умножении само на себя даёт \(9\)». Это \(3\), потому что \(3\times3=9\). Так же \(\sqrt{36}=6\), \(\sqrt{4}=2\), \(\sqrt{25}=5\).</p>
+  <p>Число \(\sqrt2\) тоже существует, просто оно не целое и даже не дробное: примерно \(1{,}41421\ldots\) без конца. Записывать его точно можно только значком \(\sqrt2\). Главное свойство, которым мы будем пользоваться постоянно:
+  \[\sqrt{a}\times\sqrt{a}=a,\qquad\text{то есть}\qquad\left(\sqrt{a}\right)^2=a.\]</p>
+
+  <p><strong>7. Корень из произведения.</strong> \(\sqrt{a\cdot b}=\sqrt{a}\cdot\sqrt{b}\). Например, \(\sqrt{12}=\sqrt{4\cdot 3}=\sqrt4\cdot\sqrt3=2\sqrt3\). Это позволяет «вытаскивать» из-под корня всё, что является полным квадратом. Другие примеры, которые понадобятся:
+  \(\sqrt{18}=\sqrt{9\cdot 2}=3\sqrt2\), \(\sqrt{36}=6\).</p>
+
+  <p><strong>8. Складывать можно только одинаковые корни.</strong> \(3\sqrt2+5\sqrt2=8\sqrt2\) — можно (это как \(3\) яблока плюс \(5\) яблок). А \(\sqrt2+\sqrt3\) сложить нельзя — это яблоко плюс груша, так и оставляем.</p>
+
+  <p><strong>9. Главный приём: сопряжённое выражение (expression conjuguée).</strong> Если внизу дроби стоит что-то вроде \(\sqrt2-1\), от корня можно избавиться. Домножим верх и низ на \(\sqrt2+1\) — то же самое, но со сменённым знаком посередине. Такую пару и называют сопряжённой. Тогда внизу сработает формула разности квадратов:
+  \[(\sqrt2-1)(\sqrt2+1)=(\sqrt2)^2-1^2=2-1=1.\]
+  Корень исчез! А умножать верх и низ на одно и то же можно всегда: \(\frac12=\frac{1\cdot 5}{2\cdot 5}=\frac{5}{10}\) — количество пирога не изменилось, изменилась только запись.</p>
+
+  <p><strong>10. Если внизу одинокий корень</strong>, например \(\sqrt6\), то домножать надо просто на него же: \(\sqrt6\cdot\sqrt6=6\), и корень внизу пропадает.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">\(A=\dfrac{\frac13+3}{\frac16+6}\)</div>
+  <p><em>Почему так делаем.</em> Наверху и внизу стоят суммы. Пока они суммы, делить неудобно. Превратим каждую в одну дробь, и тогда сработает правило «деление на дробь — это умножение на перевёрнутую».</p>
+
+  <p><strong>Верх.</strong> Складываем \(\frac13+3\). Тройку надо превратить в трети: \(3=\frac{3\cdot 3}{3}=\frac93\). Значит
+  \[\frac13+3=\frac13+\frac93=\frac{1+9}{3}=\frac{10}{3}.\]</p>
+
+  <p><strong>Низ.</strong> Складываем \(\frac16+6\). Шестёрку превращаем в шестые доли: \(6=\frac{6\cdot 6}{6}=\frac{36}{6}\). Значит
+  \[\frac16+6=\frac16+\frac{36}{6}=\frac{1+36}{6}=\frac{37}{6}.\]</p>
+
+  <p><strong>Делим.</strong> Получилось \(A=\dfrac{10/3}{37/6}\). Переворачиваем нижнюю дробь и умножаем:
+  \[A=\frac{10}{3}\times\frac{6}{37}=\frac{10\times 6}{3\times 37}=\frac{60}{111}.\]</p>
+  <p>Сокращаем: и \(60\), и \(111\) делятся на \(3\). \(60:3=20\), \(111:3=37\). Значит
+  \[A=\frac{20}{37}.\]</p>
+  <p>Дальше сокращать нельзя: \(37\) — простое число, оно делится только на себя и на единицу, а \(20\) на \(37\) не делится.</p>
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">\(B=3\times\dfrac{2+\frac12}{2-\frac12}\)</div>
+  <p><em>Почему так делаем.</em> Та же схема: сначала приводим верх и низ каждый к одной дроби, потом делим, потом умножаем на тройку.</p>
+
+  <p><strong>Верх.</strong> \(2+\frac12\). Двойку переводим в половинки: \(2=\frac{4}{2}\) (четыре половинки — это два целых). Значит
+  \[2+\frac12=\frac42+\frac12=\frac{4+1}{2}=\frac52.\]</p>
+
+  <p><strong>Низ.</strong> \(2-\frac12=\frac42-\frac12=\frac{4-1}{2}=\frac32.\)</p>
+
+  <p><strong>Делим.</strong>
+  \[\frac{5/2}{3/2}=\frac52\times\frac23=\frac{5\times 2}{2\times 3}=\frac{10}{6}=\frac53.\]
+  (Сократили на \(2\): \(10:2=5\), \(6:2=3\).)</p>
+
+  <p><strong>Умножаем на тройку.</strong>
+  \[B=3\times\frac53=\frac{3\times 5}{3}=\frac{15}{3}=5.\]</p>
+  <p>Тройка сверху и тройка снизу взаимно уничтожились. Итог: \(B=5\) — обычное целое число.</p>
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">\(C=2\times\dfrac{\frac72+1}{\frac34-5}-\dfrac53\)</div>
+  <p><em>Почему так делаем.</em> Сначала разберёмся с «этажеркой» в середине, а вычитание \(\frac53\) сделаем в самом конце — оно к дроби-этажерке отношения не имеет.</p>
+
+  <p><strong>Верх этажерки.</strong> \(\frac72+1\). Единицу переводим в половинки: \(1=\frac22\). Значит
+  \[\frac72+\frac22=\frac{7+2}{2}=\frac92.\]</p>
+
+  <p><strong>Низ этажерки.</strong> \(\frac34-5\). Пятёрку переводим в четверти: \(5=\frac{5\cdot4}{4}=\frac{20}{4}\). Значит
+  \[\frac34-\frac{20}{4}=\frac{3-20}{4}=\frac{-17}{4}=-\frac{17}{4}.\]
+  Получилось отрицательное число — это нормально, просто дробь ниже нуля.</p>
+
+  <p><strong>Делим и умножаем на 2.</strong>
+  \[2\times\frac{\;9/2\;}{-17/4}=2\times\frac92\times\left(-\frac{4}{17}\right).\]
+  Перевёрнутая дробь от \(-\frac{17}{4}\) — это \(-\frac{4}{17}\).</p>
+  <p>Считаем по порядку. Сначала \(2\times\frac92=\frac{2\times 9}{2}=\frac{18}{2}=9\). Затем
+  \[9\times\left(-\frac{4}{17}\right)=-\frac{9\times 4}{17}=-\frac{36}{17}.\]</p>
+
+  <p><strong>Вычитаем \(\frac53\).</strong> У дробей \(-\frac{36}{17}\) и \(\frac53\) знаменатели \(17\) и \(3\). Общий знаменатель — их произведение: \(3\times 17=51\).</p>
+  <p>Первую дробь домножаем сверху и снизу на \(3\): \(-\frac{36}{17}=-\frac{36\times 3}{51}=-\frac{108}{51}\). Считаем числитель: \(36\times 3=108\).</p>
+  <p>Вторую домножаем на \(17\): \(\frac53=\frac{5\times 17}{51}=\frac{85}{51}\). Считаем: \(5\times 17=85\).</p>
+  <p>Теперь вычитаем:
+  \[C=-\frac{108}{51}-\frac{85}{51}=\frac{-108-85}{51}=\frac{-193}{51}.\]
+  Складываем \(108+85\): \(108+85=193\), значит с минусами получается \(-193\).</p>
+  <p>\[C=-\frac{193}{51}.\]</p>
+  <p>Сокращать нельзя: \(51=3\times 17\), а \(193\) не делится ни на \(3\) (сумма цифр \(1+9+3=13\), а \(13\) на \(3\) не делится), ни на \(17\) (\(17\times11=187\), \(17\times12=204\) — мимо).</p>
+</div>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">\(D=\left(\sqrt{12}-\sqrt3\right)^2\)</div>
+  <p><em>Почему так делаем.</em> Есть два пути, и оба короткие. Покажу оба — второй красивее.</p>
+
+  <p><strong>Путь первый: по формуле квадрата разности</strong> \((a-b)^2=a^2-2ab+b^2\), где \(a=\sqrt{12}\) и \(b=\sqrt3\).</p>
+  <ul>
+    <li>\(a^2=(\sqrt{12})^2=12\) — корень и квадрат уничтожают друг друга;</li>
+    <li>\(b^2=(\sqrt3)^2=3\);</li>
+    <li>\(2ab=2\sqrt{12}\cdot\sqrt3=2\sqrt{12\cdot 3}=2\sqrt{36}=2\times 6=12\), потому что \(6\times6=36\).</li>
+  </ul>
+  <p>Собираем:
+  \[D=12-12+3=3.\]</p>
+
+  <p><strong>Путь второй: сначала упростить корень.</strong> Заметим, что \(12=4\times 3\), а из четвёрки корень извлекается нацело:
+  \[\sqrt{12}=\sqrt{4}\cdot\sqrt3=2\sqrt3.\]
+  Тогда в скобке остаётся \(2\sqrt3-\sqrt3=\sqrt3\) (два корня минус один корень — остался один, как две груши минус одна груша). И
+  \[D=\left(\sqrt3\right)^2=3.\]</p>
+  <p>Оба пути дали \(D=3\).</p>
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">\(E=\left(3\sqrt2\right)^2-\left(\sqrt2-1\right)^2\)</div>
+  <p><em>Почему так делаем.</em> Здесь два квадрата, каждый считаем отдельно, потом вычитаем.</p>
+
+  <p><strong>Первый квадрат.</strong> \(\left(3\sqrt2\right)^2\) означает \(3\sqrt2\times 3\sqrt2\). Переставим множители: \(3\times 3\times\sqrt2\times\sqrt2=9\times 2=18\).</p>
+
+  <p><strong>Второй квадрат.</strong> \(\left(\sqrt2-1\right)^2\). По формуле \((a-b)^2=a^2-2ab+b^2\) при \(a=\sqrt2\), \(b=1\):</p>
+  <ul>
+    <li>\(a^2=(\sqrt2)^2=2\);</li>
+    <li>\(2ab=2\cdot\sqrt2\cdot 1=2\sqrt2\);</li>
+    <li>\(b^2=1\).</li>
+  </ul>
+  <p>Значит \(\left(\sqrt2-1\right)^2=2-2\sqrt2+1=3-2\sqrt2\).</p>
+
+  <p><strong>Вычитаем.</strong> Внимание на знаки: вычитается вся скобка целиком.
+  \[E=18-\left(3-2\sqrt2\right)=18-3+2\sqrt2=15+2\sqrt2.\]</p>
+  <p>Дальше упростить нельзя: \(15\) — обычное число, \(2\sqrt2\) — число с корнем, сложить их в один кусок невозможно.</p>
+  <p>\[E=15+2\sqrt2.\]</p>
+</div>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">\(F=\dfrac{\left(1-\sqrt3\right)^2}{2-\sqrt3}\)</div>
+  <p><em>Почему так делаем.</em> Сначала раскроем квадрат сверху, а потом уберём корень снизу с помощью сопряжённого выражения.</p>
+
+  <p><strong>Числитель.</strong> \((1-\sqrt3)^2\) по формуле \((a-b)^2=a^2-2ab+b^2\) при \(a=1\), \(b=\sqrt3\):</p>
+  <ul>
+    <li>\(a^2=1\);</li>
+    <li>\(2ab=2\cdot 1\cdot\sqrt3=2\sqrt3\);</li>
+    <li>\(b^2=(\sqrt3)^2=3\).</li>
+  </ul>
+  <p>Значит \((1-\sqrt3)^2=1-2\sqrt3+3=4-2\sqrt3\).</p>
+
+  <p><strong>Убираем корень из знаменателя.</strong> Внизу \(2-\sqrt3\). Сопряжённое к нему — \(2+\sqrt3\) (тот же вид, но плюс вместо минуса). Домножаем верх и низ:
+  \[F=\frac{\left(4-2\sqrt3\right)\left(2+\sqrt3\right)}{\left(2-\sqrt3\right)\left(2+\sqrt3\right)}.\]</p>
+
+  <p><strong>Считаем низ.</strong> Это разность квадратов:
+  \[\left(2-\sqrt3\right)\left(2+\sqrt3\right)=2^2-\left(\sqrt3\right)^2=4-3=1.\]
+  Внизу оказалась единица — лучше не бывает.</p>
+
+  <p><strong>Считаем верх.</strong> Умножаем каждое на каждое:</p>
+  <ul>
+    <li>\(4\times 2=8\);</li>
+    <li>\(4\times\sqrt3=4\sqrt3\);</li>
+    <li>\(-2\sqrt3\times 2=-4\sqrt3\);</li>
+    <li>\(-2\sqrt3\times\sqrt3=-2\times 3=-6\).</li>
+  </ul>
+  <p>Складываем: \(8+4\sqrt3-4\sqrt3-6\). Корни уничтожились: \(4\sqrt3-4\sqrt3=0\). Осталось \(8-6=2\).</p>
+  <p>\[F=\frac{2}{1}=2.\]</p>
+
+  <p><em>Более короткий путь, если заметить.</em> В числителе \(4-2\sqrt3\) можно вынести двойку: \(4-2\sqrt3=2\left(2-\sqrt3\right)\). Тогда
+  \[F=\frac{2\left(2-\sqrt3\right)}{2-\sqrt3}=2,\]
+  потому что одинаковые скобки сверху и снизу сокращаются.</p>
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">\(G=\dfrac{3\sqrt2-2\sqrt3}{\sqrt6}\)</div>
+  <p><em>Почему так делаем.</em> Внизу одинокий корень \(\sqrt6\). Чтобы он исчез, домножим верх и низ на \(\sqrt6\): тогда внизу получится \(\sqrt6\cdot\sqrt6=6\) — обычное число.</p>
+
+  <p>\[G=\frac{\left(3\sqrt2-2\sqrt3\right)\sqrt6}{\sqrt6\cdot\sqrt6}=\frac{3\sqrt2\cdot\sqrt6-2\sqrt3\cdot\sqrt6}{6}.\]</p>
+
+  <p><strong>Первое слагаемое сверху.</strong> \(\sqrt2\cdot\sqrt6=\sqrt{2\times 6}=\sqrt{12}\). А \(\sqrt{12}=\sqrt{4\cdot 3}=2\sqrt3\). Значит \(3\sqrt2\cdot\sqrt6=3\times 2\sqrt3=6\sqrt3\).</p>
+
+  <p><strong>Второе слагаемое сверху.</strong> \(\sqrt3\cdot\sqrt6=\sqrt{3\times 6}=\sqrt{18}\). А \(\sqrt{18}=\sqrt{9\cdot 2}=3\sqrt2\). Значит \(2\sqrt3\cdot\sqrt6=2\times 3\sqrt2=6\sqrt2\).</p>
+
+  <p><strong>Собираем.</strong>
+  \[G=\frac{6\sqrt3-6\sqrt2}{6}.\]
+  Сверху у обоих слагаемых множитель \(6\), и внизу тоже \(6\) — сокращаем:
+  \[G=\sqrt3-\sqrt2.\]</p>
+  <p>Корня в знаменателе больше нет, знаменателя вообще нет — цель достигнута.</p>
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">\(H=3-\dfrac{3+2\sqrt3}{\sqrt3}\)</div>
+  <p><em>Почему так делаем.</em> Опять одинокий корень внизу — домножаем верх и низ на \(\sqrt3\).</p>
+
+  <p>\[\frac{3+2\sqrt3}{\sqrt3}=\frac{\left(3+2\sqrt3\right)\sqrt3}{\sqrt3\cdot\sqrt3}=\frac{3\sqrt3+2\sqrt3\cdot\sqrt3}{3}.\]</p>
+  <p>Здесь \(\sqrt3\cdot\sqrt3=3\), поэтому \(2\sqrt3\cdot\sqrt3=2\times 3=6\). Получаем
+  \[\frac{3\sqrt3+6}{3}.\]</p>
+  <p>Делим обе части числителя на \(3\): \(\frac{3\sqrt3}{3}=\sqrt3\) и \(\frac63=2\). Значит дробь равна \(\sqrt3+2\).</p>
+
+  <p><strong>Возвращаемся к \(H\).</strong>
+  \[H=3-\left(\sqrt3+2\right)=3-\sqrt3-2=1-\sqrt3.\]
+  Не забыли поменять знаки внутри скобки при вычитании. Считаем числа: \(3-2=1\).</p>
+  <p>\[H=1-\sqrt3.\]</p>
+  <p>Заметим: \(\sqrt3\approx 1{,}732\), значит \(H\approx-0{,}732\) — число отрицательное. Ничего страшного.</p>
+</div>
+
+<div class="step">
+  <div class="num">9</div>
+  <div class="head">\(I=\dfrac{\frac{\sqrt3}{2}+5}{\sqrt3-\frac12}\)</div>
+  <p><em>Почему так делаем.</em> Сначала уберём мелкие дроби сверху и снизу (приведём каждую часть к одному знаменателю \(2\)), потом поделим, потом уберём корень снизу сопряжённым.</p>
+
+  <p><strong>Верх.</strong> \(\frac{\sqrt3}{2}+5\). Пятёрку превращаем в половинки: \(5=\frac{10}{2}\). Значит
+  \[\frac{\sqrt3}{2}+\frac{10}{2}=\frac{\sqrt3+10}{2}.\]</p>
+
+  <p><strong>Низ.</strong> \(\sqrt3-\frac12\). Корень превращаем в половинки: \(\sqrt3=\frac{2\sqrt3}{2}\). Значит
+  \[\frac{2\sqrt3}{2}-\frac12=\frac{2\sqrt3-1}{2}.\]</p>
+
+  <p><strong>Делим.</strong> Переворачиваем нижнюю дробь:
+  \[I=\frac{\sqrt3+10}{2}\times\frac{2}{2\sqrt3-1}=\frac{\sqrt3+10}{2\sqrt3-1}.\]
+  Двойки сверху и снизу сократились.</p>
+
+  <p><strong>Убираем корень снизу.</strong> Сопряжённое к \(2\sqrt3-1\) — это \(2\sqrt3+1\). Домножаем:
+  \[I=\frac{\left(\sqrt3+10\right)\left(2\sqrt3+1\right)}{\left(2\sqrt3-1\right)\left(2\sqrt3+1\right)}.\]</p>
+
+  <p><strong>Знаменатель.</strong> Разность квадратов:
+  \[\left(2\sqrt3\right)^2-1^2=2^2\times\left(\sqrt3\right)^2-1=4\times 3-1=12-1=11.\]</p>
+
+  <p><strong>Числитель.</strong> Каждое на каждое:</p>
+  <ul>
+    <li>\(\sqrt3\times 2\sqrt3=2\times\left(\sqrt3\right)^2=2\times 3=6\);</li>
+    <li>\(\sqrt3\times 1=\sqrt3\);</li>
+    <li>\(10\times 2\sqrt3=20\sqrt3\);</li>
+    <li>\(10\times 1=10\).</li>
+  </ul>
+  <p>Складываем обычные числа: \(6+10=16\). Складываем корни: \(\sqrt3+20\sqrt3=21\sqrt3\) (один корень плюс двадцать корней — двадцать один корень). Итого числитель равен \(16+21\sqrt3\).</p>
+
+  <p>\[I=\frac{16+21\sqrt3}{11}.\]</p>
+  <p>Это одна дробь, корня внизу нет — готово.</p>
+</div>
+
+<div class="step">
+  <div class="num">10</div>
+  <div class="head">\(J=\dfrac{1}{\sqrt2-1}-\dfrac{1}{\sqrt2+1}\)</div>
+  <p><em>Почему так делаем.</em> Две дроби, у каждой корень внизу. Избавимся от корня в каждой по отдельности — и увидим, что дальше всё складывается само.</p>
+
+  <p><strong>Первая дробь.</strong> Внизу \(\sqrt2-1\), сопряжённое — \(\sqrt2+1\). Домножаем верх и низ:
+  \[\frac{1}{\sqrt2-1}=\frac{1\times\left(\sqrt2+1\right)}{\left(\sqrt2-1\right)\left(\sqrt2+1\right)}.\]
+  Знаменатель по разности квадратов: \(\left(\sqrt2\right)^2-1^2=2-1=1\). Значит первая дробь равна просто \(\sqrt2+1\).</p>
+
+  <p><strong>Вторая дробь.</strong> Внизу \(\sqrt2+1\), сопряжённое — \(\sqrt2-1\):
+  \[\frac{1}{\sqrt2+1}=\frac{\sqrt2-1}{\left(\sqrt2+1\right)\left(\sqrt2-1\right)}=\frac{\sqrt2-1}{2-1}=\sqrt2-1.\]</p>
+
+  <p><strong>Вычитаем.</strong>
+  \[J=\left(\sqrt2+1\right)-\left(\sqrt2-1\right)=\sqrt2+1-\sqrt2+1.\]
+  Обратите внимание на знаки: минус перед скобкой перевернул оба знака внутри. Корни уничтожились (\(\sqrt2-\sqrt2=0\)), а числа сложились: \(1+1=2\).</p>
+  <p>\[J=2.\]</p>
+  <p>Удивительный результат: выражение с двумя корнями оказалось ровным целым числом.</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <table>
+    <tr><th>Выражение</th><th>Упрощённый вид</th></tr>
+    <tr><td>\(A\)</td><td>\(\dfrac{20}{37}\)</td></tr>
+    <tr><td>\(B\)</td><td>\(5\)</td></tr>
+    <tr><td>\(C\)</td><td>\(-\dfrac{193}{51}\)</td></tr>
+    <tr><td>\(D\)</td><td>\(3\)</td></tr>
+    <tr><td>\(E\)</td><td>\(15+2\sqrt2\)</td></tr>
+    <tr><td>\(F\)</td><td>\(2\)</td></tr>
+    <tr><td>\(G\)</td><td>\(\sqrt3-\sqrt2\)</td></tr>
+    <tr><td>\(H\)</td><td>\(1-\sqrt3\)</td></tr>
+    <tr><td>\(I\)</td><td>\(\dfrac{16+21\sqrt3}{11}\)</td></tr>
+    <tr><td>\(J\)</td><td>\(2\)</td></tr>
+  </table>
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+
+  <p><strong>1. Переворачивают не ту дробь.</strong> В выражении «дробь делить на дробь» переворачивается <em>нижняя</em>, та, на которую делим. Если перевернуть верхнюю, ответ будет перевёрнутым. Проверяйте на простом примере: \(\frac{1}{1/2}=2\), а не \(\frac12\).</p>
+
+  <p><strong>2. Складывают дроби «числитель к числителю, знаменатель к знаменателю».</strong> Так нельзя: \(\frac13+\frac14\) — это не \(\frac{2}{7}\). Сначала общий знаменатель, потом складываем только числители.</p>
+
+  <p><strong>3. Забывают перевернуть знак у отрицательной дроби.</strong> В пункте \(C\) знаменатель этажерки равен \(-\frac{17}{4}\). Перевёрнутая дробь — \(-\frac{4}{17}\), минус никуда не девается.</p>
+
+  <p><strong>4. Считают, что \(\sqrt{a+b}=\sqrt a+\sqrt b\).</strong> Это неверно. Проверьте: \(\sqrt{9+16}=\sqrt{25}=5\), а \(\sqrt9+\sqrt{16}=3+4=7\). Корень «разбивается» только у произведения, не у суммы.</p>
+
+  <p><strong>5. Складывают разные корни.</strong> \(\sqrt2+\sqrt3\) — это не \(\sqrt5\). Складывать можно только одинаковые корни: \(3\sqrt2+5\sqrt2=8\sqrt2\).</p>
+
+  <p><strong>6. При домножении на сопряжённое забывают домножить числитель.</strong> Умножать надо и верх, и низ на одно и то же — иначе изменится само число, а не только его запись.</p>
+
+  <p><strong>7. Неверно берут сопряжённое.</strong> К \(2\sqrt3-1\) сопряжённое — это \(2\sqrt3+1\) (меняется только знак посередине). Не \(-2\sqrt3+1\) и не \(2\sqrt3-1\).</p>
+
+  <p><strong>8. Не доводят до конца в \(D\).</strong> Ответ \(15-2\sqrt{36}\) ещё не упрощён: \(\sqrt{36}=6\), значит \(2\sqrt{36}=12\), и всё выражение равно \(3\).</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

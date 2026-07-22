@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 3 — Упрощение буквенных выражений</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">I. Вычисления, уравнения и неравенства · Задача 3 из 55</div>
+  <h1>Упрощение буквенных выражений</h1>
+  <div class="stars">★★☆☆ — чуть сложнее базового</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>«Упростить» запись следующих выражений: записать каждое в виде <strong>одной дроби</strong>, без корня в знаменателе.</p>
+  <p>\[D(x)=3+\frac{6}{x+2}\qquad E(x)=2-\frac{3}{x^2}\qquad F(x)=\frac{1}{x-1}-\frac{1}{x+1}\]</p>
+  <p>\[G(x)=\frac{7}{x^2+3}-1\qquad H(x)=-2-\frac{3x-1}{x-2}\qquad I(x)=\frac{\dfrac{3x}{2}-5}{\dfrac{x}{3}+3}\]</p>
+  <p>\[J(x)=\frac{2x-1}{2x^2-1}-3\qquad K(x)=2x-1+\frac{3x}{2x-1}\qquad L(x)=-x+2-\frac13\times\frac{2x}{x+2}\]</p>
+  <p>\[M(x)=\frac{3}{\sqrt{x}-1}-\frac{2}{\sqrt{x}+1}\]</p>
+</div>
+
+<details>
+  <summary>Оригинал по-французски и замечание о чтении условия</summary>
+  <p class="orig">Ex 3 ★★✩✩ — Simplification algébrique. « Simplifier » l’écriture des expressions algébriques suivantes
+  (entre autre, écrire sous la forme d’une seule fraction, au plus, sans racine carrée au dénominateur).</p>
+  <p><strong>Важное замечание про \(I(x)\).</strong> В тексте, извлечённом из PDF, это выражение выглядело как «\(3x^2-5\) делить на \(x^3+3\)» — цифры \(2\) и \(3\) съехали наверх и стали похожи на степени. Но официальное решение в конце сборника пишет:
+  «\(I(x)=\frac{3x}{2}-\frac{10}{2}\) делить на \(\frac{x}{3}+\frac93=\frac{3x-10}{2}\times\frac{3}{x+9}=\frac{9x-30}{2x+18}\)».
+  Значит на самом деле это <strong>двухэтажная дробь</strong>: сверху \(\frac{3x}{2}-5\), снизу \(\frac{x}{3}+3\). Так я её и решаю.</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Это ровно та же работа, что и в задаче 2, но вместо конкретных чисел теперь стоит буква \(x\).</p>
+
+<p>Буква \(x\) — это «какое-то число, которое мы пока не назвали». Все правила действий с дробями остаются точно такими же: как складывали \(\frac13+\frac14\), так же будем складывать \(\frac{1}{x-1}+\frac{1}{x+1}\).</p>
+
+<p>Задача: каждое выражение, которое сейчас написано как «сумма или разность нескольких кусков», превратить в <strong>одну дробь</strong> вида «что-то сверху, что-то снизу».</p>
+
+<p>Бытовое сравнение. «Один пирог плюс треть пирога» — это описание в двух кусках. «Четыре трети пирога» — то же самое, но одним куском. Мы делаем именно такую сборку.</p>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><strong>1. Алгебраическая дробь.</strong> Это обычная дробь, только сверху и/или снизу стоят выражения с буквой. Например \(\frac{6}{x+2}\) значит «шесть разделить на то, что получится из \(x+2\)». Если \(x=1\), это \(\frac{6}{3}=2\). Если \(x=4\), это \(\frac66=1\).</p>
+
+  <p><strong>2. На ноль делить нельзя.</strong> Это единственное ограничение. Выражение \(\frac{6}{x+2}\) не имеет смысла при \(x=-2\), потому что тогда внизу окажется \(-2+2=0\). Такие «запрещённые» значения мы будем каждый раз отмечать.</p>
+
+  <p><strong>3. Как превратить целое выражение в дробь с нужным знаменателем.</strong> Умножаем его на этот знаменатель и записываем сверху. Например, если нужен знаменатель \(x+2\), то
+  \[3=\frac{3(x+2)}{x+2}.\]
+  Проверка при \(x=1\): справа \(\frac{3\cdot 3}{3}=3\). Верно. Это то же самое, что превращать \(3\) в \(\frac93\) — только вместо тройки внизу стоит \(x+2\).</p>
+
+  <p><strong>4. Сложение и вычитание дробей.</strong> Приводим к одному знаменателю, затем складываем (вычитаем) только числители, знаменатель не трогаем:
+  \[\frac{a}{c}+\frac{b}{c}=\frac{a+b}{c}.\]</p>
+
+  <p><strong>5. Общий знаменатель для двух разных выражений.</strong> Проще всего взять их произведение. Для \(\frac{1}{x-1}\) и \(\frac{1}{x+1}\) общим будет \((x-1)(x+1)\). Первую дробь домножаем сверху и снизу на \((x+1)\), вторую — на \((x-1)\).</p>
+
+  <p><strong>6. Минус перед дробью относится ко всему числителю.</strong> Это самое частое место ошибок. Запись
+  \[-\frac{3x-1}{x-2}\quad\text{означает}\quad\frac{-(3x-1)}{x-2}=\frac{-3x+1}{x-2}.\]
+  Оба знака внутри перевернулись.</p>
+
+  <p><strong>7. Три формулы, которые пригодятся:</strong>
+  \[(a+b)^2=a^2+2ab+b^2,\qquad (a-b)^2=a^2-2ab+b^2,\qquad a^2-b^2=(a-b)(a+b).\]</p>
+
+  <p><strong>8. Деление на дробь — это умножение на перевёрнутую:</strong>
+  \[\frac{\;\dfrac{a}{b}\;}{\dfrac{c}{d}}=\frac{a}{b}\times\frac{d}{c}.\]</p>
+
+  <p><strong>9. Квадратный корень.</strong> \(\sqrt{x}\) — это такое неотрицательное число, которое при умножении само на себя даёт \(x\). Главное свойство: \(\sqrt{x}\cdot\sqrt{x}=x\). Корень существует только для \(x\ge 0\) — из отрицательного числа корень не извлекается.</p>
+
+  <p><strong>10. Сопряжённое выражение.</strong> Чтобы убрать корень из знаменателя, домножают верх и низ на «то же самое, но с другим знаком»: к \(\sqrt{x}-1\) сопряжённое — \(\sqrt{x}+1\), и их произведение равно \((\sqrt x)^2-1^2=x-1\) — корня больше нет.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">\(D(x)=3+\dfrac{6}{x+2}\)</div>
+  <p><em>Почему так делаем.</em> Слева стоит целое число \(3\), справа дробь со знаменателем \(x+2\). Чтобы сложить, надо привести тройку к тому же знаменателю.</p>
+  <p><strong>Область определения.</strong> Знаменатель \(x+2\) не должен равняться нулю, то есть \(x\ne-2\).</p>
+  <p><strong>Приводим тройку к знаменателю \(x+2\):</strong>
+  \[3=\frac{3(x+2)}{x+2}.\]</p>
+  <p><strong>Складываем:</strong>
+  \[D(x)=\frac{3(x+2)}{x+2}+\frac{6}{x+2}=\frac{3(x+2)+6}{x+2}.\]</p>
+  <p><strong>Раскрываем скобку в числителе:</strong> \(3(x+2)=3x+6\). Значит числитель равен \(3x+6+6=3x+12\).</p>
+  <p>\[D(x)=\frac{3x+12}{x+2}.\]</p>
+  <p><em>Проверка.</em> При \(x=1\) исходное выражение: \(3+\frac{6}{3}=3+2=5\). Ответ: \(\frac{3+12}{3}=\frac{15}{3}=5\). Сошлось.</p>
+  <p><em>Замечание.</em> Числитель можно разложить: \(3x+12=3(x+4)\). Но сократить со знаменателем не выйдет, потому что \(x+4\) и \(x+2\) — разные скобки. Так что оставляем как есть.</p>
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">\(E(x)=2-\dfrac{3}{x^2}\)</div>
+  <p><em>Почему так делаем.</em> Знаменатель дроби — \(x^2\). Приводим двойку к нему.</p>
+  <p><strong>Область определения.</strong> \(x^2\ne 0\), то есть \(x\ne 0\).</p>
+  <p><strong>Приводим:</strong> \(2=\dfrac{2x^2}{x^2}\).</p>
+  <p><strong>Вычитаем:</strong>
+  \[E(x)=\frac{2x^2}{x^2}-\frac{3}{x^2}=\frac{2x^2-3}{x^2}.\]</p>
+  <p><em>Проверка.</em> При \(x=1\): исходное \(2-\frac31=2-3=-1\); ответ \(\frac{2-3}{1}=-1\). Сошлось.</p>
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">\(F(x)=\dfrac{1}{x-1}-\dfrac{1}{x+1}\)</div>
+  <p><em>Почему так делаем.</em> Две дроби с разными знаменателями. Общий знаменатель — их произведение.</p>
+  <p><strong>Область определения.</strong> \(x\ne 1\) и \(x\ne-1\).</p>
+  <p><strong>Приводим к общему знаменателю \((x-1)(x+1)\).</strong> Первую дробь домножаем сверху и снизу на \((x+1)\), вторую — на \((x-1)\):
+  \[F(x)=\frac{x+1}{(x-1)(x+1)}-\frac{x-1}{(x-1)(x+1)}.\]</p>
+  <p><strong>Вычитаем числители.</strong> Осторожно со знаками — вычитается вся скобка:
+  \[(x+1)-(x-1)=x+1-x+1=2.\]
+  Буквы уничтожились: \(x-x=0\). Осталось \(1+1=2\).</p>
+  <p>\[F(x)=\frac{2}{(x-1)(x+1)}.\]</p>
+  <p>При желании знаменатель можно раскрыть по формуле разности квадратов: \((x-1)(x+1)=x^2-1\), то есть \(F(x)=\frac{2}{x^2-1}\). Обе записи правильные.</p>
+  <p><em>Проверка.</em> При \(x=2\): исходное \(\frac11-\frac13=1-\frac13=\frac23\); ответ \(\frac{2}{1\cdot 3}=\frac23\). Сошлось.</p>
+</div>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">\(G(x)=\dfrac{7}{x^2+3}-1\)</div>
+  <p><em>Почему так делаем.</em> Приводим единицу к знаменателю \(x^2+3\).</p>
+  <p><strong>Область определения.</strong> Здесь ограничений нет вообще: \(x^2\) всегда больше или равно нулю, поэтому \(x^2+3\) всегда не меньше \(3\), то есть никогда не ноль. Подходит любое \(x\).</p>
+  <p><strong>Приводим:</strong> \(1=\dfrac{x^2+3}{x^2+3}\).</p>
+  <p><strong>Вычитаем:</strong>
+  \[G(x)=\frac{7}{x^2+3}-\frac{x^2+3}{x^2+3}=\frac{7-(x^2+3)}{x^2+3}.\]</p>
+  <p><strong>Раскрываем скобку в числителе.</strong> Минус переворачивает знаки: \(7-x^2-3\). Считаем числа: \(7-3=4\). Получаем \(-x^2+4\).</p>
+  <p>\[G(x)=\frac{-x^2+4}{x^2+3}.\]</p>
+  <p><em>Проверка.</em> При \(x=1\): исходное \(\frac74-1=\frac{7-4}{4}=\frac34\); ответ \(\frac{-1+4}{1+3}=\frac34\). Сошлось.</p>
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">\(H(x)=-2-\dfrac{3x-1}{x-2}\)</div>
+  <p><em>Почему так делаем.</em> Приводим \(-2\) к знаменателю \(x-2\), затем вычитаем — и очень внимательно следим за знаками, потому что в числителе дроби стоит целое выражение \(3x-1\).</p>
+  <p><strong>Область определения.</strong> \(x\ne 2\).</p>
+  <p><strong>Приводим:</strong> \(-2=\dfrac{-2(x-2)}{x-2}\).</p>
+  <p><strong>Соединяем в одну дробь:</strong>
+  \[H(x)=\frac{-2(x-2)}{x-2}-\frac{3x-1}{x-2}=\frac{-2(x-2)-(3x-1)}{x-2}.\]</p>
+  <p><strong>Разбираем числитель по частям.</strong></p>
+  <p>Первая часть: \(-2(x-2)\). Умножаем минус два на каждое слагаемое: \(-2\cdot x=-2x\), \(-2\cdot(-2)=+4\). Получаем \(-2x+4\).</p>
+  <p>Вторая часть: \(-(3x-1)\). Минус переворачивает оба знака: \(-3x+1\).</p>
+  <p>Складываем: \(-2x+4-3x+1\). Собираем буквы: \(-2x-3x=-5x\). Собираем числа: \(4+1=5\). Итого \(-5x+5\).</p>
+  <p>\[H(x)=\frac{-5x+5}{x-2}.\]</p>
+  <p><em>Проверка.</em> При \(x=3\): исходное \(-2-\frac{9-1}{1}=-2-8=-10\); ответ \(\frac{-15+5}{1}=-10\). Сошлось.</p>
+  <p>Числитель можно записать и как \(-5(x-1)\) — это то же самое.</p>
+</div>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">\(I(x)=\dfrac{\frac{3x}{2}-5}{\frac{x}{3}+3}\)</div>
+  <p><em>Почему так делаем.</em> Это «этажерка»: дробь, внутри которой ещё дроби. Схема как в задаче 2 — сначала верх в одну дробь, потом низ в одну дробь, потом деление превращаем в умножение на перевёрнутую.</p>
+  <p><strong>Область определения.</strong> Нижняя часть \(\frac{x}{3}+3\) не должна быть нулём. Она равна нулю, когда \(\frac{x}{3}=-3\), то есть при \(x=-9\). Значит \(x\ne-9\).</p>
+
+  <p><strong>Верх.</strong> \(\frac{3x}{2}-5\). Пятёрку переводим в половинки: \(5=\frac{10}{2}\). Значит
+  \[\frac{3x}{2}-\frac{10}{2}=\frac{3x-10}{2}.\]</p>
+
+  <p><strong>Низ.</strong> \(\frac{x}{3}+3\). Тройку переводим в трети: \(3=\frac93\). Значит
+  \[\frac{x}{3}+\frac93=\frac{x+9}{3}.\]</p>
+
+  <p><strong>Делим.</strong> Переворачиваем нижнюю дробь:
+  \[I(x)=\frac{3x-10}{2}\times\frac{3}{x+9}=\frac{3(3x-10)}{2(x+9)}.\]</p>
+
+  <p><strong>Раскрываем скобки, если нужен «плоский» вид:</strong> \(3(3x-10)=9x-30\), \(2(x+9)=2x+18\).
+  \[I(x)=\frac{9x-30}{2x+18}.\]</p>
+  <p><em>Проверка.</em> При \(x=0\): исходное \(\frac{0-5}{0+3}=\frac{-5}{3}\); ответ \(\frac{-30}{18}=-\frac{5}{3}\) (сократили на \(6\)). Сошлось.</p>
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">\(J(x)=\dfrac{2x-1}{2x^2-1}-3\)</div>
+  <p><em>Почему так делаем.</em> Приводим тройку к знаменателю \(2x^2-1\) и вычитаем.</p>
+  <p><strong>Область определения.</strong> \(2x^2-1\ne 0\). Это выражение равно нулю, когда \(2x^2=1\), то есть \(x^2=\frac12\), то есть \(x=\pm\frac{1}{\sqrt2}=\pm\frac{\sqrt2}{2}\). Эти два значения запрещены.</p>
+
+  <p><strong>Приводим:</strong> \(3=\dfrac{3(2x^2-1)}{2x^2-1}\).</p>
+
+  <p><strong>Вычитаем:</strong>
+  \[J(x)=\frac{2x-1}{2x^2-1}-\frac{3(2x^2-1)}{2x^2-1}=\frac{2x-1-3(2x^2-1)}{2x^2-1}.\]</p>
+
+  <p><strong>Считаем числитель.</strong> Сначала \(3(2x^2-1)=6x^2-3\). Оно вычитается, значит знаки переворачиваются: \(-6x^2+3\). Числитель становится
+  \[2x-1-6x^2+3.\]
+  Собираем числа: \(-1+3=2\). Расставим по убыванию степени:
+  \[-6x^2+2x+2.\]</p>
+
+  <p>\[J(x)=\frac{-6x^2+2x+2}{2x^2-1}.\]</p>
+  <p><em>Проверка.</em> При \(x=1\): исходное \(\frac{1}{1}-3=1-3=-2\); ответ \(\frac{-6+2+2}{2-1}=\frac{-2}{1}=-2\). Сошлось.</p>
+  <p>В числителе можно вынести двойку: \(-6x^2+2x+2=2(-3x^2+x+1)\). Это пригодится в задаче 4.</p>
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">\(K(x)=2x-1+\dfrac{3x}{2x-1}\)</div>
+  <p><em>Почему так делаем.</em> Целая часть здесь — \(2x-1\), а знаменатель дроби тоже \(2x-1\). Значит целую часть надо домножить на \(2x-1\) — и наверху появится квадрат.</p>
+  <p><strong>Область определения.</strong> \(2x-1\ne 0\), то есть \(x\ne\frac12\).</p>
+
+  <p><strong>Приводим:</strong>
+  \[2x-1=\frac{(2x-1)(2x-1)}{2x-1}=\frac{(2x-1)^2}{2x-1}.\]</p>
+
+  <p><strong>Складываем:</strong>
+  \[K(x)=\frac{(2x-1)^2+3x}{2x-1}.\]</p>
+
+  <p><strong>Раскрываем квадрат.</strong> По формуле \((a-b)^2=a^2-2ab+b^2\) при \(a=2x\), \(b=1\):</p>
+  <ul>
+    <li>\(a^2=(2x)^2=2x\cdot 2x=4x^2\);</li>
+    <li>\(2ab=2\cdot 2x\cdot 1=4x\);</li>
+    <li>\(b^2=1\).</li>
+  </ul>
+  <p>Значит \((2x-1)^2=4x^2-4x+1\).</p>
+
+  <p><strong>Прибавляем \(3x\):</strong> \(4x^2-4x+1+3x\). Собираем буквы: \(-4x+3x=-x\). Числитель равен \(4x^2-x+1\).</p>
+
+  <p>\[K(x)=\frac{4x^2-x+1}{2x-1}.\]</p>
+  <p><em>Проверка.</em> При \(x=1\): исходное \(2-1+\frac{3}{1}=1+3=4\); ответ \(\frac{4-1+1}{2-1}=\frac41=4\). Сошлось.</p>
+</div>
+
+<div class="step">
+  <div class="num">9</div>
+  <div class="head">\(L(x)=-x+2-\dfrac13\times\dfrac{2x}{x+2}\)</div>
+  <p><em>Почему так делаем.</em> Сначала перемножим две дроби справа (при умножении дробей числители умножаются на числители, знаменатели на знаменатели), а потом приведём всё к общему знаменателю.</p>
+  <p><strong>Область определения.</strong> \(x\ne-2\).</p>
+
+  <p><strong>Умножаем дроби:</strong>
+  \[\frac13\times\frac{2x}{x+2}=\frac{1\cdot 2x}{3\cdot(x+2)}=\frac{2x}{3(x+2)}.\]</p>
+
+  <p><strong>Общий знаменатель</strong> — это \(3(x+2)\). Приводим к нему целую часть \(-x+2\):
+  \[-x+2=\frac{(-x+2)\cdot 3(x+2)}{3(x+2)}.\]</p>
+
+  <p><strong>Соединяем:</strong>
+  \[L(x)=\frac{(-x+2)\cdot 3(x+2)-2x}{3(x+2)}.\]</p>
+
+  <p><strong>Считаем числитель.</strong> Сначала перемножим скобки \((-x+2)(x+2)\). Это разность квадратов наоборот: \((2-x)(2+x)=4-x^2\). Распишем подробно на всякий случай:</p>
+  <ul>
+    <li>\(-x\cdot x=-x^2\);</li>
+    <li>\(-x\cdot 2=-2x\);</li>
+    <li>\(2\cdot x=2x\);</li>
+    <li>\(2\cdot 2=4\).</li>
+  </ul>
+  <p>Складываем: \(-x^2-2x+2x+4=-x^2+4\). Действительно.</p>
+  <p>Теперь умножаем на тройку: \(3(-x^2+4)=-3x^2+12\).</p>
+  <p>И вычитаем \(2x\): \(-3x^2+12-2x\). Расставим по убыванию степени: \(-3x^2-2x+12\).</p>
+
+  <p>\[L(x)=\frac{-3x^2-2x+12}{3(x+2)}.\]</p>
+  <p><em>Проверка.</em> При \(x=1\): исходное \(-1+2-\frac13\cdot\frac{2}{3}=1-\frac29=\frac{9-2}{9}=\frac79\); ответ \(\frac{-3-2+12}{3\cdot 3}=\frac{7}{9}\). Сошлось.</p>
+</div>
+
+<div class="step">
+  <div class="num">10</div>
+  <div class="head">\(M(x)=\dfrac{3}{\sqrt{x}-1}-\dfrac{2}{\sqrt{x}+1}\)</div>
+  <p><em>Почему так делаем.</em> Здесь и общий знаменатель нужен, и корень из знаменателя надо убрать. Приятная новость: одно действие решает обе задачи сразу, потому что \((\sqrt x-1)(\sqrt x+1)\) — это разность квадратов, и корень в произведении исчезает.</p>
+
+  <p><strong>Область определения.</strong> Во-первых, корень требует \(x\ge 0\). Во-вторых, \(\sqrt x-1\ne 0\), то есть \(\sqrt x\ne 1\), то есть \(x\ne 1\). (Скобка \(\sqrt x+1\) нулём быть не может: корень неотрицателен, значит \(\sqrt x+1\ge 1\).) Итого: \(x\ge 0\) и \(x\ne 1\).</p>
+
+  <p><strong>Общий знаменатель:</strong>
+  \[\left(\sqrt x-1\right)\left(\sqrt x+1\right)=\left(\sqrt x\right)^2-1^2=x-1.\]
+  Корень пропал сам собой — ровно то, что требовалось.</p>
+
+  <p><strong>Приводим обе дроби.</strong> Первую домножаем сверху и снизу на \(\sqrt x+1\), вторую — на \(\sqrt x-1\):
+  \[M(x)=\frac{3\left(\sqrt x+1\right)}{x-1}-\frac{2\left(\sqrt x-1\right)}{x-1}.\]</p>
+
+  <p><strong>Считаем числитель.</strong></p>
+  <p>Первая часть: \(3(\sqrt x+1)=3\sqrt x+3\).</p>
+  <p>Вторая часть вычитается: \(-2(\sqrt x-1)=-2\sqrt x+2\).</p>
+  <p>Складываем: \(3\sqrt x+3-2\sqrt x+2\). Собираем корни: \(3\sqrt x-2\sqrt x=\sqrt x\) (три корня минус два корня — остался один). Собираем числа: \(3+2=5\).</p>
+
+  <p>\[M(x)=\frac{\sqrt{x}+5}{x-1}.\]</p>
+  <p><em>Проверка.</em> При \(x=4\) (тогда \(\sqrt4=2\)): исходное \(\frac{3}{2-1}-\frac{2}{2+1}=3-\frac23=\frac{9-2}{3}=\frac73\); ответ \(\frac{2+5}{4-1}=\frac73\). Сошлось.</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <table>
+    <tr><th>Выражение</th><th>Одна дробь</th><th>Ограничения на \(x\)</th></tr>
+    <tr><td>\(D(x)\)</td><td>\(\dfrac{3x+12}{x+2}\)</td><td>\(x\ne-2\)</td></tr>
+    <tr><td>\(E(x)\)</td><td>\(\dfrac{2x^2-3}{x^2}\)</td><td>\(x\ne 0\)</td></tr>
+    <tr><td>\(F(x)\)</td><td>\(\dfrac{2}{(x-1)(x+1)}\)</td><td>\(x\ne\pm 1\)</td></tr>
+    <tr><td>\(G(x)\)</td><td>\(\dfrac{-x^2+4}{x^2+3}\)</td><td>любое \(x\)</td></tr>
+    <tr><td>\(H(x)\)</td><td>\(\dfrac{-5x+5}{x-2}\)</td><td>\(x\ne 2\)</td></tr>
+    <tr><td>\(I(x)\)</td><td>\(\dfrac{9x-30}{2x+18}=\dfrac{3(3x-10)}{2(x+9)}\)</td><td>\(x\ne-9\)</td></tr>
+    <tr><td>\(J(x)\)</td><td>\(\dfrac{-6x^2+2x+2}{2x^2-1}\)</td><td>\(x\ne\pm\dfrac{\sqrt2}{2}\)</td></tr>
+    <tr><td>\(K(x)\)</td><td>\(\dfrac{4x^2-x+1}{2x-1}\)</td><td>\(x\ne\dfrac12\)</td></tr>
+    <tr><td>\(L(x)\)</td><td>\(\dfrac{-3x^2-2x+12}{3(x+2)}\)</td><td>\(x\ne-2\)</td></tr>
+    <tr><td>\(M(x)\)</td><td>\(\dfrac{\sqrt{x}+5}{x-1}\)</td><td>\(x\ge 0\) и \(x\ne 1\)</td></tr>
+  </table>
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+
+  <p><strong>1. Забывают, что минус перед дробью относится ко всему числителю.</strong> В \(H(x)\) выражение \(-\frac{3x-1}{x-2}\) даёт в числителе \(-3x+1\), а не \(-3x-1\). Проверяйте подстановкой числа.</p>
+
+  <p><strong>2. Не домножают целую часть на весь знаменатель.</strong> В \(K(x)\) целая часть \(2x-1\) при приведении к знаменателю \(2x-1\) даёт \((2x-1)^2\), а не \(2x-1\). Если забыть возвести в квадрат, ответ будет неверным.</p>
+
+  <p><strong>3. Считают \((2x-1)^2\) равным \(4x^2-1\).</strong> Это неверно, средний кусочек \(-4x\) теряется. Правильно: \((2x-1)^2=4x^2-4x+1\). Проверка при \(x=1\): \((2-1)^2=1\), а \(4-4+1=1\). Совпало.</p>
+
+  <p><strong>4. Сокращают то, что сокращать нельзя.</strong> В дроби \(\frac{3x+12}{x+2}\) нельзя «убрать икс» сверху и снизу. Сокращать можно только <em>множители</em> (то, что перемножается целиком), а не отдельные слагаемые. Правило: сначала разложи на множители, потом сокращай.</p>
+
+  <p><strong>5. Забывают про запрещённые значения.</strong> После упрощения дробь может выглядеть безобидно, но ограничения остаются от исходной записи.</p>
+
+  <p><strong>6. В \(M(x)\) домножают на неверное сопряжённое.</strong> К \(\sqrt x-1\) сопряжённым является \(\sqrt x+1\). Если домножить обе дроби на одно и то же выражение, общий знаменатель не получится.</p>
+
+  <p><strong>7. Пишут \(\sqrt{x}\cdot\sqrt{x}=x^2\).</strong> Нет: \(\sqrt x\cdot\sqrt x=x\). Корень и умножение на себя гасят друг друга, а не удваивают степень.</p>
+
+  <p><strong>8. Читают \(I(x)\) как \(\frac{3x^2-5}{x^3+3}\).</strong> Из-за искажений PDF так действительно кажется. Но официальное решение показывает двухэтажную дробь с \(\frac{3x}{2}\) и \(\frac{x}{3}\). Ответ \(\frac{9x-30}{2x+18}\) получается только при таком чтении.</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

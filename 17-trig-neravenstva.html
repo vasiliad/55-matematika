@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 17 — Тригонометрические неравенства</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Раздел I · Тригонометрия · Задача 17 из 55</div>
+  <h1>Тригонометрические неравенства</h1>
+  <div class="stars">★★☆☆ — средний уровень</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>Решить каждое неравенство на промежутке \(I=\left]-\pi,\ \pi\right]\):</p>
+  <p><b>1)</b> \(\cos x\geqslant\dfrac{\sqrt2}{2}\)</p>
+  <p><b>2)</b> \(2\sin(x)+1\lt 0\)</p>
+  <p><b>3)</b> \(\cos\!\left(x+\dfrac{\pi}{4}\right)\leqslant 0\)</p>
+  <p><b>4)</b> \(2\cos^2 x-\cos x-1\leqslant 0\)</p>
+  <p><b>5)</b> \(\sin 2x\geqslant\sin x\)</p>
+</div>
+
+<details>
+  <summary>Оригинал по-французски</summary>
+  <p class="orig"><b>Ex 17 ★★✩✩ — Inéquations trigonométriques.</b><br>
+  Résoudre l’inéquation suivante dans l’intervalle I donné :<br>
+  1) \(I=\left]-\pi,\pi\right]\), \(\cos x\geqslant\frac{\sqrt2}{2}\).<br>
+  2) \(I=\left]-\pi,\pi\right]\), \(2\sin(x)+1\lt 0\).<br>
+  3) \(I=\left]-\pi,\pi\right]\), \(\cos\!\left(x+\frac{\pi}{4}\right)\leqslant 0\).<br>
+  4) \(I=\left]-\pi,\pi\right]\), \(2\cos^2 x-\cos x-1\leqslant 0\).<br>
+  5) \(I=\left]-\pi,\pi\right]\), \(\sin 2x\geqslant\sin x\).</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>В прошлой задаче мы искали углы, при которых прибор показывает <b>ровно</b>
+заданное число. Теперь ищем углы, при которых показание <b>не меньше</b>
+(или <b>меньше</b>) заданного.</p>
+
+<p>Разница между уравнением и неравенством наглядная. Уравнение —
+это отдельные точки на окружности. Неравенство — целые <b>дуги</b>.</p>
+
+<p>Представьте циферблат. Уравнение спрашивает: «в каких позициях стрелка
+показывает ровно на 12?» Неравенство спрашивает: «в каких позициях стрелка
+находится в правой половине циферблата?» — а это уже целый сектор, а не
+отдельные позиции.</p>
+
+<p>Метод везде один и тот же:</p>
+<ol>
+  <li>привести неравенство к простому виду «косинус (или синус) больше/меньше
+  числа»;</li>
+  <li>нарисовать единичную окружность, провести горизонтальную или вертикальную
+  черту на уровне этого числа;</li>
+  <li>увидеть, какая дуга подходит, и записать её концы в виде углов.</li>
+</ol>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><b>1. Единичная окружность и два прибора.</b></p>
+  <p>Нарисуйте окружность радиуса 1 с центром \(O\). Точка \(M\) стартует
+  справа (позиция «3 часа») и едет против часовой стрелки. Пройденный путь и
+  есть угол \(x\), измеренный в радианах.</p>
+  <ul>
+    <li>\(\cos x\) — <b>сдвиг точки вправо-влево</b> относительно центра
+    (вправо — плюс, влево — минус);</li>
+    <li>\(\sin x\) — <b>сдвиг вверх-вниз</b> (вверх — плюс, вниз — минус).</li>
+  </ul>
+  <p>Оба числа лежат между \(-1\) и \(1\).</p>
+
+  <p><b>2. Радианы.</b> Полный круг равен \(2\pi\), где
+  \(\pi\approx 3{,}14159\). Отсюда:</p>
+  <table>
+    <tr><th>Радианы</th><th>Градусы</th><th>Позиция точки</th></tr>
+    <tr><td>\(0\)</td><td>\(0^\circ\)</td><td>справа, «3 часа»</td></tr>
+    <tr><td>\(\frac{\pi}{6}\)</td><td>\(30^\circ\)</td><td>чуть выше старта</td></tr>
+    <tr><td>\(\frac{\pi}{4}\)</td><td>\(45^\circ\)</td><td>вверх-вправо по диагонали</td></tr>
+    <tr><td>\(\frac{\pi}{3}\)</td><td>\(60^\circ\)</td><td>заметно выше</td></tr>
+    <tr><td>\(\frac{\pi}{2}\)</td><td>\(90^\circ\)</td><td>сверху, «12 часов»</td></tr>
+    <tr><td>\(\frac{2\pi}{3}\)</td><td>\(120^\circ\)</td><td>вверх-влево</td></tr>
+    <tr><td>\(\frac{3\pi}{4}\)</td><td>\(135^\circ\)</td><td>вверх-влево по диагонали</td></tr>
+    <tr><td>\(\pi\)</td><td>\(180^\circ\)</td><td>слева, «9 часов»</td></tr>
+  </table>
+  <p>Отрицательный угол — движение по часовой стрелке, то есть вниз.
+  Например, \(-\frac{\pi}{4}\) — это вниз-вправо по диагонали.</p>
+
+  <p><b>3. Таблица опорных значений.</b></p>
+  <table>
+    <tr><th>\(x\)</th><th>\(0\)</th><th>\(\frac{\pi}{6}\)</th>
+        <th>\(\frac{\pi}{4}\)</th><th>\(\frac{\pi}{3}\)</th>
+        <th>\(\frac{\pi}{2}\)</th><th>\(\frac{2\pi}{3}\)</th><th>\(\pi\)</th></tr>
+    <tr><th>\(\cos x\)</th><td>\(1\)</td><td>\(\frac{\sqrt3}{2}\)</td>
+        <td>\(\frac{\sqrt2}{2}\)</td><td>\(\frac12\)</td><td>\(0\)</td>
+        <td>\(-\frac12\)</td><td>\(-1\)</td></tr>
+    <tr><th>\(\sin x\)</th><td>\(0\)</td><td>\(\frac12\)</td>
+        <td>\(\frac{\sqrt2}{2}\)</td><td>\(\frac{\sqrt3}{2}\)</td><td>\(1\)</td>
+        <td>\(\frac{\sqrt3}{2}\)</td><td>\(0\)</td></tr>
+  </table>
+  <p>Числа для ориентира: \(\frac{\sqrt2}{2}\approx 0{,}707\),
+  \(\frac{\sqrt3}{2}\approx 0{,}866\).</p>
+  <p>Два правила симметрии, которые сильно экономят время:</p>
+  \[ \cos(-x)=\cos x\quad\text{(зеркало вверх-вниз сдвиг вправо не меняет)}, \]
+  \[ \sin(-x)=-\sin x\quad\text{(зеркало вверх-вниз переворачивает высоту)}. \]
+
+  <p><b>4. Как читать неравенство на окружности — главный приём.</b></p>
+  <p style="padding-left:18px;border-left:3px solid var(--note)">
+  <b>Для косинуса</b> (сдвиг вправо-влево) проводим <b>вертикальную</b> черту
+  на нужном уровне. Условие \(\cos x\geqslant c\) выделяет дугу
+  <b>справа</b> от черты; \(\cos x\leqslant c\) — дугу <b>слева</b>.</p>
+  <p style="padding-left:18px;border-left:3px solid var(--note)">
+  <b>Для синуса</b> (сдвиг вверх-вниз) проводим <b>горизонтальную</b> черту.
+  Условие \(\sin x\geqslant c\) выделяет дугу <b>выше</b> черты;
+  \(\sin x\leqslant c\) — дугу <b>ниже</b>.</p>
+  <p>Концы дуги — это те точки, где выполняется <em>равенство</em>. Поэтому
+  сначала всегда решают уравнение, а уже потом смотрят, какая часть окружности
+  нужна.</p>
+  <p>Про скобки: если в неравенстве стоит \(\geqslant\) или \(\leqslant\),
+  концы дуги входят в ответ (квадратные скобки). Если \(\gt\) или \(\lt\) —
+  не входят (круглые скобки, во французской записи «\(]\)» и «\([\)»).</p>
+
+  <p><b>5. Знак квадратного выражения.</b></p>
+  <p>Если у выражения \(aX^2+bX+c\) есть корни \(X_1\lt X_2\) и \(a\gt 0\), то
+  выражение отрицательно <b>между</b> корнями и положительно <b>снаружи</b>.
+  Правило легко запомнить: «положительно за пределами корней, если ветви
+  вверх».</p>
+
+  <p><b>6. Формула двойного угла.</b></p>
+  \[ \sin(2x)=2\sin x\cos x . \]
+  <p>Проверим на понятном примере \(x=\frac{\pi}{4}\):
+  слева \(\sin\frac{\pi}{2}=1\); справа
+  \(2\cdot\frac{\sqrt2}{2}\cdot\frac{\sqrt2}{2}=2\cdot\frac{2}{4}=1\).
+  \(\checkmark\)</p>
+
+  <p><b>7. Правило знаков для произведения.</b></p>
+  <p>Произведение двух чисел положительно, если оба множителя одного знака
+  (оба «плюс» или оба «минус»), и отрицательно, если знаки разные. Если хотя бы
+  один множитель равен нулю, произведение — ноль.</p>
+
+  <p><b>8. Как читать промежуток \(\left]-\pi,\pi\right]\).</b></p>
+  <p>Все числа от \(-\pi\) до \(\pi\), причём \(-\pi\) <b>не включается</b>,
+  а \(\pi\) <b>включается</b>. Его длина \(2\pi\) — ровно один полный оборот,
+  так что каждое положение точки на окружности отвечает ровно одному числу
+  из этого промежутка.</p>
+
+  <p><b>9. Как найти корни квадратного уравнения (готовый инструмент).</b></p>
+  <p>В пункте про \(\cos x\) нам понадобится найти корни уравнения \(aX^2+bX+c=0\).
+  Общий способ: посчитать <b>дискриминант</b> \(\Delta=b^2-4ac\) и взять
+  \(X=\dfrac{-b\pm\sqrt{\Delta}}{2a}\).</p>
+  <p>Есть и удобный запасной факт: <b>произведение двух корней равно \(\dfrac{c}{a}\)</b>.
+  Поэтому если один корень удалось угадать (скажем, подстановкой \(X=1\)), то второй
+  находится делением: \(X_2=\dfrac{c}{a}:X_1\). Именно этим коротким приёмом мы и
+  воспользуемся. Подробный вывод формулы дискриминанта — в
+  <a href="11-parametr.html">задаче 11</a>.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<h3>Пункт 1: \(\cos x\geqslant\dfrac{\sqrt2}{2}\)</h3>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">Находим границу — решаем сначала равенство</div>
+  <p>Почему начинаем с равенства? Потому что именно точки равенства
+  «разрезают» окружность на куски, где неравенство либо верно везде, либо
+  неверно везде.</p>
+  <p>Из таблицы: \(\cos\frac{\pi}{4}=\frac{\sqrt2}{2}\).</p>
+  <p>Второе решение получаем по симметрии: \(\cos(-x)=\cos x\), значит</p>
+  \[ \cos\!\left(-\frac{\pi}{4}\right)=\frac{\sqrt2}{2}\ \text{тоже}. \]
+  <p>На промежутке \(\left]-\pi,\pi\right]\) равенство даёт две точки:
+  \(x=-\frac{\pi}{4}\) и \(x=\frac{\pi}{4}\).</p>
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">Смотрим на окружность</div>
+  <p>Проводим вертикальную черту на расстоянии \(\frac{\sqrt2}{2}\approx 0{,}707\)
+  вправо от центра. Она пересекает окружность в двух точках: одна вверху
+  (угол \(\frac{\pi}{4}\)), другая внизу (угол \(-\frac{\pi}{4}\)).</p>
+  <p>Нам нужны точки, сдвинутые вправо <b>не меньше</b>, чем на \(0{,}707\).
+  Это дуга <b>справа</b> от черты — небольшой «кусочек апельсина» вокруг
+  позиции «3 часа».</p>
+  <p>Проверим контрольной точкой. Возьмём \(x=0\) — точка ровно справа:
+  \(\cos 0=1\), и правда \(1\geqslant 0{,}707\). \(\checkmark\) Значит, дуга
+  выбрана верно.</p>
+  <p>Проверим и «противоположную» точку \(x=\pi\): \(\cos\pi=-1\), и
+  \(-1\geqslant 0{,}707\) — неверно. \(\checkmark\) Левая часть окружности
+  действительно не подходит.</p>
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">Записываем ответ</div>
+  <p>Дуга идёт от \(-\frac{\pi}{4}\) снизу, через \(0\), до \(\frac{\pi}{4}\)
+  сверху. Знак неравенства нестрогий (\(\geqslant\)), поэтому концы включаем:</p>
+  \[ \boxed{\ S=\left[-\frac{\pi}{4};\ \frac{\pi}{4}\right]\ } \]
+  <p><b>Проверка граничного случая:</b> при \(x=\frac{\pi}{4}\) имеем
+  \(\cos x=\frac{\sqrt2}{2}\), и неравенство \(\geqslant\) выполнено как
+  равенство. \(\checkmark\)</p>
+</div>
+
+<h3>Пункт 2: \(2\sin x+1\lt 0\)</h3>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">Приводим к простому виду</div>
+  <p>Вычитаем 1 из обеих частей:</p>
+  \[ 2\sin x\lt -1 . \]
+  <p>Делим обе части на 2. Двойка положительна, поэтому знак неравенства
+  сохраняется:</p>
+  \[ \sin x\lt -\frac12 . \]
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">Находим границы и выбираем дугу</div>
+  <p><b>Решаем равенство \(\sin x=-\frac12\).</b> Из таблицы
+  \(\sin\frac{\pi}{6}=\frac12\); по правилу \(\sin(-x)=-\sin x\) получаем
+  \(\sin\!\left(-\frac{\pi}{6}\right)=-\frac12\). Это одна граничная точка.</p>
+  <p>Вторая — её зеркало относительно вертикальной оси (там же высота).
+  Отражение угла \(-\frac{\pi}{6}\) относительно вертикали даёт</p>
+  \[ \pi-\left(-\frac{\pi}{6}\right)=\pi+\frac{\pi}{6}=\frac{7\pi}{6}. \]
+  <p>Это больше \(\pi\), значит надо вычесть полный круг, чтобы попасть в наш
+  промежуток:</p>
+  \[ \frac{7\pi}{6}-2\pi=\frac{7\pi}{6}-\frac{12\pi}{6}=-\frac{5\pi}{6}. \]
+  <p>Итак, границы: \(x=-\frac{5\pi}{6}\approx-2{,}62\) и
+  \(x=-\frac{\pi}{6}\approx-0{,}52\).</p>
+  <p><b>Выбираем дугу.</b> Проводим горизонтальную черту на высоте
+  \(-\frac12\) (то есть ниже центра). Нужны точки <b>строго ниже</b> черты —
+  это нижняя дуга, проходящая через самую нижнюю позицию окружности.</p>
+  <p>Контрольная точка: \(x=-\frac{\pi}{2}\) (это низ, «6 часов»),
+  \(\sin\!\left(-\frac{\pi}{2}\right)=-1\). Верно ли \(-1\lt -\frac12\)?
+  Да, минус единица меньше минус половины. \(\checkmark\)</p>
+  <p>Ещё одна проверка — точка вне дуги: \(x=0\), \(\sin 0=0\), и
+  \(0\lt -\frac12\) неверно. \(\checkmark\)</p>
+  <p>Неравенство строгое (\(\lt\)), поэтому концы <b>не включаем</b>:</p>
+  \[ \boxed{\ S=\left]-\frac{5\pi}{6};\ -\frac{\pi}{6}\right[\ } \]
+  <p>(Это французская запись открытого промежутка; в русской традиции то же
+  самое пишут как \(\left(-\frac{5\pi}{6};-\frac{\pi}{6}\right)\).)</p>
+</div>
+
+<h3>Пункт 3: \(\cos\!\left(x+\dfrac{\pi}{4}\right)\leqslant 0\)</h3>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">Замена переменной и пересчёт промежутка</div>
+  <p>Внутри косинуса стоит не \(x\), а \(x+\frac{\pi}{4}\). Обозначим</p>
+  \[ X=x+\frac{\pi}{4}. \]
+  <p>Теперь важнейший момент, который многие пропускают: <b>вместе с
+  переменной надо пересчитать и промежуток</b>. Если \(x\) бегает по
+  \(\left]-\pi,\pi\right]\), то по какому промежутку бегает \(X\)?</p>
+  <p>Берём условие \(-\pi\lt x\leqslant\pi\) и прибавляем \(\frac{\pi}{4}\)
+  ко всем трём частям (прибавление одного и того же числа знаки не меняет):</p>
+  \[ -\pi+\frac{\pi}{4}\lt x+\frac{\pi}{4}\leqslant\pi+\frac{\pi}{4}. \]
+  <p>Считаем границы, приводя к четвертям:</p>
+  \[ -\pi+\frac{\pi}{4}=-\frac{4\pi}{4}+\frac{\pi}{4}=-\frac{3\pi}{4},\qquad
+     \pi+\frac{\pi}{4}=\frac{4\pi}{4}+\frac{\pi}{4}=\frac{5\pi}{4}. \]
+  <p>Итого:</p>
+  \[ X\in\left]-\frac{3\pi}{4};\ \frac{5\pi}{4}\right]. \]
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">Решаем \(\cos X\leqslant 0\) на этом промежутке</div>
+  <p>Условие «\(\cos X\leqslant 0\)» означает: точка сдвинута влево от центра
+  или стоит ровно на вертикальной оси. Это <b>вся левая половина окружности</b>,
+  включая верхнюю и нижнюю точки оси.</p>
+  <p>Границы — там, где \(\cos X=0\), то есть точка стоит строго сверху или
+  строго снизу: углы \(\frac{\pi}{2}\), \(-\frac{\pi}{2}\), а также
+  \(\frac{3\pi}{2}\), и так далее через полкруга.</p>
+  <p>Теперь смотрим, какие куски левой половины попадают в промежуток
+  \(\left]-\frac{3\pi}{4};\frac{5\pi}{4}\right]\). Для наглядности —
+  числовые ориентиры: \(-\frac{3\pi}{4}\approx-2{,}36\),
+  \(-\frac{\pi}{2}\approx-1{,}57\), \(\frac{\pi}{2}\approx1{,}57\),
+  \(\frac{5\pi}{4}\approx3{,}93\).</p>
+  <p><b>Кусок первый.</b> Углы от \(-\frac{3\pi}{4}\) до \(-\frac{\pi}{2}\) —
+  это нижняя левая часть окружности, косинус там отрицателен. Например, при
+  \(X=-\frac{3\pi}{4}\) косинус равен \(-\frac{\sqrt2}{2}\approx-0{,}707\),
+  что меньше нуля. \(\checkmark\) Левый конец \(-\frac{3\pi}{4}\) в
+  промежуток не входит (он исключён), правый конец \(-\frac{\pi}{2}\) входит
+  (там косинус равен нулю, а неравенство нестрогое):</p>
+  \[ X\in\left]-\frac{3\pi}{4};\ -\frac{\pi}{2}\right]. \]
+  <p><b>Кусок второй.</b> Углы от \(\frac{\pi}{2}\) до \(\frac{5\pi}{4}\) —
+  это верхняя левая часть и немного нижней левой. Проверим серединой:
+  при \(X=\pi\) косинус равен \(-1\leqslant 0\). \(\checkmark\)
+  Оба конца входят:</p>
+  \[ X\in\left[\frac{\pi}{2};\ \frac{5\pi}{4}\right]. \]
+  <p><b>А что между \(-\frac{\pi}{2}\) и \(\frac{\pi}{2}\)?</b> Это правая
+  половина, там косинус положителен. Проверим: \(\cos 0=1\gt 0\) — не подходит.
+  \(\checkmark\) Этот кусок исключаем.</p>
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">Возвращаемся от \(X\) к \(x\)</div>
+  <p>Из \(X=x+\frac{\pi}{4}\) следует \(x=X-\frac{\pi}{4}\). Вычитаем
+  \(\frac{\pi}{4}\) из обеих границ каждого куска.</p>
+  <p><b>Первый кусок:</b> \(-\frac{3\pi}{4}\lt X\leqslant-\frac{\pi}{2}\).</p>
+  \[ -\frac{3\pi}{4}-\frac{\pi}{4}\lt x\leqslant-\frac{\pi}{2}-\frac{\pi}{4}. \]
+  <p>Считаем: \(-\frac{3\pi}{4}-\frac{\pi}{4}=-\frac{4\pi}{4}=-\pi\), а
+  \(-\frac{\pi}{2}-\frac{\pi}{4}=-\frac{2\pi}{4}-\frac{\pi}{4}=-\frac{3\pi}{4}\).</p>
+  \[ x\in\left]-\pi;\ -\frac{3\pi}{4}\right]. \]
+  <p><b>Второй кусок:</b> \(\frac{\pi}{2}\leqslant X\leqslant\frac{5\pi}{4}\).</p>
+  \[ \frac{\pi}{2}-\frac{\pi}{4}\leqslant x\leqslant\frac{5\pi}{4}-\frac{\pi}{4}. \]
+  <p>Считаем: \(\frac{2\pi}{4}-\frac{\pi}{4}=\frac{\pi}{4}\), а
+  \(\frac{5\pi}{4}-\frac{\pi}{4}=\frac{4\pi}{4}=\pi\).</p>
+  \[ x\in\left[\frac{\pi}{4};\ \pi\right]. \]
+</div>
+
+<div class="step">
+  <div class="num">9</div>
+  <div class="head">Ответ и проверка</div>
+  \[ \boxed{\ S=\left]-\pi;\ -\frac{3\pi}{4}\right]\ \cup\
+     \left[\frac{\pi}{4};\ \pi\right]\ } \]
+  <p>Значок \(\cup\) читается «объединение»: подходит и то, и другое.</p>
+  <p><b>Проверка тремя точками.</b></p>
+  <ul>
+    <li>\(x=-\frac{7\pi}{8}\) (внутри первого куска):
+    \(x+\frac{\pi}{4}=-\frac{7\pi}{8}+\frac{2\pi}{8}=-\frac{5\pi}{8}\).
+    Это чуть больше полукруга вниз-влево, косинус там отрицательный.
+    \(\checkmark\)</li>
+    <li>\(x=\frac{\pi}{2}\) (внутри второго куска):
+    \(x+\frac{\pi}{4}=\frac{3\pi}{4}\), \(\cos\frac{3\pi}{4}
+    =-\frac{\sqrt2}{2}\lt 0\). \(\checkmark\)</li>
+    <li>\(x=0\) (должен не подойти): \(x+\frac{\pi}{4}=\frac{\pi}{4}\),
+    \(\cos\frac{\pi}{4}=\frac{\sqrt2}{2}\gt 0\) — неравенство нарушено.
+    \(\checkmark\)</li>
+  </ul>
+</div>
+
+<h3>Пункт 4: \(2\cos^2 x-\cos x-1\leqslant 0\)</h3>
+
+<div class="step">
+  <div class="num">10</div>
+  <div class="head">Замена \(X=\cos x\)</div>
+  <p>В неравенстве встречается только \(\cos x\) — в первой и во второй
+  степени. Значит, годится замена. Положим \(X=\cos x\), помня, что
+  обязательно \(-1\leqslant X\leqslant 1\):</p>
+  \[ 2X^2-X-1\leqslant 0 . \]
+</div>
+
+<div class="step">
+  <div class="num">11</div>
+  <div class="head">Разбираемся со знаком квадратного выражения</div>
+  <p>Сначала найдём корни \(2X^2-X-1=0\).</p>
+  <p>Один корень виден сразу — попробуем \(X=1\):</p>
+  \[ 2\cdot 1-1-1=0 . \;\checkmark \]
+  <p>Второй найдём через произведение корней: для \(aX^2+bX+c\) произведение
+  равно \(\frac{c}{a}=\frac{-1}{2}=-\frac12\). Раз один корень равен 1, то</p>
+  \[ 1\cdot X_2=-\frac12\quad\Longrightarrow\quad X_2=-\frac12 . \]
+  <p>Проверим напрямую:</p>
+  \[ 2\cdot\left(-\frac12\right)^2-\left(-\frac12\right)-1
+     =2\cdot\frac14+\frac12-1=\frac12+\frac12-1=0 . \;\checkmark \]
+  <p>Итак, корни \(-\frac12\) и \(1\). Старший коэффициент \(2\) положителен,
+  поэтому по правилу из пункта 5 раздела «Что нужно знать» выражение
+  отрицательно между корнями:</p>
+  <table>
+    <tr><th>\(X\)</th><td>\(\ldots\)</td><td>\(-\frac12\)</td>
+        <td>\(\ldots\)</td><td>\(1\)</td><td>\(\ldots\)</td></tr>
+    <tr><th>знак \(2X^2-X-1\)</th><td>\(+\)</td><td>\(0\)</td>
+        <td>\(-\)</td><td>\(0\)</td><td>\(+\)</td></tr>
+  </table>
+  <p>Значит, неравенство \(2X^2-X-1\leqslant 0\) выполняется при</p>
+  \[ -\frac12\leqslant X\leqslant 1 . \]
+</div>
+
+<div class="step">
+  <div class="num">12</div>
+  <div class="head">Переводим обратно на язык углов</div>
+  <p>Подставляем \(X=\cos x\):</p>
+  \[ -\frac12\leqslant\cos x\leqslant 1 . \]
+  <p>Правая часть \(\cos x\leqslant 1\) выполняется <b>всегда</b> —
+  косинус по определению не превосходит 1. Значит, это условие ничего не
+  ограничивает, и остаётся только</p>
+  \[ \cos x\geqslant-\frac12 . \]
+  <p><b>Находим границы.</b> Из таблицы: \(\cos\frac{2\pi}{3}=-\frac12\).
+  По симметрии \(\cos\!\left(-\frac{2\pi}{3}\right)=-\frac12\) тоже.
+  Обе точки лежат в \(\left]-\pi,\pi\right]\).</p>
+  <p><b>Выбираем дугу.</b> Проводим вертикальную черту на уровне \(-\frac12\)
+  (то есть левее центра). Нужны точки, сдвинутые вправо не меньше, чем
+  \(-\frac12\) — то есть всё, что <b>справа</b> от черты. Это большая дуга,
+  проходящая через позицию «3 часа».</p>
+  <p>Контроль: \(x=0\), \(\cos 0=1\geqslant-\frac12\). \(\checkmark\)
+  И точка вне дуги: \(x=\pi\), \(\cos\pi=-1\), а \(-1\geqslant-\frac12\)
+  неверно. \(\checkmark\)</p>
+  <p>Неравенство нестрогое, концы включаем:</p>
+  \[ \boxed{\ S=\left[-\frac{2\pi}{3};\ \frac{2\pi}{3}\right]\ } \]
+</div>
+
+<h3>Пункт 5: \(\sin 2x\geqslant\sin x\)</h3>
+
+<div class="step">
+  <div class="num">13</div>
+  <div class="head">Собираем всё в одну часть и раскладываем на множители</div>
+  <p>Сравнивать два разных синуса напрямую нельзя. Поэтому сначала переносим
+  всё влево:</p>
+  \[ \sin 2x-\sin x\geqslant 0 . \]
+  <p>Применяем формулу двойного угла \(\sin 2x=2\sin x\cos x\):</p>
+  \[ 2\sin x\cos x-\sin x\geqslant 0 . \]
+  <p>В обоих слагаемых есть множитель \(\sin x\). Выносим его:</p>
+  \[ \sin x\,(2\cos x-1)\geqslant 0 . \]
+  <p>Теперь задача свелась к вопросу о знаке произведения двух простых
+  множителей. Это уже совсем понятная работа.</p>
+</div>
+
+<div class="step">
+  <div class="num">14</div>
+  <div class="head">Разбираемся со знаком первого множителя \(\sin x\)</div>
+  <p>Синус — это высота точки. Он неотрицателен, когда точка находится на
+  верхней половине окружности или на горизонтальной оси.</p>
+  <p>На промежутке \(\left]-\pi,\pi\right]\):</p>
+  <ul>
+    <li>\(\sin x=0\) при \(x=0\) и при \(x=\pi\);</li>
+    <li>\(\sin x\gt 0\) при \(0\lt x\lt\pi\) (верхняя половина);</li>
+    <li>\(\sin x\lt 0\) при \(-\pi\lt x\lt 0\) (нижняя половина).</li>
+  </ul>
+</div>
+
+<div class="step">
+  <div class="num">15</div>
+  <div class="head">Разбираемся со знаком второго множителя \(2\cos x-1\)</div>
+  <p>Решим сначала, когда он неотрицателен:</p>
+  \[ 2\cos x-1\geqslant 0\iff 2\cos x\geqslant 1\iff\cos x\geqslant\frac12 . \]
+  <p>Из таблицы: \(\cos\frac{\pi}{3}=\frac12\), и по симметрии
+  \(\cos\!\left(-\frac{\pi}{3}\right)=\frac12\).</p>
+  <p>Дуга «справа от вертикальной черты на уровне \(\frac12\)» — это
+  \(x\in\left[-\frac{\pi}{3};\frac{\pi}{3}\right]\).</p>
+  <p>Итого:</p>
+  <ul>
+    <li>\(2\cos x-1=0\) при \(x=-\frac{\pi}{3}\) и \(x=\frac{\pi}{3}\);</li>
+    <li>\(2\cos x-1\gt 0\) при \(-\frac{\pi}{3}\lt x\lt\frac{\pi}{3}\);</li>
+    <li>\(2\cos x-1\lt 0\) вне этого промежутка, то есть при
+    \(-\pi\lt x\lt-\frac{\pi}{3}\) и при \(\frac{\pi}{3}\lt x\leqslant\pi\).</li>
+  </ul>
+</div>
+
+<div class="step">
+  <div class="num">16</div>
+  <div class="head">Строим таблицу знаков</div>
+  <p>Отмечаем на промежутке все «особые» точки, где хоть один множитель
+  обращается в ноль: это \(-\frac{\pi}{3}\), \(0\), \(\frac{\pi}{3}\)
+  и \(\pi\). Между ними знаки не меняются.</p>
+  <table>
+    <tr>
+      <th>\(x\)</th>
+      <th>\(\left]-\pi;-\frac{\pi}{3}\right[\)</th>
+      <th>\(-\frac{\pi}{3}\)</th>
+      <th>\(\left]-\frac{\pi}{3};0\right[\)</th>
+      <th>\(0\)</th>
+      <th>\(\left]0;\frac{\pi}{3}\right[\)</th>
+      <th>\(\frac{\pi}{3}\)</th>
+      <th>\(\left]\frac{\pi}{3};\pi\right[\)</th>
+      <th>\(\pi\)</th>
+    </tr>
+    <tr>
+      <th>\(\sin x\)</th>
+      <td>\(-\)</td><td>\(-\)</td><td>\(-\)</td><td>\(0\)</td>
+      <td>\(+\)</td><td>\(+\)</td><td>\(+\)</td><td>\(0\)</td>
+    </tr>
+    <tr>
+      <th>\(2\cos x-1\)</th>
+      <td>\(-\)</td><td>\(0\)</td><td>\(+\)</td><td>\(+\)</td>
+      <td>\(+\)</td><td>\(0\)</td><td>\(-\)</td><td>\(-\)</td>
+    </tr>
+    <tr>
+      <th>произведение</th>
+      <td><b>\(+\)</b></td><td><b>\(0\)</b></td><td>\(-\)</td>
+      <td><b>\(0\)</b></td><td><b>\(+\)</b></td><td><b>\(0\)</b></td>
+      <td>\(-\)</td><td><b>\(0\)</b></td>
+    </tr>
+  </table>
+  <p>Нижняя строка получена по правилу знаков: «минус на минус — плюс»,
+  «минус на плюс — минус», «плюс на плюс — плюс».</p>
+  <p>Нам нужны клетки, где произведение \(\geqslant 0\), то есть плюс или ноль
+  (выделены жирным).</p>
+</div>
+
+<div class="step">
+  <div class="num">17</div>
+  <div class="head">Собираем ответ и проверяем</div>
+  <p>Складываем все подходящие участки:</p>
+  <ul>
+    <li>от \(-\pi\) (не включая) до \(-\frac{\pi}{3}\) (включая) — плюс, затем ноль;</li>
+    <li>точка \(0\) и дуга до \(\frac{\pi}{3}\) (включая) — ноль, затем плюс, затем ноль;</li>
+    <li>отдельная точка \(\pi\) — там ноль.</li>
+  </ul>
+  \[ \boxed{\ S=\left]-\pi;\ -\frac{\pi}{3}\right]\ \cup\
+     \left[0;\ \frac{\pi}{3}\right]\ \cup\ \{\pi\}\ } \]
+  <p>Обратите внимание на одинокую точку \(\pi\) в ответе. Она попадает
+  в решение потому, что \(\sin\pi=0\), значит произведение равно нулю, а ноль
+  удовлетворяет условию «\(\geqslant 0\)». Соседние с ней точки решениями
+  не являются — вот и получается изолированная точка. Это не ошибка, а
+  нормальная ситуация для нестрогих неравенств.</p>
+  <p><b>Проверим ответ на нескольких значениях.</b></p>
+  <table>
+    <tr><th>\(x\)</th><th>\(\sin 2x\)</th><th>\(\sin x\)</th>
+        <th>\(\sin 2x\geqslant\sin x\)?</th><th>В ответе?</th></tr>
+    <tr><td>\(-\frac{\pi}{2}\)</td><td>\(\sin(-\pi)=0\)</td><td>\(-1\)</td>
+        <td>\(0\geqslant-1\) — да</td><td>да \(\checkmark\)</td></tr>
+    <tr><td>\(-\frac{\pi}{4}\)</td><td>\(\sin\!\left(-\frac{\pi}{2}\right)=-1\)</td>
+        <td>\(-\frac{\sqrt2}{2}\approx-0{,}71\)</td>
+        <td>\(-1\geqslant-0{,}71\) — нет</td><td>нет \(\checkmark\)</td></tr>
+    <tr><td>\(\frac{\pi}{4}\)</td><td>\(\sin\frac{\pi}{2}=1\)</td>
+        <td>\(\frac{\sqrt2}{2}\approx0{,}71\)</td>
+        <td>\(1\geqslant 0{,}71\) — да</td><td>да \(\checkmark\)</td></tr>
+    <tr><td>\(\frac{\pi}{2}\)</td><td>\(\sin\pi=0\)</td><td>\(1\)</td>
+        <td>\(0\geqslant 1\) — нет</td><td>нет \(\checkmark\)</td></tr>
+    <tr><td>\(\pi\)</td><td>\(\sin 2\pi=0\)</td><td>\(0\)</td>
+        <td>\(0\geqslant 0\) — да</td><td>да \(\checkmark\)</td></tr>
+  </table>
+  <p>Все пять контрольных точек согласуются с ответом.</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <p><b>1)</b> \(\cos x\geqslant\frac{\sqrt2}{2}\):
+  \(\displaystyle S=\left[-\frac{\pi}{4};\ \frac{\pi}{4}\right]\).</p>
+
+  <p><b>2)</b> \(2\sin x+1\lt 0\):
+  \(\displaystyle S=\left]-\frac{5\pi}{6};\ -\frac{\pi}{6}\right[\)
+  (концы не входят — неравенство строгое).</p>
+
+  <p><b>3)</b> \(\cos\!\left(x+\frac{\pi}{4}\right)\leqslant 0\):
+  \(\displaystyle S=\left]-\pi;\ -\frac{3\pi}{4}\right]\cup
+  \left[\frac{\pi}{4};\ \pi\right]\).</p>
+
+  <p><b>4)</b> \(2\cos^2 x-\cos x-1\leqslant 0\):
+  \(\displaystyle S=\left[-\frac{2\pi}{3};\ \frac{2\pi}{3}\right]\).</p>
+
+  <p><b>5)</b> \(\sin 2x\geqslant\sin x\):
+  \(\displaystyle S=\left]-\pi;\ -\frac{\pi}{3}\right]\cup
+  \left[0;\ \frac{\pi}{3}\right]\cup\{\pi\}\).</p>
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+  <p><b>1. Путают, какую черту проводить.</b> Косинус — это сдвиг
+  вправо-влево, поэтому для него черта <b>вертикальная</b>. Синус — сдвиг
+  вверх-вниз, черта <b>горизонтальная</b>. Перепутав, получите совершенно
+  другую дугу.</p>
+
+  <p><b>2. В пункте 3 забывают пересчитать промежуток.</b> Если сделать замену
+  \(X=x+\frac{\pi}{4}\), но искать \(X\) по-прежнему на
+  \(\left]-\pi,\pi\right]\), ответ будет неверным. Промежуток обязан
+  сдвинуться вместе с переменной — на те же \(\frac{\pi}{4}\).</p>
+
+  <p><b>3. Неправильно ставят скобки на концах.</b> Строгое неравенство
+  (\(\lt\), \(\gt\)) — концы исключаются; нестрогое (\(\leqslant\),
+  \(\geqslant\)) — включаются. В пункте 2 это как раз проверяется: там строгое
+  неравенство, и концы \(-\frac{5\pi}{6}\), \(-\frac{\pi}{6}\) в ответ
+  не входят.</p>
+
+  <p><b>4. В пункте 5 делят обе части на \(\sin x\).</b> Это грубая ошибка
+  сразу по двум причинам: во-первых, \(\sin x\) может быть нулём (делить
+  нельзя); во-вторых, при отрицательном \(\sin x\) знак неравенства
+  переворачивается. Правильный путь — перенести всё в одну часть и разложить
+  на множители.</p>
+
+  <p><b>5. Теряют изолированную точку \(\pi\) в пункте 5.</b> Она не видна на
+  беглом взгляде, потому что вокруг неё решений нет. Именно поэтому таблица
+  знаков строится с отдельными столбцами для нулей.</p>
+
+  <p><b>6. В пункте 4 «решают» условие \(\cos x\leqslant 1\).</b> Оно верно
+  всегда и ничего не даёт. Полезно уметь распознавать такие «пустые» условия,
+  чтобы не искать несуществующие ограничения.</p>
+
+  <p><b>7. Забывают, что \(\cos^2 x\) — это \((\cos x)^2\).</b> Возводится в
+  квадрат результат, а не аргумент. Именно поэтому замена \(X=\cos x\)
+  работает так гладко.</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

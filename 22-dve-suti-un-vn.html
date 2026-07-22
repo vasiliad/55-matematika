@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 22 — Две связанные последовательности</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Раздел II · Последовательности · Задача 22 из 55</div>
+  <h1>Две переплетённые последовательности</h1>
+  <div class="stars">★☆☆☆ — самый простой уровень</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>Пусть \((u_n)_{n\geqslant1}\) и \((v_n)_{n\geqslant1}\) — две последовательности действительных чисел, заданные так:</p>
+  \[u_1=12,\qquad v_1=1,\]
+  \[\forall n\geqslant1:\qquad u_{n+1}=\frac{u_n+2v_n}{3},\qquad v_{n+1}=\frac{u_n+3v_n}{4}.\]
+  <p><b>1)</b> Для всякого натурального \(n\geqslant1\) положим \(w_n=v_n-u_n\).<br>
+  <b>a)</b> Доказать, что \((w_n)_{n\geqslant1}\) — геометрическая прогрессия, затем выразить \(w_n\) через \(n\).<br>
+  <b>b)</b> Вывести отсюда, что \((w_n)_{n\geqslant1}\) сходится, и найти её предел.</p>
+  <p><b>2)</b> Для всякого натурального \(n\geqslant1\) положим \(x_n=8v_n+3u_n\). Доказать, что \((x_n)_{n\geqslant1}\) постоянна.</p>
+  <p><b>3)</b> Вывести отсюда выражения \(u_n\) и \(v_n\) через \(n\).</p>
+  <p><b>4)</b> Показать, что \((u_n)_{n\geqslant1}\) и \((v_n)_{n\geqslant1}\) сходятся к одному и тому же пределу, и указать его.</p>
+</div>
+
+<details>
+  <summary>Оригинал по-французски</summary>
+  <p class="orig">Soit \((u_n)_{n\geqslant1}\) et \((v_n)_{n\geqslant1}\) deux suites réelles définies par : \(u_1=12\) et \(v_1=1\), \(\forall n\in\mathbb N^*\), \(u_{n+1}=\frac{u_n+2v_n}{3}\) et \(v_{n+1}=\frac{u_n+3v_n}{4}\).<br>
+  1) Pour tout entier naturel non nul \(n\), on pose \(w_n=v_n-u_n\).<br>
+  a) Démontrer que la suite \((w_n)_{n\geqslant1}\) ainsi définie est une suite géométrique puis exprimer \(w_n\) en fonction de \(n\).<br>
+  b) En déduire que \((w_n)_{n\geqslant1}\) est convergente puis déterminer sa limite.<br>
+  2) Pour tout entier naturel non nul \(n\), on pose \(x_n=8v_n+3u_n\). Démontrer que \((x_n)_{n\geqslant1}\) est constante.<br>
+  3) En déduire les expressions respectives de \(u_n\) et \(v_n\) en fonction de \(n\).<br>
+  4) Montrer que \((u_n)_{n\geqslant1}\) et \((v_n)_{n\geqslant1}\) convergent vers une même limite que l'on explicitera.</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Здесь не одна лестница чисел, а <b>две сразу</b>, и они переплетены: чтобы сделать следующий шаг на любой из них, нужны числа с обеих.</p>
+
+<p>Представьте два ведра с водой. В первом 12 литров, во втором 1 литр. Каждую минуту происходит перемешивание: новое содержимое первого ведра считается по одной формуле от обоих старых объёмов, второго — по другой. Вопрос: что будет через много минут?</p>
+
+<p>Интуиция подсказывает: объёмы должны выровняться. Задача ведёт нас к строгому доказательству этого, причём очень красивым путём.</p>
+
+<p><b>Идея решения.</b> Вместо того чтобы гоняться за \(u_n\) и \(v_n\) по отдельности (это трудно, они всё время цепляются друг за друга), мы придумываем две новые величины:</p>
+<ul>
+  <li>\(w_n=v_n-u_n\) — <b>разница</b> между вёдрами. Окажется, что она каждый шаг делится на 12, то есть быстро тает.</li>
+  <li>\(x_n=8v_n+3u_n\) — специальная комбинация, которая вообще <b>не меняется</b>. Такую величину называют «сохраняющейся» или «инвариантом».</li>
+</ul>
+<p>Зная разницу и знaя сохраняющуюся комбинацию, мы сможем восстановить и \(u_n\), и \(v_n\) — как в задаче «сумма и разность двух чисел известны, найти сами числа».</p>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><b>1. Последовательность и запись \(u_n\).</b> Лестница чисел с номерами. \(u_n\) («у-энное») — число на ступеньке номер \(n\). Здесь нумерация начинается <b>с единицы</b>, а не с нуля: значок \(n\geqslant1\) в записи \((u_n)_{n\geqslant1}\) как раз про это. Первая ступенька — \(u_1\).</p>
+  <p>Французское \(\mathbb N^{*}\) означает «натуральные числа без нуля», то есть \(1,2,3,\dots\)</p>
+
+  <p><b>2. Знак \(\forall\)</b> читается «для всякого». Запись \(\forall n\geqslant1\) — «для всякого \(n\), начиная с единицы».</p>
+
+  <p><b>3. Геометрическая прогрессия.</b> Лестница, где каждое следующее число получается умножением предыдущего на одно и то же число \(q\) (знаменатель, по-французски <i>raison</i>). Если известны первый член и знаменатель, любой член считается по формуле. Осторожно: когда нумерация начинается с единицы, формула такая:</p>
+  \[w_n=w_1\cdot q^{\,n-1}.\]
+  <p>Почему \(n-1\), а не \(n\): чтобы дойти от первой ступеньки до \(n\)-й, нужно \(n-1\) шагов. Проверим: от \(w_1\) до \(w_1\) — ноль шагов, и правда \(q^{1-1}=q^0=1\).</p>
+
+  <p><b>4. Постоянная последовательность.</b> Это лестница, где все числа одинаковы: \(x_1=x_2=x_3=\dots\) Доказать постоянство — значит показать, что \(x_{n+1}=x_n\) при любом \(n\).</p>
+
+  <p><b>5. Предел и сходимость.</b> Если, идя по лестнице всё дальше, числа подбираются к какому-то одному числу и остаются возле него, это число называют <b>предел</b> (limite), а лестницу — <b>сходящейся</b> (convergente). Обозначение:</p>
+  \[\lim_{n\to+\infty}w_n=0.\]
+  <p><b>Главный факт:</b> если \(-1&lt;q&lt;1\), то \(q^{\,n}\) стремится к нулю. Например, \(\left(\frac{1}{12}\right)^1\approx0{,}083\), \(\left(\frac{1}{12}\right)^2\approx0{,}0069\), \(\left(\frac{1}{12}\right)^3\approx0{,}00058\) — очень быстро тает.</p>
+
+  <p><b>6. Как складывать дроби с разными знаменателями.</b> Приводим к общему знаменателю. Например:</p>
+  \[\frac{A}{4}-\frac{B}{3}=\frac{3A}{12}-\frac{4B}{12}=\frac{3A-4B}{12}.\]
+  <p>Общий знаменатель для 3 и 4 — это 12. Умножаем первую дробь сверху и снизу на 3, вторую — на 4.</p>
+</div>
+
+<h2>Сначала посчитаем несколько чисел руками</h2>
+
+<div class="step">
+  <div class="num">0</div>
+  <div class="head">Чтобы понимать, о чём речь</div>
+  <p>Даны \(u_1=12\), \(v_1=1\). Считаем вторую ступеньку:</p>
+  \[u_2=\frac{u_1+2v_1}{3}=\frac{12+2\cdot1}{3}=\frac{14}{3}\approx4{,}667,\]
+  \[v_2=\frac{u_1+3v_1}{4}=\frac{12+3\cdot1}{4}=\frac{15}{4}=3{,}75.\]
+  <p>Третью:</p>
+  \[u_3=\frac{\dfrac{14}{3}+2\cdot\dfrac{15}{4}}{3}=\frac{\dfrac{14}{3}+\dfrac{15}{2}}{3}=\frac{\dfrac{28}{6}+\dfrac{45}{6}}{3}=\frac{\dfrac{73}{6}}{3}=\frac{73}{18}\approx4{,}056,\]
+  \[v_3=\frac{\dfrac{14}{3}+3\cdot\dfrac{15}{4}}{4}=\frac{\dfrac{14}{3}+\dfrac{45}{4}}{4}=\frac{\dfrac{56}{12}+\dfrac{135}{12}}{4}=\frac{\dfrac{191}{12}}{4}=\frac{191}{48}\approx3{,}979.\]
+  <p>Видно, как числа быстро сближаются: было 12 и 1 (разница 11), стало 4,667 и 3,75 (разница около 0,92), затем 4,056 и 3,979 (разница около 0,077). Разница каждый раз уменьшается примерно в 12 раз. И оба числа явно ползут к чему-то около 4.</p>
+  <p>Теперь докажем это строго.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<h3>Пункт 1a. Доказываем, что \((w_n)\) геометрическая</h3>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">Записываем \(w_{n+1}\) по определению</div>
+  <p>Почему мы так делаем: чтобы доказать «геометричность», надо сравнить \(w_{n+1}\) с \(w_n\). Значит, начинаем с \(w_{n+1}\) и стараемся привести его к виду «число, умноженное на \(w_n\)».</p>
+  \[w_{n+1}=v_{n+1}-u_{n+1}.\]
+  <p>Подставляем данные правила:</p>
+  \[w_{n+1}=\frac{u_n+3v_n}{4}-\frac{u_n+2v_n}{3}.\]
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">Приводим к общему знаменателю 12</div>
+  <p>Знаменатели 4 и 3. Наименьшее число, которое делится на оба, — это 12. Первую дробь домножаем сверху и снизу на 3, вторую — на 4:</p>
+  \[w_{n+1}=\frac{3\,(u_n+3v_n)}{12}-\frac{4\,(u_n+2v_n)}{12}=\frac{3(u_n+3v_n)-4(u_n+2v_n)}{12}.\]
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">Раскрываем скобки в числителе</div>
+  <p>Аккуратно, по одному действию:</p>
+  \[3(u_n+3v_n)=3u_n+9v_n,\]
+  \[4(u_n+2v_n)=4u_n+8v_n.\]
+  <p>Вычитаем второе из первого (не забываем сменить знаки у обоих слагаемых второй скобки):</p>
+  \[3u_n+9v_n-4u_n-8v_n.\]
+  <p>Собираем отдельно \(u_n\) и отдельно \(v_n\):</p>
+  \[(3u_n-4u_n)+(9v_n-8v_n)=-u_n+v_n.\]
+</div>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">Узнаём \(w_n\)</div>
+  <p>Получилось:</p>
+  \[w_{n+1}=\frac{-u_n+v_n}{12}=\frac{v_n-u_n}{12}.\]
+  <p>Но ведь \(v_n-u_n\) — это в точности \(w_n\) по определению! Значит:</p>
+  \[\boxed{\;w_{n+1}=\frac{1}{12}\,w_n\;}\]
+  <p>Множитель \(\dfrac{1}{12}\) — одно и то же число при любом \(n\). По определению это означает: \((w_n)_{n\geqslant1}\) — <b>геометрическая прогрессия</b> со знаменателем \(q=\dfrac{1}{12}\).</p>
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">Находим первый член и выражаем \(w_n\) через \(n\)</div>
+  <p>Первый член (нумерация начинается с единицы):</p>
+  \[w_1=v_1-u_1=1-12=-11.\]
+  <p>Формула для геометрической прогрессии, начинающейся с номера 1: от первой ступеньки до \(n\)-й делается \(n-1\) умножений на \(q\), поэтому</p>
+  \[\boxed{\;w_n=-11\left(\frac{1}{12}\right)^{n-1}\;}\]
+  <p>Проверка при \(n=1\): \(-11\cdot\left(\frac{1}{12}\right)^0=-11\cdot1=-11\). Верно.</p>
+  <p>Проверка при \(n=2\): по формуле \(-11\cdot\frac{1}{12}=-\frac{11}{12}\approx-0{,}917\). А по прямому счёту \(w_2=v_2-u_2=\frac{15}{4}-\frac{14}{3}=\frac{45}{12}-\frac{56}{12}=-\frac{11}{12}\). Совпало.</p>
+</div>
+
+<h3>Пункт 1b. Сходимость и предел \((w_n)\)</h3>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">Смотрим на величину знаменателя</div>
+  <p>Знаменатель прогрессии \(q=\dfrac{1}{12}\approx0{,}083\). Это число лежит строго между \(-1\) и \(1\). А значит, по основному факту про степени,</p>
+  \[\lim_{n\to+\infty}\left(\frac{1}{12}\right)^{n-1}=0.\]
+  <p>Показатель \(n-1\) растёт вместе с \(n\), так что это тот же самый случай.</p>
+  <p>Умножение на постоянное число \(-11\) не мешает: если множитель стремится к нулю, произведение тоже стремится к нулю.</p>
+  \[\lim_{n\to+\infty}w_n=-11\cdot0=0.\]
+  <p>Значит, \((w_n)\) <b>сходится</b>, и её предел равен \(\boldsymbol{0}\).</p>
+  <p>Смысл: разница между двумя лестницами исчезает. Числа \(u_n\) и \(v_n\) неограниченно сближаются.</p>
+</div>
+
+<h3>Пункт 2. Доказываем постоянство \((x_n)\)</h3>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">Почему именно комбинация \(8v_n+3u_n\)</div>
+  <p>Числа 8 и 3 не с потолка — они специально подобраны составителем задачи так, чтобы всё сократилось. Нам их дали готовыми, наше дело — проверить, что это работает.</p>
+  <p>Чтобы доказать постоянство, надо показать: \(x_{n+1}=x_n\).</p>
+  \[x_{n+1}=8v_{n+1}+3u_{n+1}=8\cdot\frac{u_n+3v_n}{4}+3\cdot\frac{u_n+2v_n}{3}.\]
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">Сокращаем дроби</div>
+  <p>В первом слагаемом: \(\dfrac{8}{4}=2\), значит</p>
+  \[8\cdot\frac{u_n+3v_n}{4}=2\,(u_n+3v_n)=2u_n+6v_n.\]
+  <p>Во втором слагаемом: \(\dfrac{3}{3}=1\), значит</p>
+  \[3\cdot\frac{u_n+2v_n}{3}=u_n+2v_n.\]
+</div>
+
+<div class="step">
+  <div class="num">9</div>
+  <div class="head">Складываем и узнаём \(x_n\)</div>
+  \[x_{n+1}=(2u_n+6v_n)+(u_n+2v_n).\]
+  <p>Собираем отдельно \(u_n\) и \(v_n\):</p>
+  \[x_{n+1}=(2u_n+u_n)+(6v_n+2v_n)=3u_n+8v_n.\]
+  <p>А это и есть \(x_n\) (порядок слагаемых не важен). Итак:</p>
+  \[\boxed{\;x_{n+1}=x_n\quad\text{для всех }n\geqslant1\;}\]
+  <p>Значит, \((x_n)\) — <b>постоянная</b> последовательность: все её члены равны первому.</p>
+</div>
+
+<div class="step">
+  <div class="num">10</div>
+  <div class="head">Находим само значение</div>
+  \[x_1=8v_1+3u_1=8\cdot1+3\cdot12=8+36=44.\]
+  <p>Следовательно, для всех \(n\geqslant1\):</p>
+  \[8v_n+3u_n=44.\]
+  <p>Быстрая проверка на второй ступеньке: \(8\cdot\dfrac{15}{4}+3\cdot\dfrac{14}{3}=2\cdot15+14=30+14=44\). Работает.</p>
+</div>
+
+<h3>Пункт 3. Выражаем \(u_n\) и \(v_n\) через \(n\)</h3>
+
+<div class="step">
+  <div class="num">11</div>
+  <div class="head">Собираем систему из двух уравнений</div>
+  <p>Теперь у нас есть два независимых факта про каждую ступеньку \(n\):</p>
+  \[\begin{cases} v_n-u_n=w_n\\[4pt] 8v_n+3u_n=44 \end{cases}\]
+  <p>Это обычная система: два уравнения, две неизвестные (\(u_n\) и \(v_n\)), а \(w_n\) мы уже умеем считать. Решаем её как в школе — методом подстановки.</p>
+</div>
+
+<div class="step">
+  <div class="num">12</div>
+  <div class="head">Выражаем \(u_n\) из первого уравнения и подставляем во второе</div>
+  <p>Из \(v_n-u_n=w_n\) следует \(u_n=v_n-w_n\). Подставляем во второе уравнение:</p>
+  \[8v_n+3\,(v_n-w_n)=44.\]
+  <p>Раскрываем скобку:</p>
+  \[8v_n+3v_n-3w_n=44,\]
+  \[11v_n-3w_n=44.\]
+  <p>Прибавляем \(3w_n\) к обеим частям:</p>
+  \[11v_n=44+3w_n.\]
+  <p>Делим на 11:</p>
+  \[v_n=\frac{44+3w_n}{11}=4+\frac{3}{11}\,w_n.\]
+</div>
+
+<div class="step">
+  <div class="num">13</div>
+  <div class="head">Находим \(u_n\)</div>
+  <p>Возвращаемся к \(u_n=v_n-w_n\):</p>
+  \[u_n=4+\frac{3}{11}w_n-w_n.\]
+  <p>Считаем \(\dfrac{3}{11}w_n-w_n\). Представим \(w_n=\dfrac{11}{11}w_n\):</p>
+  \[\frac{3}{11}w_n-\frac{11}{11}w_n=\frac{3-11}{11}w_n=-\frac{8}{11}w_n.\]
+  <p>Итого:</p>
+  \[u_n=4-\frac{8}{11}\,w_n.\]
+</div>
+
+<div class="step">
+  <div class="num">14</div>
+  <div class="head">Подставляем найденное \(w_n\)</div>
+  <p>Помним: \(w_n=-11\left(\dfrac{1}{12}\right)^{n-1}\). Число 11 очень удачно сократится с одиннадцатыми долями.</p>
+  <p>Для \(u_n\):</p>
+  \[u_n=4-\frac{8}{11}\cdot\left(-11\left(\frac{1}{12}\right)^{n-1}\right)=4+\frac{8\cdot11}{11}\left(\frac{1}{12}\right)^{n-1},\]
+  \[\boxed{\;u_n=4+8\left(\frac{1}{12}\right)^{n-1}\;}\]
+  <p>Для \(v_n\):</p>
+  \[v_n=4+\frac{3}{11}\cdot\left(-11\left(\frac{1}{12}\right)^{n-1}\right)=4-\frac{3\cdot11}{11}\left(\frac{1}{12}\right)^{n-1},\]
+  \[\boxed{\;v_n=4-3\left(\frac{1}{12}\right)^{n-1}\;}\]
+</div>
+
+<div class="step">
+  <div class="num">15</div>
+  <div class="head">Обязательная проверка на реальных числах</div>
+  <p>При \(n=1\): \(\left(\frac{1}{12}\right)^0=1\), значит</p>
+  \[u_1=4+8=12,\qquad v_1=4-3=1.\]
+  <p>Совпало с условием.</p>
+  <p>При \(n=2\): \(\left(\frac{1}{12}\right)^1=\frac{1}{12}\), значит</p>
+  \[u_2=4+\frac{8}{12}=4+\frac23=\frac{12}{3}+\frac23=\frac{14}{3},\qquad v_2=4-\frac{3}{12}=4-\frac14=\frac{16}{4}-\frac14=\frac{15}{4}.\]
+  <p>Совпало с тем, что мы посчитали руками в начале.</p>
+  <p>При \(n=3\): \(\left(\frac{1}{12}\right)^2=\frac{1}{144}\), значит</p>
+  \[u_3=4+\frac{8}{144}=4+\frac{1}{18}=\frac{72}{18}+\frac{1}{18}=\frac{73}{18},\qquad v_3=4-\frac{3}{144}=4-\frac{1}{48}=\frac{192}{48}-\frac{1}{48}=\frac{191}{48}.\]
+  <p>Тоже совпало. Формулы верны.</p>
+</div>
+
+<h3>Пункт 4. Сходимость к общему пределу</h3>
+
+<div class="step">
+  <div class="num">16</div>
+  <div class="head">Разбираем каждую формулу на части</div>
+  <p>Формула \(u_n=4+8\left(\frac{1}{12}\right)^{n-1}\) состоит из постоянной части 4 и меняющейся части \(8\left(\frac{1}{12}\right)^{n-1}\).</p>
+  <p>Так как \(\dfrac{1}{12}\) лежит между \(-1\) и \(1\), степень стремится к нулю:</p>
+  \[\lim_{n\to+\infty}\left(\frac{1}{12}\right)^{n-1}=0.\]
+  <p>Значит, \(8\cdot0=0\), и</p>
+  \[\lim_{n\to+\infty}u_n=4+0=4.\]
+</div>
+
+<div class="step">
+  <div class="num">17</div>
+  <div class="head">То же самое для \((v_n)\)</div>
+  <p>Формула \(v_n=4-3\left(\frac{1}{12}\right)^{n-1}\). Меняющаяся часть \(-3\left(\frac{1}{12}\right)^{n-1}\) тоже стремится к нулю, потому что \(-3\cdot0=0\):</p>
+  \[\lim_{n\to+\infty}v_n=4-0=4.\]
+</div>
+
+<div class="step">
+  <div class="num">18</div>
+  <div class="head">Вывод</div>
+  <p>Обе последовательности сходятся, и оба предела равны 4. Значит, предел один и тот же:</p>
+  \[\lim_{n\to+\infty}u_n=\lim_{n\to+\infty}v_n=4.\]
+  <p>Заметим, что \((u_n)\) подбирается к четвёрке <b>сверху</b> (добавка \(+8\left(\frac{1}{12}\right)^{n-1}\) всегда положительна), а \((v_n)\) — <b>снизу</b> (добавка отрицательна). Две лестницы движутся навстречу друг другу и встречаются в точке 4. Такую пару называют <b>смежными последовательностями</b> (suites adjacentes).</p>
+  <p>Проверка через сохраняющуюся величину: если оба предела равны одному числу \(L\), то в равенстве \(8v_n+3u_n=44\) при больших \(n\) получим \(8L+3L=44\), то есть \(11L=44\), откуда \(L=4\). Тот же ответ, полученный совсем другим способом.</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <p><b>1a)</b> \(w_{n+1}=\dfrac{1}{12}w_n\) — значит \((w_n)\) геометрическая со знаменателем \(q=\dfrac{1}{12}\) и первым членом \(w_1=-11\); поэтому</p>
+  \[w_n=-11\left(\frac{1}{12}\right)^{n-1}.\]
+  <p><b>1b)</b> Так как \(\left|\dfrac{1}{12}\right|&lt;1\), последовательность \((w_n)\) сходится и \(\displaystyle\lim_{n\to+\infty}w_n=0\).</p>
+  <p><b>2)</b> \(x_{n+1}=3u_n+8v_n=x_n\), значит \((x_n)\) постоянна, и для всех \(n\geqslant1\): \(x_n=44\).</p>
+  <p><b>3)</b></p>
+  \[u_n=4+8\left(\frac{1}{12}\right)^{n-1},\qquad v_n=4-3\left(\frac{1}{12}\right)^{n-1}.\]
+  <p><b>4)</b> Обе сходятся к одному пределу:</p>
+  \[\lim_{n\to+\infty}u_n=\lim_{n\to+\infty}v_n=4.\]
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+  <p><b>1. Пишут \(w_n=w_1\cdot q^{\,n}\) вместо \(w_1\cdot q^{\,n-1}\).</b> Здесь нумерация начинается с единицы, а не с нуля. От первой ступеньки до \(n\)-й ровно \(n-1\) шагов. Всегда проверяйте формулу подстановкой \(n=1\): должно получиться в точности \(w_1\).</p>
+  <p><b>2. При вычитании дробей теряют знак у второй скобки.</b> В шаге 3 надо было раскрыть \(-4(u_n+2v_n)\) как \(-4u_n-8v_n\), а не как \(-4u_n+8v_n\). Минус перед скобкой меняет знак у <b>всех</b> слагаемых внутри.</p>
+  <p><b>3. Ошибаются в направлении вычитания.</b> По условию \(w_n=v_n-u_n\), значит и \(w_{n+1}=v_{n+1}-u_{n+1}\) — сначала \(v\), потом \(u\). Если перепутать порядок, получится \(w_1=+11\) и все дальнейшие знаки будут неверными.</p>
+  <p><b>4. Не проверяют \(x_1\).</b> Доказать, что \(x_{n+1}=x_n\), — это только полдела: мы узнали, что величина не меняется, но не узнали, чему она равна. Обязательно надо вычислить \(x_1=44\).</p>
+  <p><b>5. Пытаются решать систему в пункте 3 «в лоб», подставив сразу длинное выражение \(w_n\).</b> Гораздо аккуратнее сначала решить систему в буквах (получить \(v_n=4+\frac{3}{11}w_n\) и \(u_n=4-\frac{8}{11}w_n\)), и только в конце подставить \(w_n\). Тогда одиннадцатки красиво сократятся с множителем \(-11\).</p>
+  <p><b>6. Забывают, что «сходится» требует конечного предела.</b> Здесь всё хорошо: обе последовательности имеют конечный предел 4, значит обе сходятся.</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

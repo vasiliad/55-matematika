@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 27 — Разность соседних квадратных корней</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Последовательности · Задача 27 из 55</div>
+  <h1>Насколько соседние квадратные корни отличаются друг от друга</h1>
+  <div class="stars">★☆☆☆ — базовый уровень</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>Последовательность \((u_n)\) задана для всех целых \(n\geqslant1\) формулой</p>
+  \[u_n=\sqrt{n+1}-\sqrt{n}.\]
+  <ol>
+    <li>a) Доказать, что для любого целого \(n\geqslant1\)
+      \[\frac{1}{2\sqrt{n+1}}\ \leqslant\ u_n\ \leqslant\ \frac{1}{2\sqrt{n}}.\]
+      b) Каков предел последовательности \((u_n)\)?</li>
+    <li>Последовательность \((v_n)\) задана формулой
+      \[v_n=\frac{u_1+u_2+\dots+u_n}{\sqrt{n}}.\]
+      Каков предел последовательности \((v_n)\)?</li>
+  </ol>
+</div>
+
+<details>
+  <summary>Оригинал по-французски</summary>
+  <p class="orig">La suite \((u_n)\) est définie sur \(\mathbb N^{*}\) par : \(u_n=\sqrt{n+1}-\sqrt n\).<br>
+  1) a) Démontrer que, pour tout \(n\in\mathbb N^{*}\),
+  \(\dfrac{1}{2\sqrt{n+1}}\leqslant u_n\leqslant\dfrac{1}{2\sqrt n}\).
+  b) Quelle est la limite de \((u_n)\) ?<br>
+  2) La suite \((v_n)\) est définie par \(v_n=\dfrac{u_1+u_2+\dots+u_n}{\sqrt n}\).
+  Quelle est la limite de \((v_n)\) ?</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Выпишем квадратные корни подряд: \(\sqrt1=1\), \(\sqrt2\approx1{,}414\), \(\sqrt3\approx1{,}732\),
+\(\sqrt4=2\), \(\sqrt5\approx2{,}236\), … Числа растут, но всё медленнее и медленнее.
+Задача спрашивает: <b>на сколько каждый следующий корень больше предыдущего?</b>
+Эта разность и есть \(u_n\).</p>
+
+<p>Первая часть: доказать, что эта разность зажата между двумя простыми дробями, и понять,
+что она стремится к нулю (соседние корни становятся почти одинаковыми).</p>
+
+<p>Вторая часть: сложить все эти разности от первой до \(n\)-й, поделить результат на \(\sqrt n\)
+и посмотреть, к чему стремится получившееся число. Ответ окажется красивым — единица.</p>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><b>Что такое квадратный корень (racine carrée).</b> \(\sqrt{a}\) — это такое неотрицательное
+  число, которое при умножении само на себя даёт \(a\). Например, \(\sqrt9=3\), потому что
+  \(3\cdot3=9\). А \(\sqrt2\approx1{,}414\), потому что \(1{,}414\cdot1{,}414\approx1{,}9994\).
+  Главное свойство, которым мы будем пользоваться: \(\sqrt{a}\cdot\sqrt{a}=a\).</p>
+
+  <p><b>Корни сохраняют порядок.</b> Если \(a\leqslant b\) (и оба неотрицательны),
+  то \(\sqrt a\leqslant\sqrt b\). Проще: чем больше число, тем больше его корень.
+  Например, \(4&lt;9\) и \(2&lt;3\). Отсюда сразу: \(\sqrt n\leqslant\sqrt{n+1}\).</p>
+
+  <p><b>Запись \(\mathbb N^{*}\)</b> означает «целые числа \(1,2,3,4,\dots\)», то есть натуральные
+  числа без нуля. Ноль исключён, потому что дальше нам придётся делить на \(\sqrt n\),
+  а на ноль делить нельзя.</p>
+
+  <p><b>Приём «умножить на сопряжённое» (quantité conjuguée).</b> Это главный трюк задачи.
+  Он основан на школьном тождестве</p>
+  \[(A-B)(A+B)=A\cdot A+A\cdot B-B\cdot A-B\cdot B=A^2-B^2.\]
+  <p>Если \(A=\sqrt{n+1}\) и \(B=\sqrt n\), то \(A^2=n+1\) и \(B^2=n\), и разность корней
+  превращается в разность обычных чисел. Так мы избавимся от неудобной разности корней.</p>
+
+  <p><b>Что такое предел (limite).</b> Список чисел «стремится к \(L\)», если его числа подбираются
+  к \(L\) сколь угодно близко и остаются рядом. Например, \(\frac{1}{n}\) — это
+  \(1;\ 0{,}5;\ 0{,}333;\ 0{,}25;\ 0{,}2;\dots\) — стремится к 0.
+  Так же \(\frac{1}{\sqrt n}\) стремится к 0, только медленнее.</p>
+
+  <p><b>Правило «зажатой середины» (théorème des gendarmes).</b> Если всегда выполняется
+  \(A\leqslant B\leqslant C\), и при этом \(A\) стремится к какому-то числу \(L\), и \(C\) стремится
+  к тому же \(L\), то и \(B\) вынужден стремиться к \(L\).
+  Картинка: два конвоира ведут арестанта, оба идут к воротам — значит и арестант придёт к воротам.</p>
+
+  <p><b>Телескопическая сумма (somme télescopique).</b> Так называют сумму, в которой соседние
+  слагаемые взаимно уничтожаются, и от длинной цепочки остаются только два крайних кусочка —
+  как складывается подзорная труба. Пример:
+  \((5-3)+(8-5)+(11-8)=5-3+8-5+11-8=11-3=8\). Все средние числа сократились.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">Посмотрим на числа руками</div>
+  <p><b>Почему.</b> Полезно увидеть, о каких величинах вообще идёт речь, прежде чем что-то доказывать.</p>
+  <table>
+    <tr><th>\(n\)</th><th>1</th><th>2</th><th>3</th><th>4</th><th>9</th><th>100</th></tr>
+    <tr><th>\(\sqrt n\)</th><td>\(1\)</td><td>\(\approx1{,}4142\)</td><td>\(\approx1{,}7321\)</td><td>\(2\)</td><td>\(3\)</td><td>\(10\)</td></tr>
+    <tr><th>\(\sqrt{n+1}\)</th><td>\(\approx1{,}4142\)</td><td>\(\approx1{,}7321\)</td><td>\(2\)</td><td>\(\approx2{,}2361\)</td><td>\(\approx3{,}1623\)</td><td>\(\approx10{,}0499\)</td></tr>
+    <tr><th>\(u_n\)</th><td>\(\approx0{,}4142\)</td><td>\(\approx0{,}3178\)</td><td>\(\approx0{,}2679\)</td><td>\(\approx0{,}2361\)</td><td>\(\approx0{,}1623\)</td><td>\(\approx0{,}0499\)</td></tr>
+  </table>
+  <p>Видно: разности всё время положительны и постепенно уменьшаются, приближаясь к нулю.</p>
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">Пункт 1a: главный трюк — избавляемся от разности корней</div>
+  <p><b>Почему так делаем.</b> Разность двух корней — неудобная штука: непонятно, как её сравнивать
+  с дробями. Превратим её в дробь. Для этого умножим и разделим на сумму тех же корней —
+  от этого значение не изменится (мы же умножаем на единицу, записанную в виде
+  \(\frac{\text{сумма}}{\text{сумма}}\)).</p>
+  \[u_n=\sqrt{n+1}-\sqrt{n}
+  =\frac{\left(\sqrt{n+1}-\sqrt{n}\right)\cdot\left(\sqrt{n+1}+\sqrt{n}\right)}{\sqrt{n+1}+\sqrt{n}}.\]
+  <p>Раскроем числитель по тождеству \((A-B)(A+B)=A^2-B^2\), где \(A=\sqrt{n+1}\), \(B=\sqrt n\).
+  Распишем подробно:</p>
+  \[\left(\sqrt{n+1}-\sqrt{n}\right)\left(\sqrt{n+1}+\sqrt{n}\right)
+  =\underbrace{\sqrt{n+1}\cdot\sqrt{n+1}}_{=\,n+1}
+  +\sqrt{n+1}\sqrt{n}-\sqrt{n}\sqrt{n+1}
+  -\underbrace{\sqrt{n}\cdot\sqrt{n}}_{=\,n}.\]
+  <p>Средние два слагаемых одинаковы по величине и противоположны по знаку — они уничтожаются.
+  Остаётся \((n+1)-n=1\). Итак:</p>
+  \[\boxed{\ u_n=\frac{1}{\sqrt{n+1}+\sqrt{n}}\ }\]
+  <p>Проверим на числе: при \(n=1\) получаем \(\dfrac{1}{\sqrt2+\sqrt1}=\dfrac{1}{1{,}4142+1}=\dfrac{1}{2{,}4142}\approx0{,}4142\).
+  В таблице шага 1 стоит ровно это значение. Формула верна.</p>
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">Пункт 1a: зажимаем знаменатель между двумя простыми числами</div>
+  <p><b>Почему.</b> Теперь \(u_n\) — это дробь с единицей наверху. У такой дроби всё определяется
+  знаменателем: <b>чем больше знаменатель, тем меньше дробь</b> (делим один пирог на большее
+  число людей — каждому достаётся меньше). Значит достаточно зажать знаменатель.</p>
+  <p>Знаменатель — это \(\sqrt{n+1}+\sqrt{n}\), сумма двух корней. Так как \(n\leqslant n+1\),
+  то \(\sqrt n\leqslant\sqrt{n+1}\). Отсюда две оценки.</p>
+
+  <p><b>Сверху.</b> Заменим меньший корень \(\sqrt n\) на больший \(\sqrt{n+1}\) — сумма только вырастет:</p>
+  \[\sqrt{n+1}+\sqrt{n}\ \leqslant\ \sqrt{n+1}+\sqrt{n+1}=2\sqrt{n+1}.\]
+
+  <p><b>Снизу.</b> Заменим больший корень \(\sqrt{n+1}\) на меньший \(\sqrt{n}\) — сумма только уменьшится:</p>
+  \[\sqrt{n+1}+\sqrt{n}\ \geqslant\ \sqrt{n}+\sqrt{n}=2\sqrt{n}.\]
+
+  <p>Итого знаменатель зажат:</p>
+  \[2\sqrt{n}\ \leqslant\ \sqrt{n+1}+\sqrt{n}\ \leqslant\ 2\sqrt{n+1}.\]
+
+  <p>Теперь переходим к дробям. Все три числа положительны, поэтому при переходе к обратным
+  величинам порядок переворачивается (большему знаменателю соответствует меньшая дробь):</p>
+  \[\frac{1}{2\sqrt{n+1}}\ \leqslant\ \frac{1}{\sqrt{n+1}+\sqrt{n}}\ \leqslant\ \frac{1}{2\sqrt{n}}.\]
+  <p>А в середине стоит ровно \(u_n\). Требуемое неравенство доказано:</p>
+  \[\frac{1}{2\sqrt{n+1}}\ \leqslant\ u_n\ \leqslant\ \frac{1}{2\sqrt{n}}.\]
+  <p>Проверим на \(n=4\): слева \(\dfrac{1}{2\sqrt5}=\dfrac{1}{4{,}4721}\approx0{,}2236\);
+  в середине \(u_4\approx0{,}2361\); справа \(\dfrac{1}{2\sqrt4}=\dfrac{1}{4}=0{,}25\).
+  Действительно \(0{,}2236\leqslant0{,}2361\leqslant0{,}25\).</p>
+</div>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">Пункт 1b: предел \((u_n)\)</div>
+  <p><b>Почему используем зажатие.</b> Мы уже знаем, что \(u_n\) зажат между двумя дробями.
+  Если оба края идут к нулю, то и \(u_n\) обязан идти к нулю.</p>
+  <p><b>Правый край.</b> Когда \(n\) растёт, \(\sqrt n\) тоже растёт неограниченно
+  (\(\sqrt{100}=10\), \(\sqrt{10\,000}=100\), \(\sqrt{1\,000\,000}=1000\)).
+  Значит \(2\sqrt n\) растёт неограниченно, а дробь \(\dfrac{1}{2\sqrt n}\) становится
+  сколь угодно малой — стремится к 0.</p>
+  <p><b>Левый край.</b> Точно так же \(\dfrac{1}{2\sqrt{n+1}}\) стремится к 0.</p>
+  <p>Оба конвоира приходят в 0, значит</p>
+  \[\lim_{n\to+\infty}u_n=0.\]
+  <p><b>Что это значит по-человечески.</b> Соседние квадратные корни становятся всё ближе друг к другу.
+  Например, \(\sqrt{1\,000\,001}-\sqrt{1\,000\,000}\approx0{,}0005\) — разница почти незаметна.</p>
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">Пункт 2: складываем всё — сумма «складывается как подзорная труба»</div>
+  <p><b>Почему сумма считается легко.</b> Каждое слагаемое — это разность двух соседних корней.
+  Выпишем их подряд и посмотрим, что происходит:</p>
+  \[u_1=\sqrt2-\sqrt1,\quad u_2=\sqrt3-\sqrt2,\quad u_3=\sqrt4-\sqrt3,\quad\dots,\quad
+  u_n=\sqrt{n+1}-\sqrt{n}.\]
+  <p>Складываем всё в одну строку, не переставляя:</p>
+  \[u_1+u_2+\dots+u_n=
+  \sqrt2-\sqrt1+\sqrt3-\sqrt2+\sqrt4-\sqrt3+\dots+\sqrt{n+1}-\sqrt{n}.\]
+  <p>Смотрим: \(+\sqrt2\) и \(-\sqrt2\) уничтожаются. \(+\sqrt3\) и \(-\sqrt3\) уничтожаются.
+  \(+\sqrt4\) и \(-\sqrt4\) уничтожаются. И так далее — сокращается всё, кроме самого первого
+  минуса и самого последнего плюса. Остаётся:</p>
+  \[u_1+u_2+\dots+u_n=\sqrt{n+1}-\sqrt1=\sqrt{n+1}-1.\]
+  <p><b>Проверим на маленьком примере, \(n=3\):</b></p>
+  \[u_1+u_2+u_3\approx0{,}4142+0{,}3178+0{,}2679=0{,}9999\approx1{,}0000,\]
+  <p>а формула даёт \(\sqrt4-1=2-1=1\). Совпало.</p>
+</div>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">Пункт 2: подставляем сумму и упрощаем</div>
+  <p><b>Почему.</b> Теперь у \(v_n\) простой явный вид, и с ним можно работать.</p>
+  \[v_n=\frac{u_1+u_2+\dots+u_n}{\sqrt n}=\frac{\sqrt{n+1}-1}{\sqrt n}.\]
+  <p>Разобьём дробь на две (числитель состоит из двух слагаемых):</p>
+  \[v_n=\frac{\sqrt{n+1}}{\sqrt{n}}-\frac{1}{\sqrt{n}}.\]
+  <p><b>Разбираем первое слагаемое.</b> Частное двух корней — это корень из частного:</p>
+  \[\frac{\sqrt{n+1}}{\sqrt{n}}=\sqrt{\frac{n+1}{n}}=\sqrt{\frac{n}{n}+\frac{1}{n}}=\sqrt{1+\frac{1}{n}}.\]
+  <p>Итак</p>
+  \[v_n=\sqrt{1+\frac1n}-\frac{1}{\sqrt n}.\]
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">Пункт 2: находим предел \((v_n)\)</div>
+  <p><b>Почему теперь всё видно.</b> В формуле остались только две «уходящие» величины,
+  и обе стремятся к нулю.</p>
+  <ul>
+    <li>\(\dfrac1n\) стремится к 0 (это \(1;\ 0{,}5;\ 0{,}333;\ 0{,}25;\dots\)).
+    Значит подкоренное выражение \(1+\frac1n\) стремится к 1, а сам корень \(\sqrt{1+\frac1n}\)
+    стремится к \(\sqrt1=1\).</li>
+    <li>\(\dfrac{1}{\sqrt n}\) стремится к 0 (это \(1;\ 0{,}707;\ 0{,}577;\ 0{,}5;\dots\)).</li>
+  </ul>
+  <p>Складывая (точнее, вычитая) пределы, получаем</p>
+  \[\lim_{n\to+\infty}v_n=1-0=1.\]
+  <p><b>Проверим числами.</b> Считаем \(v_n=\dfrac{\sqrt{n+1}-1}{\sqrt n}\):</p>
+  <table>
+    <tr><th>\(n\)</th><th>1</th><th>3</th><th>9</th><th>100</th><th>10 000</th></tr>
+    <tr><th>\(\sqrt{n+1}-1\)</th><td>\(\approx0{,}4142\)</td><td>\(1\)</td><td>\(\approx2{,}1623\)</td><td>\(\approx9{,}0499\)</td><td>\(\approx99{,}0050\)</td></tr>
+    <tr><th>\(\sqrt n\)</th><td>\(1\)</td><td>\(\approx1{,}7321\)</td><td>\(3\)</td><td>\(10\)</td><td>\(100\)</td></tr>
+    <tr><th>\(v_n\)</th><td>\(\approx0{,}4142\)</td><td>\(\approx0{,}5774\)</td><td>\(\approx0{,}7208\)</td><td>\(\approx0{,}9050\)</td><td>\(\approx0{,}9901\)</td></tr>
+  </table>
+  <p>Числа медленно, но уверенно ползут к единице.</p>
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">Смысл результата</div>
+  <p><b>Почему стоит об этом подумать.</b> Получилось любопытное: каждое отдельное слагаемое \(u_n\)
+  стремится к нулю, но их сумма всё равно растёт — потому что слагаемых становится всё больше.
+  Сумма \(\sqrt{n+1}-1\) растёт примерно как \(\sqrt n\). Поэтому, поделив сумму на \(\sqrt n\),
+  мы получаем величину порядка единицы, а не ноль и не бесконечность.</p>
+  <p>Мораль: «каждое слагаемое стремится к нулю» ещё не означает «сумма мала».
+  Классический пример того, как складывание бесконечно многих маленьких кусочков даёт большое число.</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <ol>
+    <li>a) После умножения на сопряжённое \(u_n=\dfrac{1}{\sqrt{n+1}+\sqrt n}\).
+      Так как \(2\sqrt n\leqslant\sqrt{n+1}+\sqrt n\leqslant2\sqrt{n+1}\), то
+      \[\frac{1}{2\sqrt{n+1}}\leqslant u_n\leqslant\frac{1}{2\sqrt n}.\]
+      b) Обе границы стремятся к 0, поэтому \(\displaystyle\lim_{n\to+\infty}u_n=0\).</li>
+    <li>Сумма телескопическая: \(u_1+u_2+\dots+u_n=\sqrt{n+1}-1\), значит
+      \[v_n=\frac{\sqrt{n+1}-1}{\sqrt n}=\sqrt{1+\frac1n}-\frac{1}{\sqrt n},\qquad
+      \lim_{n\to+\infty}v_n=1.\]</li>
+  </ol>
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+  <ul>
+    <li><b>Пишут \(\sqrt{n+1}-\sqrt n=\sqrt{1}=1\).</b> Это грубая ошибка: корень из разности
+    не равен разности корней. Проверьте руками: \(\sqrt4-\sqrt1=2-1=1\), но \(\sqrt{4-1}=\sqrt3\approx1{,}73\).
+    Разные числа.</li>
+    <li><b>Забывают умножить и числитель, и знаменатель при трюке с сопряжённым.</b>
+    Умножать надо на дробь \(\frac{\sqrt{n+1}+\sqrt n}{\sqrt{n+1}+\sqrt n}\), которая равна единице.
+    Если умножить только сверху, значение изменится.</li>
+    <li><b>Путают направление неравенства при переходе к обратным дробям.</b>
+    Больший знаменатель даёт МЕНЬШУЮ дробь. Поэтому оценка знаменателя сверху даёт оценку дроби снизу.</li>
+    <li><b>Считают, что раз каждое \(u_n\) стремится к нулю, то и сумма стремится к нулю.</b>
+    Нет: сумма равна \(\sqrt{n+1}-1\) и растёт неограниченно.</li>
+    <li><b>Начинают нумерацию с нуля.</b> Здесь \(n\geqslant1\): при \(n=0\) знаменатель \(\sqrt0=0\),
+    и \(v_0\) не существует.</li>
+  </ul>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

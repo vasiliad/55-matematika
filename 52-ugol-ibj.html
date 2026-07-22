@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 52 — Угол IBJ в квадрате</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+figure{margin:22px 0;text-align:center}
+figure svg{max-width:100%;height:auto;background:var(--card);
+  border:1px solid var(--line);border-radius:10px}
+figcaption{font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);margin-top:8px}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Раздел V · Координаты и векторы · Задача 52 из 55</div>
+  <h1>Угол \(\widehat{IBJ}\) в квадрате: находим его без транспортира</h1>
+  <div class="stars">★★☆☆ — средний уровень</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>\(ABCD\) — квадрат со стороной \(a\); \(I\) и \(J\) — середины отрезков
+  \([AD]\) и \([DC]\) соответственно. Через \(\alpha\) обозначим величину угла
+  \(\widehat{IBJ}\) в градусах.</p>
+  <ol>
+    <li>Показать, что \(\;\vec{BI}\cdot\vec{BJ}=\dfrac54\,a^{2}\cos(\alpha)\).</li>
+    <li>Выразить векторы \(\vec{BI}\) и \(\vec{BJ}\) через векторы \(\vec{AB}\)
+    и \(\vec{AD}\).</li>
+    <li>Вывести отсюда другой способ вычислить \(\vec{BI}\cdot\vec{BJ}\)
+    и найти \(\alpha\) с точностью до градуса.</li>
+  </ol>
+</div>
+
+<figure>
+<svg viewBox="30 30 330 320" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="Квадрат ABCD с серединами I и J и углом IBJ">
+  <!-- triangle IBJ fill -->
+  <polygon points="300,60 60,180 180,300" fill="#fdf3e3" stroke="none"/>
+  <!-- square -->
+  <polygon points="60,60 300,60 300,300 60,300" fill="none" stroke="#25211c" stroke-width="2.5"/>
+  <!-- BI and BJ -->
+  <line x1="300" y1="60" x2="60"  y2="180" stroke="#1e4e79" stroke-width="2.5"/>
+  <line x1="300" y1="60" x2="180" y2="300" stroke="#166534" stroke-width="2.5"/>
+  <!-- IJ -->
+  <line x1="60" y1="180" x2="180" y2="300" stroke="#6b6257" stroke-width="1.5"
+        stroke-dasharray="5 4"/>
+  <!-- angle arc at B -->
+  <path d="M 250.8 84.6 A 55 55 0 0 0 275.4 109.2" fill="none"
+        stroke="#b45309" stroke-width="2.5"/>
+  <!-- midpoint ticks -->
+  <line x1="53" y1="115" x2="67" y2="125" stroke="#6b6257" stroke-width="1.5"/>
+  <line x1="53" y1="235" x2="67" y2="245" stroke="#6b6257" stroke-width="1.5"/>
+  <line x1="115" y1="293" x2="125" y2="307" stroke="#6b6257" stroke-width="1.5"/>
+  <line x1="235" y1="293" x2="245" y2="307" stroke="#6b6257" stroke-width="1.5"/>
+  <!-- points -->
+  <circle cx="60"  cy="60"  r="4.5" fill="#25211c"/>
+  <circle cx="300" cy="60"  r="4.5" fill="#25211c"/>
+  <circle cx="300" cy="300" r="4.5" fill="#25211c"/>
+  <circle cx="60"  cy="300" r="4.5" fill="#25211c"/>
+  <circle cx="60"  cy="180" r="4.5" fill="#b45309"/>
+  <circle cx="180" cy="300" r="4.5" fill="#b45309"/>
+  <!-- labels -->
+  <g font-family="Georgia,serif" font-size="20" fill="#25211c">
+    <text x="42"  y="52">A</text>
+    <text x="308" y="52">B</text>
+    <text x="308" y="316">C</text>
+    <text x="40"  y="316">D</text>
+  </g>
+  <g font-family="Georgia,serif" font-size="20" fill="#b45309">
+    <text x="38"  y="186">I</text>
+    <text x="176" y="324">J</text>
+    <text x="240" y="122">α</text>
+  </g>
+  <g font-family="system-ui,sans-serif" font-size="13" fill="#6b6257">
+    <text x="150" y="52">сторона a</text>
+    <text x="150" y="176">BI</text>
+    <text x="246" y="200">BJ</text>
+  </g>
+</svg>
+<figcaption>Квадрат \(ABCD\) со стороной \(a\). \(I\) — середина \([AD]\),
+\(J\) — середина \([DC]\). Чёрточками отмечены равные половинки сторон.
+Оранжевая дуга — искомый угол \(\alpha=\widehat{IBJ}\).</figcaption>
+</figure>
+
+<details>
+  <summary>Оригинал по-французски</summary>
+  <p class="orig"><b>Ex 52 ★★✩✩</b><br>
+  Soient ABCD un carré de côté a, I et J les milieux respectifs des segments
+  [AD] et [DC]. On note α la mesure en degrés de l’angle \(\widehat{IBJ}\).<br>
+  1) Montrer que \(\vec{BI}\cdot\vec{BJ}=\frac54 a^{2}\cos(\alpha)\).<br>
+  2) Exprimer les vecteurs \(\vec{BI}\) et \(\vec{BJ}\) en fonction des vecteurs
+  \(\vec{AB}\) et \(\vec{AD}\).<br>
+  3) En déduire une autre manière de calculer \(\vec{BI}\cdot\vec{BJ}\) et
+  déterminer α au degré près.</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Нарисуйте квадрат. Отметьте середину левой стороны — это \(I\), и середину
+нижней стороны — это \(J\). Теперь из правого верхнего угла \(B\) проведите
+два отрезка: в \(I\) и в \(J\). Между ними получился какой-то угол.
+<b>Чему он равен?</b></p>
+
+<p>Транспортиром можно измерить, но приблизительно. Задача просит вычислить
+его точно — не измеряя.</p>
+
+<p>Идея решения красивая. Есть величина, называемая <b>скалярное произведение
+(produit scalaire)</b>. Её можно посчитать <em>двумя разными способами</em>:</p>
+<ul>
+  <li><b>способ «через угол»</b> — он даёт формулу, в которую входит
+  неизвестный нам \(\cos\alpha\);</li>
+  <li><b>способ «через разложение»</b> — он даёт просто число, без угла.</li>
+</ul>
+<p>Приравниваем два результата — и неизвестный \(\cos\alpha\) находится.
+Это классический приём: посчитать одно и то же двумя путями.</p>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><b>1. Вектор (vecteur) — стрелка «куда и насколько сдвинуться».</b></p>
+  <p>Запись \(\vec{BI}\) означает: «сдвиг, переводящий точку \(B\) в точку
+  \(I\)». У вектора есть направление и длина, и больше ничего. Место, где
+  нарисована стрелка, значения не имеет: две одинаково направленные стрелки
+  одинаковой длины — один и тот же вектор.</p>
+  <p>Длину вектора \(\vec u\) обозначают \(\|\vec u\|\) и называют его
+  <b>нормой</b>. Например \(\|\vec{BI}\|=BI\) — просто длина отрезка \([BI]\).</p>
+
+  <p><b>2. Сложение векторов — «правило цепочки».</b></p>
+  <p>Если сначала сдвинуться из \(B\) в \(A\), а потом из \(A\) в \(I\), то в
+  сумме получится сдвиг из \(B\) в \(I\):</p>
+  \[ \vec{BA}+\vec{AI}=\vec{BI}. \]
+  <p>Это правило работает с любой промежуточной точкой (оно называется
+  <b>соотношением Шаля</b>, relation de Chasles). Проверьте на себе: пройти
+  из кухни в коридор, а потом из коридора в спальню — то же самое, что пройти
+  из кухни в спальню.</p>
+
+  <p><b>3. Умножение вектора на число.</b></p>
+  <p>\(2\vec u\) — та же стрелка, но вдвое длиннее. \(\tfrac12\vec u\) —
+  вдвое короче. \(-\vec u\) — та же длина, но в противоположную сторону.
+  В частности \(\vec{BA}=-\vec{AB}\).</p>
+
+  <p><b>4. Скалярное произведение — способ первый, «через угол».</b></p>
+  <p>Для двух ненулевых векторов \(\vec u\) и \(\vec v\), между которыми угол
+  \(\theta\), определяют число</p>
+  \[ \vec u\cdot\vec v=\|\vec u\|\times\|\vec v\|\times\cos\theta . \]
+  <p>Словами: «перемножили длины и домножили на косинус угла между стрелками».
+  Результат — обычное число (скаляр), а не стрелка.</p>
+  <p><b>Что такое \(\cos\theta\).</b> Это число из таблицы, зависящее только от
+  величины угла. Ключевые значения:</p>
+  <table>
+    <tr><th>угол \(\theta\)</th><th>\(\cos\theta\)</th><th>смысл</th></tr>
+    <tr><td>\(0^\circ\)</td><td>\(1\)</td><td>стрелки смотрят в одну сторону</td></tr>
+    <tr><td>\(36^\circ\)</td><td>\(0{,}80902\)</td><td>—</td></tr>
+    <tr><td>\(37^\circ\)</td><td>\(0{,}79864\)</td><td>—</td></tr>
+    <tr><td>\(60^\circ\)</td><td>\(0{,}5\)</td><td>—</td></tr>
+    <tr><td>\(90^\circ\)</td><td>\(0\)</td><td>стрелки перпендикулярны</td></tr>
+    <tr><td>\(180^\circ\)</td><td>\(-1\)</td><td>стрелки смотрят навстречу</td></tr>
+  </table>
+  <p>Отсюда главное свойство: <b>скалярное произведение равно нулю ровно тогда,
+  когда стрелки перпендикулярны</b> (ведь \(\cos 90^\circ=0\)).</p>
+
+  <p><b>5. Скалярное произведение — способ второй, «раскрытие скобок».</b></p>
+  <p>Со скалярным произведением можно обращаться почти как с обычным
+  умножением чисел:</p>
+  <ul>
+    <li>порядок неважен: \(\vec u\cdot\vec v=\vec v\cdot\vec u\);</li>
+    <li>числовые множители выносятся:
+    \((k\vec u)\cdot\vec v=k\,(\vec u\cdot\vec v)\);</li>
+    <li>скобки раскрываются:
+    \(\vec u\cdot(\vec v+\vec w)=\vec u\cdot\vec v+\vec u\cdot\vec w\).</li>
+  </ul>
+  <p>И два частных случая, которые всё решают:</p>
+  <ul>
+    <li><b>вектор на себя:</b> \(\vec u\cdot\vec u=\|\vec u\|\times\|\vec u\|
+    \times\cos 0^\circ=\|\vec u\|^{2}\) — просто квадрат длины;</li>
+    <li><b>перпендикулярные векторы:</b> \(\vec u\cdot\vec v=0\).</li>
+  </ul>
+
+  <p><b>6. Теорема Пифагора — понадобится для длин.</b></p>
+  <p>В прямоугольном треугольнике квадрат длинной стороны (гипотенузы) равен
+  сумме квадратов двух коротких: \(c^{2}=a^{2}+b^{2}\).</p>
+
+  <p><b>7. Середина отрезка.</b></p>
+  <p>\(I\) — середина \([AD]\) значит: \(AI=ID=\tfrac{AD}{2}\), и в векторном
+  виде \(\vec{AI}=\tfrac12\vec{AD}\).</p>
+
+  <p><b>8. Как из \(\cos\alpha\) получить сам угол \(\alpha\).</b></p>
+  <p>Обратная операция называется «арккосинус» и на калькуляторе обозначена
+  \(\cos^{-1}\) или \(\arccos\). Но её можно заменить поиском по таблице:
+  подбираем угол, у которого косинус равен нужному числу.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<h3>Пункт 1. Формула «через угол»</h3>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">Находим длину \(BI\)</div>
+  <p><em>Почему так делаем.</em> Определение скалярного произведения требует
+  длин обеих стрелок. Считаем их по теореме Пифагора.</p>
+  <p>Посмотрим на треугольник \(ABI\):</p>
+  <ul>
+    <li>\(AB=a\) — сторона квадрата;</li>
+    <li>\(AI=\dfrac{a}{2}\) — половина стороны, ведь \(I\) — середина \([AD]\);</li>
+    <li>угол при вершине \(A\) прямой, потому что стороны \(AB\) и \(AD\)
+    квадрата перпендикулярны.</li>
+  </ul>
+  <p>Значит \(BI\) — гипотенуза, и по теореме Пифагора:</p>
+  \[ BI^{2}=AB^{2}+AI^{2}=a^{2}+\left(\frac{a}{2}\right)^{2}
+     =a^{2}+\frac{a^{2}}{4}. \]
+  <p>Приводим к общему знаменателю: \(a^{2}=\dfrac{4a^{2}}{4}\), поэтому</p>
+  \[ BI^{2}=\frac{4a^{2}}{4}+\frac{a^{2}}{4}=\frac{5a^{2}}{4}. \]
+  <p>Извлекаем корень:</p>
+  \[ BI=\sqrt{\frac{5a^{2}}{4}}=\frac{a\sqrt5}{2}. \]
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">Находим длину \(BJ\)</div>
+  <p><em>Почему так делаем.</em> Тот же приём, но теперь треугольник \(BCJ\).</p>
+  <ul>
+    <li>\(BC=a\) — сторона квадрата;</li>
+    <li>\(CJ=\dfrac{a}{2}\) — половина стороны, ведь \(J\) — середина
+    \([DC]\), а значит и \([CD]\);</li>
+    <li>угол при вершине \(C\) прямой (стороны квадрата).</li>
+  </ul>
+  \[ BJ^{2}=BC^{2}+CJ^{2}=a^{2}+\frac{a^{2}}{4}=\frac{5a^{2}}{4},
+     \qquad BJ=\frac{a\sqrt5}{2}. \]
+  <p>Длины оказались одинаковыми — так и должно быть: картинка симметрична
+  относительно диагонали \(BD\), которая меняет местами \(I\) и \(J\).</p>
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">Собираем формулу</div>
+  <p><em>Почему так делаем.</em> Теперь просто подставляем найденные длины
+  в определение скалярного произведения.</p>
+  <p>Угол между векторами \(\vec{BI}\) и \(\vec{BJ}\) — это как раз угол
+  \(\widehat{IBJ}=\alpha\) (обе стрелки выходят из точки \(B\)):</p>
+  \[ \vec{BI}\cdot\vec{BJ}=\|\vec{BI}\|\times\|\vec{BJ}\|\times\cos\alpha
+     =\frac{a\sqrt5}{2}\times\frac{a\sqrt5}{2}\times\cos\alpha . \]
+  <p>Перемножаем дроби: числитель на числитель, знаменатель на знаменатель.</p>
+  <p>Числитель: \(a\sqrt5\times a\sqrt5=a\times a\times\sqrt5\times\sqrt5
+  =a^{2}\times 5=5a^{2}\)<br>
+  (потому что \(\sqrt5\times\sqrt5=5\) — таково определение корня).</p>
+  <p>Знаменатель: \(2\times 2=4\).</p>
+  \[ \boxed{\;\vec{BI}\cdot\vec{BJ}=\frac{5a^{2}}{4}\cos\alpha
+     =\frac54\,a^{2}\cos\alpha\;} \checkmark \]
+  <p>Требуемая формула доказана.</p>
+</div>
+
+<h3>Пункт 2. Раскладываем стрелки по базису</h3>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">Разложение \(\vec{BI}\)</div>
+  <p><em>Почему так делаем.</em> Мы хотим посчитать то же скалярное
+  произведение другим путём — так, чтобы угол \(\alpha\) вообще не участвовал.
+  Для этого выразим обе стрелки через две «опорные» стрелки \(\vec{AB}\) и
+  \(\vec{AD}\), про которые мы знаем всё: они одинаковой длины \(a\) и
+  перпендикулярны.</p>
+  <p>Идём из \(B\) в \(I\) через промежуточную точку \(A\) (правило цепочки):</p>
+  \[ \vec{BI}=\vec{BA}+\vec{AI}. \]
+  <p>Теперь заменяем каждое слагаемое:</p>
+  <ul>
+    <li>\(\vec{BA}=-\vec{AB}\) — это тот же путь, но в обратную сторону;</li>
+    <li>\(\vec{AI}=\dfrac12\vec{AD}\) — потому что \(I\) середина \([AD]\).</li>
+  </ul>
+  \[ \boxed{\;\vec{BI}=-\vec{AB}+\frac12\vec{AD}\;} \]
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">Разложение \(\vec{BJ}\)</div>
+  <p><em>Почему так делаем.</em> Тот же приём, но путь длиннее: из \(B\) в
+  \(J\) пойдём через \(A\) и \(D\).</p>
+  \[ \vec{BJ}=\vec{BA}+\vec{AD}+\vec{DJ}. \]
+  <p>Разбираем слагаемые:</p>
+  <ul>
+    <li>\(\vec{BA}=-\vec{AB}\);</li>
+    <li>\(\vec{AD}\) остаётся как есть;</li>
+    <li>\(\vec{DJ}=\dfrac12\vec{DC}\) — \(J\) середина \([DC]\).
+    А чему равен \(\vec{DC}\)? В квадрате \(ABCD\) стороны \(AB\) и \(DC\)
+    параллельны, равны и направлены одинаково (из первой буквы во вторую
+    вдоль одной пары сторон), поэтому \(\vec{DC}=\vec{AB}\). Значит
+    \(\vec{DJ}=\dfrac12\vec{AB}\).</li>
+  </ul>
+  <p>Складываем:</p>
+  \[ \vec{BJ}=-\vec{AB}+\vec{AD}+\frac12\vec{AB}. \]
+  <p>Собираем подобные (слагаемые с \(\vec{AB}\)):
+  \(-1+\dfrac12=-\dfrac12\).</p>
+  \[ \boxed{\;\vec{BJ}=-\frac12\vec{AB}+\vec{AD}\;} \]
+  <p><b>Проверка через координаты.</b> Поставим \(A\) в начало координат, ось
+  «вправо» вдоль \(\vec{AB}\), ось «вниз» вдоль \(\vec{AD}\), обе единицы
+  равны \(a\). Тогда \(A=(0;0)\), \(B=(a;0)\), \(C=(a;a)\), \(D=(0;a)\),
+  \(I=(0;\tfrac a2)\), \(J=(\tfrac a2;a)\). Считаем «конец минус начало»:<br>
+  \(\vec{BI}=(0-a;\ \tfrac a2-0)=(-a;\ \tfrac a2)\) — совпадает с
+  \(-\vec{AB}+\tfrac12\vec{AD}\). ✔<br>
+  \(\vec{BJ}=(\tfrac a2-a;\ a-0)=(-\tfrac a2;\ a)\) — совпадает с
+  \(-\tfrac12\vec{AB}+\vec{AD}\). ✔</p>
+</div>
+
+<h3>Пункт 3. Второй способ и вычисление угла</h3>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">Готовим три «кирпичика»</div>
+  <p><em>Почему так делаем.</em> Раскрывая скобки, мы получим четыре
+  скалярных произведения опорных векторов. Посчитаем их заранее.</p>
+  <ul>
+    <li>\(\vec{AB}\cdot\vec{AB}=\|\vec{AB}\|^{2}=a^{2}\) — вектор на себя даёт
+    квадрат длины;</li>
+    <li>\(\vec{AD}\cdot\vec{AD}=\|\vec{AD}\|^{2}=a^{2}\) — то же самое;</li>
+    <li>\(\vec{AB}\cdot\vec{AD}=0\) — <b>потому что стороны квадрата
+    перпендикулярны</b>, а скалярное произведение перпендикулярных векторов
+    равно нулю. Это ключевой момент всего решения.</li>
+  </ul>
+  <p>И конечно, \(\vec{AD}\cdot\vec{AB}=\vec{AB}\cdot\vec{AD}=0\) — порядок
+  неважен.</p>
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">Раскрываем скобки</div>
+  <p>Подставляем найденные разложения:</p>
+  \[ \vec{BI}\cdot\vec{BJ}
+     =\left(-\vec{AB}+\frac12\vec{AD}\right)\cdot
+      \left(-\frac12\vec{AB}+\vec{AD}\right). \]
+  <p>Раскрываем как обычные скобки — «каждое с каждым», всего четыре
+  слагаемых:</p>
+  \[
+  \begin{aligned}
+  &\bigl(-\vec{AB}\bigr)\cdot\left(-\frac12\vec{AB}\right)
+   =+\frac12\,\vec{AB}\cdot\vec{AB} \\[4pt]
+  &\bigl(-\vec{AB}\bigr)\cdot\vec{AD}
+   =-\,\vec{AB}\cdot\vec{AD} \\[4pt]
+  &\left(\frac12\vec{AD}\right)\cdot\left(-\frac12\vec{AB}\right)
+   =-\frac14\,\vec{AD}\cdot\vec{AB} \\[4pt]
+  &\left(\frac12\vec{AD}\right)\cdot\vec{AD}
+   =+\frac12\,\vec{AD}\cdot\vec{AD}
+  \end{aligned}
+  \]
+  <p>(Знаки: «минус на минус даёт плюс» в первом слагаемом,
+  «минус на плюс даёт минус» во втором и третьем.)</p>
+  <p>Складываем всё:</p>
+  \[ \vec{BI}\cdot\vec{BJ}=\frac12\,\vec{AB}\cdot\vec{AB}
+     -\vec{AB}\cdot\vec{AD}
+     -\frac14\,\vec{AD}\cdot\vec{AB}
+     +\frac12\,\vec{AD}\cdot\vec{AD}. \]
+  <p>Подставляем «кирпичики» из шага 6:</p>
+  \[ \vec{BI}\cdot\vec{BJ}=\frac12\,a^{2}-0-\frac14\cdot 0+\frac12\,a^{2}. \]
+  <p>Два средних слагаемых обнулились — вот ради чего мы выбрали именно
+  \(\vec{AB}\) и \(\vec{AD}\) в качестве опорных. Остаётся:</p>
+  \[ \vec{BI}\cdot\vec{BJ}=\frac12 a^{2}+\frac12 a^{2}=a^{2}. \]
+  \[ \boxed{\;\vec{BI}\cdot\vec{BJ}=a^{2}\;} \]
+
+  <p><b>Проверка по координатам</b> (из шага 5):
+  \(\vec{BI}=(-a;\ \tfrac a2)\), \(\vec{BJ}=(-\tfrac a2;\ a)\). Тогда</p>
+  \[ \vec{BI}\cdot\vec{BJ}=(-a)\left(-\frac a2\right)+\frac a2\cdot a
+     =\frac{a^{2}}{2}+\frac{a^{2}}{2}=a^{2}. \checkmark \]
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">Приравниваем два результата и находим \(\cos\alpha\)</div>
+  <p><em>Почему так делаем.</em> Мы посчитали одно и то же число двумя
+  способами. Значит результаты равны — и это даёт уравнение на \(\alpha\).</p>
+  \[ \underbrace{\frac54\,a^{2}\cos\alpha}_{\text{пункт 1}}
+     =\underbrace{a^{2}}_{\text{пункт 3}} . \]
+  <p>Делим обе части на \(a^{2}\). Это законно: \(a\) — длина стороны
+  квадрата, она не ноль.</p>
+  \[ \frac54\cos\alpha=1 . \]
+  <p>Умножаем обе части на \(\dfrac45\):</p>
+  \[ \cos\alpha=\frac45=0{,}8 . \]
+  <p>Обратите внимание: <b>размер квадрата исчез из ответа</b>. Угол
+  \(\widehat{IBJ}\) одинаков в маленьком и в огромном квадрате — что
+  разумно, ведь все квадраты подобны друг другу.</p>
+</div>
+
+<div class="step">
+  <div class="num">9</div>
+  <div class="head">Находим сам угол с точностью до градуса</div>
+  <p><em>Почему так делаем.</em> Известен косинус, нужен угол. Ищем по таблице
+  тот угол, у которого косинус равен \(0{,}8\).</p>
+  <p>Косинус <em>убывает</em> при росте угла от \(0^\circ\) до \(90^\circ\):
+  чем больше угол, тем меньше косинус. Сравниваем:</p>
+  <table>
+    <tr><th>угол</th><th>\(\cos\)</th><th>сравнение с \(0{,}8\)</th></tr>
+    <tr><td>\(35^\circ\)</td><td>\(0{,}81915\)</td><td>больше \(0{,}8\)</td></tr>
+    <tr><td>\(36^\circ\)</td><td>\(0{,}80902\)</td><td>больше \(0{,}8\)</td></tr>
+    <tr><td>\(37^\circ\)</td><td>\(0{,}79864\)</td><td>меньше \(0{,}8\)</td></tr>
+    <tr><td>\(38^\circ\)</td><td>\(0{,}78801\)</td><td>меньше \(0{,}8\)</td></tr>
+  </table>
+  <p>Значит \(\alpha\) лежит между \(36^\circ\) и \(37^\circ\). Какому из них
+  он ближе? Считаем расстояния по косинусу:</p>
+  <ul>
+    <li>до \(36^\circ\): \(0{,}80902-0{,}8=0{,}00902\);</li>
+    <li>до \(37^\circ\): \(0{,}8-0{,}79864=0{,}00136\).</li>
+  </ul>
+  <p>Второе расстояние заметно меньше — значит \(\alpha\) гораздо ближе к
+  \(37^\circ\). Более точный расчёт даёт \(\alpha\approx 36{,}87^\circ\).</p>
+  \[ \boxed{\;\alpha\approx 37^\circ\;} \]
+
+  <p><b>Дополнительная проверка.</b> Раз \(\cos\alpha=\tfrac45\), то по
+  основному тригонометрическому тождеству
+  \(\sin^{2}\alpha=1-\cos^{2}\alpha=1-\tfrac{16}{25}=\tfrac{9}{25}\),
+  откуда \(\sin\alpha=\tfrac35=0{,}6\). Пара
+  \(\left(\tfrac35;\tfrac45\right)\) — это знаменитый треугольник
+  \(3\!-\!4\!-\!5\). И действительно, \(\sin 37^\circ=0{,}6018\) —
+  очень близко к \(0{,}6\). ✔</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <p><b>1.</b> \(BI=BJ=\dfrac{a\sqrt5}{2}\), поэтому</p>
+  \[ \vec{BI}\cdot\vec{BJ}=BI\times BJ\times\cos\alpha
+     =\frac{a\sqrt5}{2}\cdot\frac{a\sqrt5}{2}\cos\alpha
+     =\frac54\,a^{2}\cos\alpha . \]
+  <p><b>2.</b> \(\;\vec{BI}=-\vec{AB}+\dfrac12\vec{AD}\), \(\qquad
+  \vec{BJ}=-\dfrac12\vec{AB}+\vec{AD}\).</p>
+  <p><b>3.</b> Раскрывая скобки и пользуясь тем, что
+  \(\vec{AB}\cdot\vec{AD}=0\) и \(\|\vec{AB}\|=\|\vec{AD}\|=a\):</p>
+  \[ \vec{BI}\cdot\vec{BJ}=\frac12 a^{2}+\frac12 a^{2}=a^{2}. \]
+  <p>Приравнивая два выражения:</p>
+  \[ \frac54 a^{2}\cos\alpha=a^{2}
+     \;\Longrightarrow\;
+     \cos\alpha=\frac45=0{,}8
+     \;\Longrightarrow\;
+     \boxed{\alpha\approx 37^\circ}\quad(\text{точнее }36{,}87^\circ). \]
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+
+  <p><b>1. Считают, что угол \(45^\circ\).</b> Картинка симметрична, диагональ
+  \(BD\) делит угол \(\alpha\) пополам, и глазу кажется, что \(\alpha\) —
+  «половина прямого». Но нет: диагональ \(BD\) делит угол \(\widehat{ABC}=90^\circ\)
+  пополам, а угол \(\widehat{IBJ}\) — это только <em>часть</em> прямого угла,
+  поскольку \(I\) и \(J\) лежат не в углах \(A\) и \(C\), а на серединах сторон.
+  Ответ \(36{,}87^\circ\), а не \(45^\circ\).</p>
+
+  <p><b>2. Путают \(J\) — середину \([DC]\) — с серединой \([BC]\).</b>
+  Внимательно: \(I\) на левой стороне, \(J\) на нижней. Обе точки «далеко»
+  от \(B\), и картинка получается симметричной. Если взять \(J\) на \([BC]\),
+  задача станет совсем другой.</p>
+
+  <p><b>3. Забывают, что \(\vec{BA}=-\vec{AB}\).</b> Потеря минуса ломает всё
+  разложение. Проверяйте разложения подстановкой координат — это занимает
+  полминуты (см. конец шага 5).</p>
+
+  <p><b>4. При раскрытии скобок теряют слагаемое.</b> Скобок две, в каждой по
+  два слагаемых — значит должно получиться ровно \(2\times 2=4\) слагаемых.
+  Если их три — что-то пропущено.</p>
+
+  <p><b>5. Считают \(\vec{AB}\cdot\vec{AD}\) равным \(a^{2}\).</b> Нет: это
+  ноль, потому что стороны квадрата перпендикулярны. Квадрат длины даёт
+  только произведение вектора <em>на себя</em>.</p>
+
+  <p><b>6. Ошибаются со знаком неравенства при поиске угла.</b> Косинус
+  <em>убывает</em>: больший угол — меньший косинус. Наше \(0{,}8\) меньше
+  \(\cos 36^\circ\), значит угол <em>больше</em> \(36^\circ\), а не меньше.</p>
+
+  <p><b>7. Пишут \(\sqrt5\times\sqrt5=\sqrt{25}=5\) — верно, но затем считают
+  \(\left(\frac{a\sqrt5}{2}\right)^{2}=\frac{5a^{2}}{2}\).</b> Знаменатель тоже
+  возводится в квадрат: \(2^{2}=4\), значит \(\frac{5a^{2}}{4}\).</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>

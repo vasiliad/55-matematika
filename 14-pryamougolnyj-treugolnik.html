@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задача 14 — Прямоугольный треугольник</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#faf8f5; --card:#ffffff; --ink:#25211c; --muted:#6b6257;
+  --line:#e6ded2; --accent:#b45309; --accent-soft:#fdf3e3;
+  --good:#166534; --good-soft:#eaf6ec; --warn:#9a3412; --warn-soft:#fdeee6;
+  --note:#1e4e79; --note-soft:#eaf1f8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
+  font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
+}
+.wrap{max-width:820px;margin:0 auto}
+header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
+.crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px;font-size:17px}
+h2{font-size:23px;margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:19px;margin:26px 0 8px;color:var(--accent)}
+p{margin:12px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 22px;margin:18px 0}
+.box.task{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.box.know{border-left:5px solid var(--note);background:var(--note-soft)}
+.box.answer{border-left:5px solid var(--good);background:var(--good-soft)}
+.box.trap{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.box .lbl{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.step{margin:22px 0;padding-left:52px;position:relative;min-height:34px}
+.step .num{position:absolute;left:0;top:1px;width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:system-ui,sans-serif;font-weight:700;
+  font-size:16px;display:flex;align-items:center;justify-content:center}
+.step .head{font-weight:700;margin-bottom:4px}
+ul,ol{margin:12px 0;padding-left:26px}
+li{margin:7px 0}
+table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
+th{background:var(--accent-soft);font-weight:700}
+details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;color:var(--muted);font-weight:600}
+details[open] summary{margin-bottom:10px}
+.orig{font-style:italic;color:var(--muted);font-size:16px}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent)}
+@media(max-width:600px){body{font-size:17px;padding:20px 12px 60px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="crumb">Раздел I · Алгебра и геометрия · Задача 14 из 55</div>
+  <h1>Прямоугольный треугольник</h1>
+  <div class="stars">★★☆☆ — средний уровень</div>
+</header>
+
+<div class="box task">
+  <span class="lbl">Условие</span>
+  <p>Пусть \(a\), \(b\), \(c\) — длины сторон прямоугольного треугольника,
+  где \(c\) — наибольшая сторона.</p>
+  <p>Доказать, что для любого целого \(n\gt 2\) выполняется</p>
+  \[ c^n\gt a^n+b^n . \]
+</div>
+
+<details>
+  <summary>Оригинал по-французски</summary>
+  <p class="orig"><b>Ex 14 ★★✩✩ — Triangle rectangle.</b><br>
+  Soient a, b, c les longueurs des côtés d’un triangle rectangle dont le plus
+  grand côté est c. Démontrer que pour tout entier n &gt; 2, c<sup>n</sup> &gt;
+  a<sup>n</sup> + b<sup>n</sup>.</p>
+</details>
+
+<h2>Что от нас хотят простыми словами</h2>
+
+<p>Про прямоугольный треугольник есть знаменитое правило: <b>квадрат</b>
+большой стороны равен сумме <b>квадратов</b> двух других. Это теорема Пифагора,
+и мы разберём её ниже с нуля.</p>
+
+\[ c^2=a^2+b^2\qquad\text{— тут стоит РАВНО.} \]
+
+<p>Задача спрашивает: а что будет, если вместо квадрата взять куб? Или
+четвёртую степень? Пятую? Останется ли равенство?</p>
+
+<p>Ответ: равенство сломается, и всегда в одну и ту же сторону — большая
+сторона «победит»:</p>
+
+\[ c^3\gt a^3+b^3,\qquad c^4\gt a^4+b^4,\qquad c^5\gt a^5+b^5,\qquad\ldots \]
+
+<p>Посмотрим на самом известном примере — треугольнике со сторонами 3, 4 и 5.</p>
+
+<table>
+  <tr><th>Степень \(n\)</th><th>\(c^n\)</th><th>\(a^n+b^n\)</th><th>Сравнение</th></tr>
+  <tr><td>2</td><td>\(5^2=25\)</td><td>\(9+16=25\)</td><td>равно</td></tr>
+  <tr><td>3</td><td>\(5^3=125\)</td><td>\(27+64=91\)</td><td>\(125\gt 91\)</td></tr>
+  <tr><td>4</td><td>\(5^4=625\)</td><td>\(81+256=337\)</td><td>\(625\gt 337\)</td></tr>
+  <tr><td>5</td><td>\(5^5=3125\)</td><td>\(243+1024=1267\)</td><td>\(3125\gt 1267\)</td></tr>
+</table>
+
+<p>Разрыв растёт. Но одних примеров мало: примеров бесконечно много, все не
+переберёшь. Нужно доказательство, работающее сразу для всех \(n\).</p>
+
+<div class="box know">
+  <span class="lbl">Что нужно знать заранее</span>
+
+  <p><b>1. Что такое прямоугольный треугольник (triangle rectangle).</b></p>
+  <p>Треугольник — фигура из трёх точек, соединённых отрезками. В каждом углу
+  два отрезка сходятся под каким-то наклоном. Если в одном из углов отрезки
+  сходятся «ровно», как край стола или угол листа бумаги, — этот угол называют
+  <b>прямым</b> (90 градусов), а треугольник — прямоугольным.</p>
+  <p>У такого треугольника стороны имеют названия:</p>
+  <ul>
+    <li><b>Катеты (cathètes)</b> — две стороны, образующие прямой угол.
+    У нас это \(a\) и \(b\).</li>
+    <li><b>Гипотенуза (hypoténuse)</b> — сторона напротив прямого угла.
+    У нас это \(c\). Она всегда самая длинная.</li>
+  </ul>
+  <p>Представьте лестницу, приставленную к стене. Стена и пол — катеты,
+  сама лестница — гипотенуза. Лестница длиннее и стены (до точки касания),
+  и расстояния от стены до её низа.</p>
+
+  <p><b>2. Теорема Пифагора (théorème de Pythagore).</b></p>
+  <p>Формулировка: в прямоугольном треугольнике</p>
+  \[ a^2+b^2=c^2 . \]
+  <p>Здесь \(a^2\) означает \(a\cdot a\) — это площадь квадрата со стороной
+  \(a\). Так что теорема говорит буквально следующее: <em>если построить
+  квадрат на каждой из трёх сторон, то площадь большого квадрата равна сумме
+  площадей двух маленьких</em>.</p>
+  <p><b>Как в этом убедиться.</b> Возьмём четыре одинаковые копии нашего
+  треугольника и большой квадрат со стороной \(a+b\). Разложим четыре
+  треугольника по углам большого квадрата так, чтобы катет \(a\) одного
+  примыкал к катету \(b\) следующего. Тогда в середине останется дырка —
+  и это в точности квадрат со стороной \(c\) (все четыре гипотенузы образуют
+  его границу).</p>
+  <p>Теперь посчитаем площадь большого квадрата двумя способами.</p>
+  <p><em>Способ первый</em> — по формуле «сторона умножить на сторону»:</p>
+  \[ (a+b)^2=(a+b)(a+b)=a^2+ab+ba+b^2=a^2+2ab+b^2 . \]
+  <p><em>Способ второй</em> — сложить куски. Площадь прямоугольного треугольника
+  с катетами \(a\) и \(b\) равна \(\frac{ab}{2}\) (это половина прямоугольника
+  \(a\times b\)). Четыре таких треугольника дают
+  \(4\cdot\frac{ab}{2}=2ab\). Плюс дырка в середине, то есть \(c^2\):</p>
+  \[ 2ab+c^2 . \]
+  <p>Обе величины — это площадь одной и той же фигуры, значит они равны:</p>
+  \[ a^2+2ab+b^2=2ab+c^2 . \]
+  <p>Вычтем \(2ab\) из обеих частей:</p>
+  \[ a^2+b^2=c^2 . \]
+  <p>Готово. Теорема доказана.</p>
+
+  <p><b>3. Обозначение \(x^n\).</b></p>
+  <p>Это \(x\), умноженный сам на себя \(n\) раз:
+  \(x^3=x\cdot x\cdot x\), \(x^5=x\cdot x\cdot x\cdot x\cdot x\).
+  Запись «\(n\gt 2\), \(n\) целое» означает: \(n=3,4,5,6,\ldots\)</p>
+
+  <p><b>4. Правило: большее число в большей степени даёт больше.</b></p>
+  <p>Если \(0\lt u\lt v\) и \(k\) — целое положительное число, то
+  \(u^k\lt v^k\).</p>
+  <p>Почему? Умножение на положительное число сохраняет неравенство. Из
+  \(u\lt v\) умножением на \(u\gt 0\) получаем \(u\cdot u\lt v\cdot u\), а умножением
+  \(u\lt v\) на \(v\gt 0\) получаем \(u\cdot v\lt v\cdot v\). Соединяем в цепочку:
+  \(u^2\lt uv\lt v^2\), значит \(u^2\lt v^2\). Повторяя тот же ход, поднимаемся
+  к любой степени.</p>
+  <p>Пример: \(2\lt 3\), поэтому \(2^4=16\lt 81=3^4\).</p>
+
+  <p><b>5. Правило сложения неравенств.</b></p>
+  <p>Если \(A\gt B\) и \(C\gt D\), то \(A+C\gt B+D\). Складывать неравенства
+  одного направления можно.</p>
+</div>
+
+<h2>Решение по шагам</h2>
+
+<h3>Подготовка</h3>
+
+<div class="step">
+  <div class="num">1</div>
+  <div class="head">Записываем, что нам дано</div>
+  <p>Три факта, из которых будем всё выводить:</p>
+  <ul>
+    <li>\(a\gt 0\), \(b\gt 0\), \(c\gt 0\) — это длины сторон, они положительны;</li>
+    <li>\(a^2+b^2=c^2\) — теорема Пифагора;</li>
+    <li>\(n\) — целое число, \(n\geqslant 3\).</li>
+  </ul>
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <div class="head">Доказываем, что \(c\gt a\) и \(c\gt b\)</div>
+  <p>В условии сказано, что \(c\) — наибольшая сторона, но полезно увидеть,
+  что это следует из самой теоремы Пифагора.</p>
+  <p>Так как \(b\gt 0\), то \(b^2\gt 0\). Значит,</p>
+  \[ c^2=a^2+b^2\gt a^2+0=a^2 . \]
+  <p>Итак, \(c^2\gt a^2\). Оба числа \(a\) и \(c\) положительны, поэтому из
+  \(c^2\gt a^2\) следует \(c\gt a\). (Если бы было \(c\leqslant a\), то по правилу
+  из пункта 4 получилось бы \(c^2\leqslant a^2\) — противоречие.)</p>
+  <p>Совершенно так же, поменяв ролями \(a\) и \(b\):</p>
+  \[ c^2=a^2+b^2\gt b^2\quad\Longrightarrow\quad c\gt b . \]
+  <p>Запомним эти два неравенства — они будут работать в каждом шаге:</p>
+  \[ \boxed{\ c\gt a\gt 0\qquad\text{и}\qquad c\gt b\gt 0\ } \]
+</div>
+
+<h3>Способ 1: прямое доказательство (короткое и наглядное)</h3>
+
+<div class="step">
+  <div class="num">3</div>
+  <div class="head">Идея: отщипнуть от \(c^n\) кусочек \(c^2\)</div>
+  <p>Почему именно так? Потому что про \(c^2\) мы знаем всё — это \(a^2+b^2\).
+  А остальное — «лишний вес», который и создаёт перевес.</p>
+  <p>Так как \(n\geqslant 3\), число \(n-2\) — целое и не меньше 1. Разложим:</p>
+  \[ c^n=\underbrace{c\cdot c\cdots c}_{n\ \text{раз}}
+      =\underbrace{c\cdot c\cdots c}_{n-2\ \text{раз}}\cdot
+       \underbrace{c\cdot c}_{2\ \text{раза}}
+      =c^{\,n-2}\cdot c^2 . \]
+  <p>Теперь подставим вместо \(c^2\) сумму \(a^2+b^2\):</p>
+  \[ c^n=c^{\,n-2}\left(a^2+b^2\right)=c^{\,n-2}a^2+c^{\,n-2}b^2 . \]
+  <p>Это точное равенство, никаких неравенств пока нет.</p>
+</div>
+
+<div class="step">
+  <div class="num">4</div>
+  <div class="head">Оцениваем каждое слагаемое</div>
+  <p>Возьмём первое слагаемое \(c^{\,n-2}a^2\). Мы знаем, что \(c\gt a\gt 0\)
+  и что \(n-2\geqslant 1\). По правилу из пункта 4:</p>
+  \[ c^{\,n-2}\gt a^{\,n-2} . \]
+  <p>Умножим обе части на \(a^2\). Это положительное число, поэтому знак
+  неравенства сохраняется:</p>
+  \[ c^{\,n-2}a^2\gt a^{\,n-2}a^2 . \]
+  <p>А справа получается ровно \(a^n\): степени при умножении складываются,
+  \((n-2)+2=n\). Итак:</p>
+  \[ c^{\,n-2}a^2\gt a^n . \]
+  <p>Точно так же для второго слагаемого, используя \(c\gt b\gt 0\):</p>
+  \[ c^{\,n-2}\gt b^{\,n-2}\quad\Longrightarrow\quad c^{\,n-2}b^2\gt b^{\,n-2}b^2=b^n . \]
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <div class="head">Складываем и получаем требуемое</div>
+  <p>По правилу сложения неравенств (пункт 5):</p>
+  \[ c^{\,n-2}a^2+c^{\,n-2}b^2\ \gt\ a^n+b^n . \]
+  <p>Но левая часть — это в точности \(c^n\) (шаг 3). Значит,</p>
+  \[ \boxed{\ c^n\gt a^n+b^n\ } \]
+  <p>Доказательство закончено. Оно работает сразу для всех \(n=3,4,5,\ldots\)</p>
+</div>
+
+<h3>Способ 2: доказательство по индукции (как в официальном решении)</h3>
+
+<div class="step">
+  <div class="num">6</div>
+  <div class="head">Что такое индукция: принцип домино</div>
+  <p>Представьте бесконечный ряд костяшек домино, стоящих одна за другой.
+  Как уронить их все? Достаточно двух вещей:</p>
+  <ol>
+    <li><b>уронить первую</b> костяшку;</li>
+    <li>убедиться, что <b>каждая падающая роняет следующую</b>.</li>
+  </ol>
+  <p>Тогда упадут все — и первая, и вторая, и миллионная.</p>
+  <p>Математическая индукция (récurrence) устроена точно так же. Мы хотим
+  доказать бесконечно много утверждений сразу:</p>
+  <ul>
+    <li>\(\mathcal{P}(3)\): \(c^3\gt a^3+b^3\);</li>
+    <li>\(\mathcal{P}(4)\): \(c^4\gt a^4+b^4\);</li>
+    <li>\(\mathcal{P}(5)\): \(c^5\gt a^5+b^5\); и так далее.</li>
+  </ul>
+  <p>Достаточно доказать «первую костяшку» \(\mathcal{P}(3)\) и правило
+  «\(\mathcal{P}(n)\) роняет \(\mathcal{P}(n+1)\)».</p>
+</div>
+
+<div class="step">
+  <div class="num">7</div>
+  <div class="head">База: роняем первую костяшку, \(n=3\)</div>
+  <p>Начинаем с теоремы Пифагора и умножаем обе её части на \(c\).
+  Так как \(c\gt 0\), знак равенства сохраняется:</p>
+  \[ c^2=a^2+b^2\quad\Longrightarrow\quad c\cdot c^2=c\left(a^2+b^2\right), \]
+  \[ c^3=ca^2+cb^2 . \]
+  <p>Теперь оцениваем каждое слагаемое, пользуясь \(c\gt a\) и \(c\gt b\):</p>
+  <ul>
+    <li>умножим \(c\gt a\) на положительное \(a^2\): \(ca^2\gt a\cdot a^2=a^3\);</li>
+    <li>умножим \(c\gt b\) на положительное \(b^2\): \(cb^2\gt b\cdot b^2=b^3\).</li>
+  </ul>
+  <p>Складываем два неравенства:</p>
+  \[ ca^2+cb^2\gt a^3+b^3 . \]
+  <p>Левая часть равна \(c^3\), поэтому</p>
+  \[ c^3\gt a^3+b^3 . \]
+  <p>Утверждение \(\mathcal{P}(3)\) верно. Первая костяшка упала. \(\checkmark\)</p>
+</div>
+
+<div class="step">
+  <div class="num">8</div>
+  <div class="head">Переход: каждая костяшка роняет следующую</div>
+  <p>Пусть для какого-то целого \(n\geqslant 3\) утверждение \(\mathcal{P}(n)\)
+  уже верно. Это называется <b>предположением индукции</b>:</p>
+  \[ c^n\gt a^n+b^n . \]
+  <p>Наша цель — вывести отсюда \(\mathcal{P}(n+1)\), то есть
+  \(c^{n+1}\gt a^{n+1}+b^{n+1}\).</p>
+  <p><b>Шаг А.</b> Умножим обе части предположения на \(c\). Число \(c\)
+  положительно, поэтому знак неравенства не меняется:</p>
+  \[ c\cdot c^n\gt c\left(a^n+b^n\right), \]
+  \[ c^{n+1}\gt ca^n+cb^n . \tag{$\star$} \]
+  <p><b>Шаг Б.</b> Оценим правую часть ещё раз, снизу. Используем \(c\gt a\) и
+  \(c\gt b\):</p>
+  <ul>
+    <li>умножаем \(c\gt a\) на положительное \(a^n\): \(ca^n\gt a\cdot a^n=a^{n+1}\);</li>
+    <li>умножаем \(c\gt b\) на положительное \(b^n\): \(cb^n\gt b\cdot b^n=b^{n+1}\).</li>
+  </ul>
+  <p>Складываем:</p>
+  \[ ca^n+cb^n\gt a^{n+1}+b^{n+1} . \tag{$\star\star$} \]
+  <p><b>Шаг В.</b> Соединяем \((\star)\) и \((\star\star)\) в цепочку:</p>
+  \[ c^{n+1}\gt ca^n+cb^n\gt a^{n+1}+b^{n+1} . \]
+  <p>Крайние члены цепочки дают:</p>
+  \[ c^{n+1}\gt a^{n+1}+b^{n+1} . \]
+  <p>Утверждение \(\mathcal{P}(n+1)\) верно. Костяшка уронила следующую.
+  \(\checkmark\)</p>
+</div>
+
+<div class="step">
+  <div class="num">9</div>
+  <div class="head">Вывод</div>
+  <p>Первая костяшка упала (\(n=3\)), и каждая роняет следующую. По принципу
+  математической индукции утверждение верно для всех целых \(n\geqslant 3\),
+  то есть для всех целых \(n\gt 2\):</p>
+  \[ c^n\gt a^n+b^n . \]
+  <p>Что и требовалось доказать.</p>
+</div>
+
+<div class="step">
+  <div class="num">10</div>
+  <div class="head">Контроль на числах</div>
+  <p>Проверим оба способа на треугольнике 3–4–5 при \(n=4\).</p>
+  <p>По способу 1: \(c^4=c^{4-2}\cdot c^2=5^2\cdot 5^2=25\cdot 25=625\).
+  Разложение: \(c^2\left(a^2+b^2\right)=25\cdot(9+16)=25\cdot 25=625\)
+  \(\checkmark\). Далее \(25\cdot 9=225\gt 81=a^4\) \(\checkmark\), и
+  \(25\cdot 16=400\gt 256=b^4\) \(\checkmark\). Сумма:
+  \(225+400=625\gt 81+256=337\) \(\checkmark\).</p>
+  <p>По способу 2: из \(n=3\) знаем \(125\gt 91\). Умножаем на \(c=5\):
+  \(625\gt 455\). А \(455=5\cdot 27+5\cdot 64=135+320\), и действительно
+  \(135\gt 81\), \(320\gt 256\), поэтому \(455\gt 337\). Цепочка
+  \(625\gt 455\gt 337\) работает. \(\checkmark\)</p>
+</div>
+
+<div class="box answer">
+  <span class="lbl">Ответ</span>
+  <p>Утверждение доказано. Коротко суть:</p>
+  \[ c^n=c^{\,n-2}\left(a^2+b^2\right)=c^{\,n-2}a^2+c^{\,n-2}b^2
+     \gt a^{\,n-2}a^2+b^{\,n-2}b^2=a^n+b^n . \]
+  <p>Ключевая причина неравенства: гипотенуза строго длиннее каждого катета
+  (\(c\gt a\) и \(c\gt b\)), поэтому каждый «лишний» множитель \(c\), появляющийся
+  при переходе от степени 2 к более высокой, увеличивает левую часть сильнее,
+  чем множители \(a\) и \(b\) увеличивают правую.</p>
+  <p>При \(n=2\) стоит равенство (теорема Пифагора), при всех \(n\gt 2\) —
+  строгое неравенство.</p>
+</div>
+
+<div class="box trap">
+  <span class="lbl">Где обычно ошибаются</span>
+  <p><b>1. Проверяют на примерах и считают, что доказали.</b> Три-четыре
+  удачных числа ничего не гарантируют: значений \(n\) бесконечно много.
+  Нужно рассуждение, работающее для всех сразу.</p>
+
+  <p><b>2. Начинают индукцию с \(n=1\) или \(n=2\).</b> При \(n=2\) неравенство
+  <em>не</em> выполняется — там равенство. Поэтому первая костяшка обязана быть
+  именно \(n=3\).</p>
+
+  <p><b>3. При умножении неравенства забывают проверить знак множителя.</b>
+  Умножать неравенство на положительное число можно, знак сохраняется.
+  На отрицательное — знак переворачивается. Здесь всё в порядке только потому,
+  что \(a\), \(b\), \(c\) — длины и значит положительны. Это обязательно надо
+  проговорить.</p>
+
+  <p><b>4. Считают, что \(c\gt a\) «дано» и не требует обоснования.</b>
+  В условии это действительно написано, но приятнее и надёжнее вывести:
+  из \(c^2=a^2+b^2\) и \(b^2\gt 0\) сразу получается \(c^2\gt a^2\), а для
+  положительных чисел это равносильно \(c\gt a\).</p>
+
+  <p><b>5. Путают «степень» и «умножение на число».</b> \(c^3\) — это
+  \(c\cdot c\cdot c\), а не \(3c\). Для \(c=5\): \(c^3=125\), а \(3c=15\).</p>
+
+  <p><b>6. В переходе индукции используют доказываемое утверждение как
+  доказанное.</b> Мы предполагаем \(\mathcal{P}(n)\) и <em>выводим</em>
+  \(\mathcal{P}(n+1)\). Использовать \(\mathcal{P}(n+1)\) внутри вывода нельзя —
+  это было бы рассуждение по кругу.</p>
+</div>
+
+<footer>
+  Сборник Lycée Henri-IV «Livret de travail 1<sup>ère</sup> → Terminale» ·
+  <a href="index.html">← ко всем задачам</a>
+</footer>
+
+</div>
+</body>
+</html>
