@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -167,12 +177,12 @@ footer a{color:var(--accent)}
 
   <p><strong>Особые точки:</strong> \(1\), \(2\) (нули числителя) и \(3\) (нуль знаменателя). Выписываем по возрастанию.</p>
 
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(-\infty\) … 1</th><th>1</th><th>1 … 2</th><th>2</th><th>2 … 3</th><th>3</th><th>3 … \(+\infty\)</th></tr>
     <tr><th>\(2x^2-6x+4\)</th><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td></tr>
     <tr><th>\(x-3\)</th><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td></tr>
     <tr><th>\(I(x)\)</th><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td><td>‖</td><td>+</td></tr>
-  </table>
+  </table></div>
 
   <p><em>Как проверить.</em> Возьмём \(x=0\) (это в первом куске). \(I(0)=0+\frac{4}{-3}=-\frac43\) — отрицательно, в таблице минус. Возьмём \(x=1{,}5\) (второй кусок): \(I(1{,}5)=3+\frac{4}{-1{,}5}=3-2{,}67=0{,}33\) — положительно, в таблице плюс. Сходится.</p>
 </div>
@@ -193,12 +203,12 @@ footer a{color:var(--accent)}
   <p><strong>Знак числителя.</strong> Коэффициент при \(x^2\) равен \(2\), он положителен: снаружи корней плюс, внутри минус.</p>
   <p><strong>Знак знаменателя.</strong> \(x^2\) всегда положителен, кроме точки \(x=0\), где он равен нулю. Значит в этой точке дробь не существует.</p>
 
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(-\infty\) … \(-\frac{\sqrt6}{2}\)</th><th>\(-\frac{\sqrt6}{2}\)</th><th>… 0</th><th>0</th><th>0 … \(\frac{\sqrt6}{2}\)</th><th>\(\frac{\sqrt6}{2}\)</th><th>… \(+\infty\)</th></tr>
     <tr><th>\(2x^2-3\)</th><td>+</td><td>0</td><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td></tr>
     <tr><th>\(x^2\)</th><td>+</td><td>+</td><td>+</td><td>0</td><td>+</td><td>+</td><td>+</td></tr>
     <tr><th>\(J(x)\)</th><td>+</td><td>0</td><td>−</td><td>‖</td><td>−</td><td>0</td><td>+</td></tr>
-  </table>
+  </table></div>
 
   <p><em>Замечание.</em> Обратите внимание: слева и справа от нуля знак одинаковый (минус). Так бывает: точка \(x=0\) «выколота», но знак через неё не меняется, потому что \(x^2\) не меняет знака.</p>
 </div>
@@ -213,12 +223,12 @@ footer a{color:var(--accent)}
 
   <p><strong>Знаменатель</strong> состоит из двух простых множителей: \(x-1\) (ноль при \(x=1\)) и \(x+1\) (ноль при \(x=-1\)).</p>
 
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(-\infty\) … \(-1\)</th><th>\(-1\)</th><th>\(-1\) … 1</th><th>1</th><th>1 … \(+\infty\)</th></tr>
     <tr><th>\(x-1\)</th><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td></tr>
     <tr><th>\(x+1\)</th><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td></tr>
     <tr><th>\(K(x)\)</th><td>+</td><td>‖</td><td>−</td><td>‖</td><td>+</td></tr>
-  </table>
+  </table></div>
 
   <p><em>Разбор нижней строки.</em> В первом куске оба множителя знаменателя отрицательны, минус на минус даёт плюс, и \(2\) делить на положительное — положительно. Во втором куске один множитель минус, другой плюс — знаменатель отрицательный, дробь отрицательная. В третьем оба плюс — дробь положительна.</p>
   <p><strong>Важно:</strong> \(K(x)\) <em>никогда не равно нулю</em>, потому что числитель — двойка. В таблице нигде нет символа \(0\), только двойные черты.</p>
@@ -235,12 +245,12 @@ footer a{color:var(--accent)}
   <p><strong>Числитель.</strong> \(-x^2+4=0\) означает \(x^2=4\), то есть \(x=2\) или \(x=-2\). Корни видны сразу, дискриминант считать не нужно.</p>
   <p>Коэффициент при \(x^2\) равен \(-1\), он отрицательный. По правилу «снаружи как \(a\), внутри наоборот»: снаружи отрезка от \(-2\) до \(2\) числитель отрицателен, внутри положителен.</p>
 
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(-\infty\) … \(-2\)</th><th>\(-2\)</th><th>\(-2\) … 2</th><th>2</th><th>2 … \(+\infty\)</th></tr>
     <tr><th>\(-x^2+4\)</th><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td></tr>
     <tr><th>\(x^2+3\)</th><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
     <tr><th>\(L(x)\)</th><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td></tr>
-  </table>
+  </table></div>
 
   <p><em>Проверка.</em> При \(x=0\): \(L(0)=\frac73-1=\frac43\) — положительно, и в таблице в среднем куске плюс. Сходится.</p>
 </div>
@@ -255,12 +265,12 @@ footer a{color:var(--accent)}
 
   <p><strong>Знаменатель.</strong> \(x-2=0\) при \(x=2\); слева минус, справа плюс.</p>
 
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(-\infty\) … 1</th><th>1</th><th>1 … 2</th><th>2</th><th>2 … \(+\infty\)</th></tr>
     <tr><th>\(-5x+5\)</th><td>+</td><td>0</td><td>−</td><td>−</td><td>−</td></tr>
     <tr><th>\(x-2\)</th><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td></tr>
     <tr><th>\(M(x)\)</th><td>−</td><td>0</td><td>+</td><td>‖</td><td>−</td></tr>
-  </table>
+  </table></div>
 
   <p><em>Проверка.</em> При \(x=0\): \(M(0)=-2-\frac{-1}{-2}=-2-0{,}5=-2{,}5\) — минус, как в таблице. При \(x=1{,}5\): \(M=-2-\frac{3{,}5}{-0{,}5}=-2+7=5\) — плюс, как в таблице.</p>
 </div>
@@ -275,12 +285,12 @@ footer a{color:var(--accent)}
 
   <p><strong>Знаменатель.</strong> Множитель \(2\) положителен. \(x+9=0\) при \(x=-9\). Слева минус, справа плюс.</p>
 
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(-\infty\) … \(-9\)</th><th>\(-9\)</th><th>\(-9\) … \(\frac{10}{3}\)</th><th>\(\frac{10}{3}\)</th><th>\(\frac{10}{3}\) … \(+\infty\)</th></tr>
     <tr><th>\(3(3x-10)\)</th><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td></tr>
     <tr><th>\(2(x+9)\)</th><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td></tr>
     <tr><th>\(N(x)\)</th><td>+</td><td>‖</td><td>−</td><td>0</td><td>+</td></tr>
-  </table>
+  </table></div>
 
   <p><em>Проверка.</em> При \(x=0\): \(N(0)=\frac{0-5}{0+3}=-\frac53\) — минус, и в таблице средний кусок минус. Сходится.</p>
 </div>
@@ -313,7 +323,7 @@ footer a{color:var(--accent)}
   <p><strong>Знак числителя.</strong> Коэффициент \(a=-3\) отрицателен: снаружи корней минус, между корнями плюс.</p>
   <p><strong>Знак знаменателя.</strong> Коэффициент \(a=2\) положителен: снаружи корней плюс, между корнями минус.</p>
 
-  <table>
+  <div class="tablewrap"><table>
     <tr>
       <th>\(x\)</th>
       <th>… \(-\frac{\sqrt2}{2}\)</th><th>\(-\frac{\sqrt2}{2}\)</th>
@@ -325,7 +335,7 @@ footer a{color:var(--accent)}
     <tr><th>\(-3x^2+x+1\)</th><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td><td>0</td><td>−</td></tr>
     <tr><th>\(2x^2-1\)</th><td>+</td><td>0</td><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td></tr>
     <tr><th>\(P(x)\)</th><td>−</td><td>‖</td><td>+</td><td>0</td><td>−</td><td>‖</td><td>+</td><td>0</td><td>−</td></tr>
-  </table>
+  </table></div>
 
   <p><em>Проверка на конкретном числе.</em> Возьмём \(x=0\) — это в куске между \(\frac{1-\sqrt{13}}{6}\approx-0{,}434\) и \(\frac{\sqrt2}{2}\approx 0{,}707\), где таблица обещает минус. Считаем: \(P(0)=\frac{-1}{-1}-3=1-3=-2\). Минус. Сходится.</p>
   <p>Возьмём \(x=-0{,}5\) — это между \(-0{,}707\) и \(-0{,}434\), где таблица обещает плюс. Считаем: \(2x-1=-2\); \(2x^2-1=2\cdot 0{,}25-1=-0{,}5\). Дробь: \(\frac{-2}{-0{,}5}=4\). Тогда \(P=4-3=1\). Плюс. Сходится.</p>
@@ -349,12 +359,12 @@ footer a{color:var(--accent)}
   <p><strong>Знак числителя.</strong> Это произведение \(x\) и \(4x-1\). Можно рассуждать по-квадратному: коэффициент при \(x^2\) равен \(4\), он положителен, значит снаружи корней плюс, между корнями минус.</p>
   <p><strong>Знак знаменателя.</strong> \(2x-1=0\) при \(x=\frac12\); коэффициент \(2\) положителен: слева минус, справа плюс.</p>
 
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(-\infty\) … 0</th><th>0</th><th>0 … \(\frac14\)</th><th>\(\frac14\)</th><th>\(\frac14\) … \(\frac12\)</th><th>\(\frac12\)</th><th>\(\frac12\) … \(+\infty\)</th></tr>
     <tr><th>\(x(4x-1)\)</th><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td></tr>
     <tr><th>\(2x-1\)</th><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td></tr>
     <tr><th>\(Q(x)\)</th><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td><td>‖</td><td>+</td></tr>
-  </table>
+  </table></div>
 
   <p><em>Проверка.</em> При \(x=0{,}1\) (кусок от \(0\) до \(\frac14\), обещан плюс): числитель \(0{,}1\times(0{,}4-1)=0{,}1\times(-0{,}6)=-0{,}06\); знаменатель \(0{,}2-1=-0{,}8\). Дробь \(\frac{-0{,}06}{-0{,}8}=0{,}075\) — плюс. Сходится.</p>
 </div>
@@ -382,7 +392,7 @@ footer a{color:var(--accent)}
   <p><strong>Знак числителя.</strong> \(a=-3\) отрицателен: снаружи корней минус, между корнями плюс.</p>
   <p><strong>Знак знаменателя.</strong> \(3(x+2)\): тройка положительна, \(x+2\) слева от \(-2\) отрицательно, справа положительно.</p>
 
-  <table>
+  <div class="tablewrap"><table>
     <tr>
       <th>\(x\)</th>
       <th>… \(\frac{-1-\sqrt{37}}{3}\)</th><th>\(\frac{-1-\sqrt{37}}{3}\)</th>
@@ -393,7 +403,7 @@ footer a{color:var(--accent)}
     <tr><th>\(-3x^2-2x+12\)</th><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td><td>0</td><td>−</td></tr>
     <tr><th>\(3(x+2)\)</th><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td></tr>
     <tr><th>\(R(x)\)</th><td>+</td><td>0</td><td>−</td><td>‖</td><td>+</td><td>0</td><td>−</td></tr>
-  </table>
+  </table></div>
 
   <p><em>Проверка.</em> При \(x=0\) (кусок между \(-2\) и \(1{,}69\), обещан плюс): \(R(0)=0+2-\frac13\times\frac{0}{2}=2\). Плюс. Сходится.</p>
   <p>При \(x=-3\) (самый левый кусок, обещан плюс): \(R(-3)=3+2-\frac13\times\frac{-6}{-1}=5-\frac13\times 6=5-2=3\). Плюс. Сходится.</p>

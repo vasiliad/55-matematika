@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -229,11 +239,11 @@ footer a{color:var(--accent)}
   <div class="num">10</div>
   <div class="head">Пример с дробной разностью: \(u_0=1\), \(r=\frac12\)</div>
   <p>Здесь показатели не целые, и «перемножить \(e\) само на себя» уже не получится. Но формула всё равно работает — она верна для любых чисел, не только целых.</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(n\)</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
     <tr><th>\(u_n\)</th><td>1</td><td>1,5</td><td>2</td><td>2,5</td><td>3</td></tr>
     <tr><th>\(v_n=e^{u_n}\)</th><td>2,718</td><td>4,482</td><td>7,389</td><td>12,182</td><td>20,086</td></tr>
-  </table>
+  </table></div>
   <p>Верхняя строка — арифметическая: каждый раз прибавляем \(0{,}5\). Нижняя — геометрическая: проверим отношения соседей.</p>
   \[\frac{4{,}482}{2{,}718}\approx1{,}649;\qquad\frac{7{,}389}{4{,}482}\approx1{,}649;\qquad\frac{12{,}182}{7{,}389}\approx1{,}649;\qquad\frac{20{,}086}{12{,}182}\approx1{,}649.\]
   <p>Все отношения дали одно и то же число \(1{,}649\). А что это за число? Это \(e^{0{,}5}=e^{r}\). Проверим косвенно: если умножить его само на себя, должно получиться \(e^1=e\).</p>

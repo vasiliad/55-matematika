@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -206,11 +216,11 @@ footer a{color:var(--accent)}
   \(e^x\) растёт, получаем: \(e^x\gt1\) ровно при \(x\gt0\). Аналогично \(e^x\lt1\) при
   \(x\lt0\), и \(e^0-1=0\).</p>
   <p>Итог по знакам:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>от \(-\infty\) до \(0\)</th><th>\(0\)</th><th>от \(0\) до \(+\infty\)</th></tr>
     <tr><th>\(g'(x)=e^x-1\)</th><td>минус</td><td>\(0\)</td><td>плюс</td></tr>
     <tr><th>\(g(x)=e^x-x\)</th><td>убывает ↘</td><td>\(1\)</td><td>возрастает ↗</td></tr>
-  </table>
+  </table></div>
   <p>Значит, \(g\) сначала идёт вниз, потом вверх — самая нижняя точка находится ровно в \(x=0\).</p>
 </div>
 
@@ -320,12 +330,12 @@ footer a{color:var(--accent)}
   </ul>
   <p>Когда \(1-x\gt0\)? Переносим: \(1\gt x\), то есть \(x\lt1\). Когда \(1-x\lt0\)?
   При \(x\gt1\). И \(1-x=0\) при \(x=1\).</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>от \(-\infty\) до \(1\)</th><th>\(1\)</th><th>от \(1\) до \(+\infty\)</th></tr>
     <tr><th>знак \((1-x)\)</th><td>\(+\)</td><td>\(0\)</td><td>\(-\)</td></tr>
     <tr><th>знак \(f'(x)\)</th><td>\(+\)</td><td>\(0\)</td><td>\(-\)</td></tr>
     <tr><th>\(f(x)\)</th><td>возрастает ↗</td><td>максимум</td><td>убывает ↘</td></tr>
-  </table>
+  </table></div>
 </div>
 
 <div class="step">
@@ -337,7 +347,7 @@ footer a{color:var(--accent)}
   <p>Численно: \(e\approx2{,}71828\), поэтому \(e-1\approx1{,}71828\), и</p>
   \[\frac{2{,}71828}{1{,}71828}\approx1{,}582.\]
   <p>Собираем всё в таблицу изменения:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr>
       <th>\(x\)</th>
       <td>\(-\infty\)</td><td></td><td>\(1\)</td><td></td><td>\(+\infty\)</td>
@@ -350,15 +360,15 @@ footer a{color:var(--accent)}
       <th>\(f(x)\)</th>
       <td>\(0\)</td><td>↗</td><td>\(\dfrac{e}{e-1}\approx1{,}582\)</td><td>↘</td><td>\(1\)</td>
     </tr>
-  </table>
+  </table></div>
   <p><b>Читаем таблицу вслух:</b> слева функция стартует от значения, близкого к нулю,
   плавно поднимается, в точке \(x=1\) достигает вершины высотой примерно \(1{,}582\),
   а дальше плавно опускается и прижимается к уровню \(1\) сверху.</p>
   <p><b>Проверим на числах, что таблица не врёт:</b></p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(-2\)</th><th>\(-1\)</th><th>\(0\)</th><th>\(1\)</th><th>\(2\)</th><th>\(5\)</th></tr>
     <tr><th>\(f(x)\)</th><td>\(0{,}063\)</td><td>\(0{,}269\)</td><td>\(1\)</td><td>\(1{,}582\)</td><td>\(1{,}371\)</td><td>\(1{,}035\)</td></tr>
-  </table>
+  </table></div>
   <p>Числа сначала растут: \(0{,}063\to0{,}269\to1\to1{,}582\). Потом падают:
   \(1{,}582\to1{,}371\to1{,}035\). Ровно как в таблице. ✔</p>
   <p>Проверим отдельно \(f(0)\): \(f(0)=\dfrac{e^0}{e^0-0}=\dfrac{1}{1}=1\). Да, единица.

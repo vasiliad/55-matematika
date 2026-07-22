@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -206,7 +216,7 @@ figcaption{font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);ma
   Результат — обычное число (скаляр), а не стрелка.</p>
   <p><b>Что такое \(\cos\theta\).</b> Это число из таблицы, зависящее только от
   величины угла. Ключевые значения:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>угол \(\theta\)</th><th>\(\cos\theta\)</th><th>смысл</th></tr>
     <tr><td>\(0^\circ\)</td><td>\(1\)</td><td>стрелки смотрят в одну сторону</td></tr>
     <tr><td>\(36^\circ\)</td><td>\(0{,}80902\)</td><td>—</td></tr>
@@ -214,7 +224,7 @@ figcaption{font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);ma
     <tr><td>\(60^\circ\)</td><td>\(0{,}5\)</td><td>—</td></tr>
     <tr><td>\(90^\circ\)</td><td>\(0\)</td><td>стрелки перпендикулярны</td></tr>
     <tr><td>\(180^\circ\)</td><td>\(-1\)</td><td>стрелки смотрят навстречу</td></tr>
-  </table>
+  </table></div>
   <p>Отсюда главное свойство: <b>скалярное произведение равно нулю ровно тогда,
   когда стрелки перпендикулярны</b> (ведь \(\cos 90^\circ=0\)).</p>
 
@@ -444,13 +454,13 @@ figcaption{font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);ma
   тот угол, у которого косинус равен \(0{,}8\).</p>
   <p>Косинус <em>убывает</em> при росте угла от \(0^\circ\) до \(90^\circ\):
   чем больше угол, тем меньше косинус. Сравниваем:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>угол</th><th>\(\cos\)</th><th>сравнение с \(0{,}8\)</th></tr>
     <tr><td>\(35^\circ\)</td><td>\(0{,}81915\)</td><td>больше \(0{,}8\)</td></tr>
     <tr><td>\(36^\circ\)</td><td>\(0{,}80902\)</td><td>больше \(0{,}8\)</td></tr>
     <tr><td>\(37^\circ\)</td><td>\(0{,}79864\)</td><td>меньше \(0{,}8\)</td></tr>
     <tr><td>\(38^\circ\)</td><td>\(0{,}78801\)</td><td>меньше \(0{,}8\)</td></tr>
-  </table>
+  </table></div>
   <p>Значит \(\alpha\) лежит между \(36^\circ\) и \(37^\circ\). Какому из них
   он ближе? Считаем расстояния по косинусу:</p>
   <ul>

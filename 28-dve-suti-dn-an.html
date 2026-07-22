@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -187,11 +197,11 @@ footer a{color:var(--accent)}
   <p>Заодно посчитаем ещё несколько чисел — пригодятся для проверок:</p>
   \[d_3=\frac12\cdot225+100=112{,}5+100=212{,}5,\]
   \[a_3=\frac12\cdot225+\frac12\cdot417{,}5+70=112{,}5+208{,}75+70=391{,}25.\]
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(n\)</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
     <tr><th>\(d_n\)</th><td>300</td><td>250</td><td>225</td><td>212,5</td><td>206,25</td></tr>
     <tr><th>\(a_n\)</th><td>450</td><td>445</td><td>417,5</td><td>391,25</td><td>371,875</td></tr>
-  </table>
+  </table></div>
   <p>Уже видно: \(d_n\) приближается к 200, а \(a_n\) убывает — но пока неясно, до какого числа.</p>
 </div>
 
@@ -286,11 +296,11 @@ footer a{color:var(--accent)}
   Идея — зажать его между нулём и величиной \(\frac{100}{n}\), про которую уже точно известно,
   что она стремится к нулю.</p>
   <p>Посмотрим на числах, чтобы поверить:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(n\)</th><th>1</th><th>4</th><th>8</th><th>12</th><th>20</th></tr>
     <tr><th>\(2^{n}\)</th><td>2</td><td>16</td><td>256</td><td>4096</td><td>1 048 576</td></tr>
     <tr><th>\(100n\left(\frac12\right)^{n}=\frac{100n}{2^{n}}\)</th><td>50</td><td>25</td><td>3,125</td><td>\(\approx0{,}293\)</td><td>\(\approx0{,}0019\)</td></tr>
-  </table>
+  </table></div>
 </div>
 
 <div class="step">
@@ -326,11 +336,11 @@ footer a{color:var(--accent)}
   \[2^{\,n+1}\ \geqslant\ 2n^{2}\ \geqslant\ (n+1)^2,\qquad\text{значит}\qquad 2^{\,n+1}\geqslant(n+1)^2.\]
   <p>Костяшка \(n\) уронила костяшку \(n+1\).</p>
   <p><b>Вывод:</b> \(2^{\,n}\geqslant n^{2}\) для всех целых \(n\geqslant4\).</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(n\)</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>10</th></tr>
     <tr><th>\(2^{n}\)</th><td>16</td><td>32</td><td>64</td><td>128</td><td>256</td><td>1024</td></tr>
     <tr><th>\(n^{2}\)</th><td>16</td><td>25</td><td>36</td><td>49</td><td>64</td><td>100</td></tr>
-  </table>
+  </table></div>
   <p>Кстати, при \(n=3\) утверждение было бы ложным: \(2^3=8\), а \(3^2=9\), и \(8\) меньше \(9\).
   Вот почему домино ставят начиная с четвёрки, а не раньше.</p>
 </div>
@@ -364,12 +374,12 @@ footer a{color:var(--accent)}
   <p><b>Почему об этом надо говорить честно.</b> В сборнике напечатано: «показать, что для любого
   целого \(n\geqslant3\) верно \(2^{\,n}\geqslant(n+1)^2\)». Это утверждение <b>ложно</b>.
   Проверим прямым подсчётом — доказывать ничего не надо, достаточно найти контрпримеры:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(n\)</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
     <tr><th>\(2^{n}\)</th><td>8</td><td>16</td><td>32</td><td>64</td><td>128</td><td>256</td></tr>
     <tr><th>\((n+1)^2\)</th><td>16</td><td>25</td><td>36</td><td>49</td><td>64</td><td>81</td></tr>
     <tr><th>верно ли \(2^{n}\geqslant(n+1)^2\)?</th><td>нет</td><td>нет</td><td>нет</td><td>да</td><td>да</td><td>да</td></tr>
-  </table>
+  </table></div>
   <p>При \(n=3\) получаем \(8\) против \(16\), при \(n=4\) — \(16\) против \(25\),
   при \(n=5\) — \(32\) против \(36\). Все три случая опровергают напечатанное утверждение.</p>
 
@@ -428,12 +438,12 @@ footer a{color:var(--accent)}
   <p><b>Значит, цепочка \((a_n)\) сходится, и её предел равен 340.</b></p>
 
   <p><b>Проверим числами.</b></p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(n\)</th><th>0</th><th>2</th><th>5</th><th>10</th><th>20</th></tr>
     <tr><th>\(100n\left(\frac12\right)^{n}\)</th><td>0</td><td>50</td><td>15,625</td><td>\(\approx0{,}977\)</td><td>\(\approx0{,}0019\)</td></tr>
     <tr><th>\(110\left(\frac12\right)^{n}\)</th><td>110</td><td>27,5</td><td>3,4375</td><td>\(\approx0{,}107\)</td><td>\(\approx0{,}0001\)</td></tr>
     <tr><th>\(a_n\)</th><td>450</td><td>417,5</td><td>359,0625</td><td>\(\approx341{,}08\)</td><td>\(\approx340{,}002\)</td></tr>
-  </table>
+  </table></div>
   <p>Числа действительно спускаются к 340.</p>
 </div>
 

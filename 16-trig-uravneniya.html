@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -135,14 +145,14 @@ footer a{color:var(--accent)}
   окружности радиуса 1.</p>
   <p>Длина всей окружности радиуса 1 равна \(2\pi\) (число
   \(\pi\approx 3{,}14159\)). Значит:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>Доля круга</th><th>Радианы</th><th>Градусы</th><th>Где оказалась точка</th></tr>
     <tr><td>весь круг</td><td>\(2\pi\)</td><td>\(360^\circ\)</td><td>вернулась в старт</td></tr>
     <tr><td>половина</td><td>\(\pi\)</td><td>\(180^\circ\)</td><td>слева, «9 часов»</td></tr>
     <tr><td>четверть</td><td>\(\frac{\pi}{2}\)</td><td>\(90^\circ\)</td><td>сверху, «12 часов»</td></tr>
     <tr><td>восьмая</td><td>\(\frac{\pi}{4}\)</td><td>\(45^\circ\)</td><td>вверх-вправо, по диагонали</td></tr>
     <tr><td>двенадцатая</td><td>\(\frac{\pi}{6}\)</td><td>\(30^\circ\)</td><td>чуть выше старта</td></tr>
-  </table>
+  </table></div>
   <p>Проще всего запомнить: <b>полный круг \(=2\pi\)</b>, а всё остальное —
   доли от него.</p>
 
@@ -161,7 +171,7 @@ footer a{color:var(--accent)}
   \(\cos\pi=-1\), \(\sin\pi=0\).</p>
 
   <p><b>4. Таблица значений, которые надо знать наизусть.</b></p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(0\)</th><th>\(\frac{\pi}{6}\)</th>
         <th>\(\frac{\pi}{4}\)</th><th>\(\frac{\pi}{3}\)</th>
         <th>\(\frac{\pi}{2}\)</th></tr>
@@ -169,7 +179,7 @@ footer a{color:var(--accent)}
         <td>\(\frac{\sqrt2}{2}\)</td><td>\(\frac12\)</td><td>\(0\)</td></tr>
     <tr><th>\(\sin x\)</th><td>\(0\)</td><td>\(\frac12\)</td>
         <td>\(\frac{\sqrt2}{2}\)</td><td>\(\frac{\sqrt3}{2}\)</td><td>\(1\)</td></tr>
-  </table>
+  </table></div>
   <p>Для справки: \(\frac{\sqrt2}{2}\approx 0{,}707\),
   \(\frac{\sqrt3}{2}\approx 0{,}866\).</p>
 
@@ -291,7 +301,7 @@ footer a{color:var(--accent)}
   \(-\pi\) и \(\pi\). Удобно всё выражать в восьмых долях \(\pi\):
   \(-\pi=-\frac{8\pi}{8}\), \(\pi=\frac{8\pi}{8}\).</p>
   <p><b>Серия ①: \(x=\frac{\pi}{8}+k\pi\)</b></p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(k\)</th><th>\(x\)</th><th>В промежутке?</th></tr>
     <tr><td>\(-2\)</td><td>\(\frac{\pi}{8}-2\pi=-\frac{15\pi}{8}\)</td>
         <td>нет, меньше \(-\pi\)</td></tr>
@@ -300,9 +310,9 @@ footer a{color:var(--accent)}
     <tr><td>\(0\)</td><td>\(\frac{\pi}{8}\)</td><td><b>да</b></td></tr>
     <tr><td>\(1\)</td><td>\(\frac{\pi}{8}+\pi=\frac{9\pi}{8}\)</td>
         <td>нет, больше \(\pi\)</td></tr>
-  </table>
+  </table></div>
   <p><b>Серия ②: \(x=-\frac{\pi}{8}+k\pi\)</b></p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(k\)</th><th>\(x\)</th><th>В промежутке?</th></tr>
     <tr><td>\(-1\)</td><td>\(-\frac{\pi}{8}-\pi=-\frac{9\pi}{8}\)</td>
         <td>нет, меньше \(-\pi\)</td></tr>
@@ -311,7 +321,7 @@ footer a{color:var(--accent)}
         <td><b>да</b></td></tr>
     <tr><td>\(2\)</td><td>\(-\frac{\pi}{8}+2\pi=\frac{15\pi}{8}\)</td>
         <td>нет, больше \(\pi\)</td></tr>
-  </table>
+  </table></div>
   <p>Собираем всё и расставляем по возрастанию:</p>
   \[ \boxed{\ S=\left\{-\frac{7\pi}{8},\ -\frac{\pi}{8},\
      \frac{\pi}{8},\ \frac{7\pi}{8}\right\}\ } \]
@@ -390,13 +400,13 @@ footer a{color:var(--accent)}
   <div class="num">8</div>
   <div class="head">Отбираем решения серии ② на промежутке \([0;\pi]\)</div>
   <p>Шаг здесь \(\pi\), поэтому просто переберём \(k\).</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(k\)</th><th>\(x=-\frac{\pi}{8}+k\pi\)</th><th>В промежутке \([0;\pi]\)?</th></tr>
     <tr><td>\(0\)</td><td>\(-\frac{\pi}{8}\)</td><td>нет, меньше 0</td></tr>
     <tr><td>\(1\)</td><td>\(-\frac{\pi}{8}+\pi=\frac{7\pi}{8}\)</td><td><b>да</b></td></tr>
     <tr><td>\(2\)</td><td>\(-\frac{\pi}{8}+2\pi=\frac{15\pi}{8}\)</td>
         <td>нет, больше \(\pi\)</td></tr>
-  </table>
+  </table></div>
 </div>
 
 <div class="step">

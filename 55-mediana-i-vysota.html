@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -235,7 +245,7 @@ figcaption{font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);ma
   на четверть оборота против часовой стрелки вокруг \(O\) даёт точку</p>
   \[ (x;\,y)\ \longmapsto\ (-y;\,x). \]
   <p><b>Проверим на понятных примерах.</b></p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>было</th><th>стало</th><th>проверка</th></tr>
     <tr><td>\((1;0)\) — вправо</td><td>\((0;1)\) — вверх</td>
         <td>вправо → вверх: да, это четверть оборота против часовой ✔</td></tr>
@@ -246,7 +256,7 @@ figcaption{font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);ma
     <tr><td>\((3;2)\)</td><td>\((-2;3)\)</td>
         <td>длины: \(\sqrt{9+4}=\sqrt{13}\) и \(\sqrt{4+9}=\sqrt{13}\) — равны ✔;
             \((3;2)\cdot(-2;3)=-6+6=0\) — перпендикулярны ✔</td></tr>
-  </table>
+  </table></div>
   <p>Последняя строка показывает главное: правило \((x;y)\mapsto(-y;x)\)
   <b>сохраняет длину</b> и <b>поворачивает ровно на прямой угол</b>. Значит
   это действительно поворот на \(90^\circ\).</p>

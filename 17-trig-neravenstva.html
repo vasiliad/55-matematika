@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -132,7 +142,7 @@ footer a{color:var(--accent)}
 
   <p><b>2. Радианы.</b> Полный круг равен \(2\pi\), где
   \(\pi\approx 3{,}14159\). Отсюда:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>Радианы</th><th>Градусы</th><th>Позиция точки</th></tr>
     <tr><td>\(0\)</td><td>\(0^\circ\)</td><td>справа, «3 часа»</td></tr>
     <tr><td>\(\frac{\pi}{6}\)</td><td>\(30^\circ\)</td><td>чуть выше старта</td></tr>
@@ -142,12 +152,12 @@ footer a{color:var(--accent)}
     <tr><td>\(\frac{2\pi}{3}\)</td><td>\(120^\circ\)</td><td>вверх-влево</td></tr>
     <tr><td>\(\frac{3\pi}{4}\)</td><td>\(135^\circ\)</td><td>вверх-влево по диагонали</td></tr>
     <tr><td>\(\pi\)</td><td>\(180^\circ\)</td><td>слева, «9 часов»</td></tr>
-  </table>
+  </table></div>
   <p>Отрицательный угол — движение по часовой стрелке, то есть вниз.
   Например, \(-\frac{\pi}{4}\) — это вниз-вправо по диагонали.</p>
 
   <p><b>3. Таблица опорных значений.</b></p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(0\)</th><th>\(\frac{\pi}{6}\)</th>
         <th>\(\frac{\pi}{4}\)</th><th>\(\frac{\pi}{3}\)</th>
         <th>\(\frac{\pi}{2}\)</th><th>\(\frac{2\pi}{3}\)</th><th>\(\pi\)</th></tr>
@@ -157,7 +167,7 @@ footer a{color:var(--accent)}
     <tr><th>\(\sin x\)</th><td>\(0\)</td><td>\(\frac12\)</td>
         <td>\(\frac{\sqrt2}{2}\)</td><td>\(\frac{\sqrt3}{2}\)</td><td>\(1\)</td>
         <td>\(\frac{\sqrt3}{2}\)</td><td>\(0\)</td></tr>
-  </table>
+  </table></div>
   <p>Числа для ориентира: \(\frac{\sqrt2}{2}\approx 0{,}707\),
   \(\frac{\sqrt3}{2}\approx 0{,}866\).</p>
   <p>Два правила симметрии, которые сильно экономят время:</p>
@@ -415,12 +425,12 @@ footer a{color:var(--accent)}
   <p>Итак, корни \(-\frac12\) и \(1\). Старший коэффициент \(2\) положителен,
   поэтому по правилу из пункта 5 раздела «Что нужно знать» выражение
   отрицательно между корнями:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(X\)</th><td>\(\ldots\)</td><td>\(-\frac12\)</td>
         <td>\(\ldots\)</td><td>\(1\)</td><td>\(\ldots\)</td></tr>
     <tr><th>знак \(2X^2-X-1\)</th><td>\(+\)</td><td>\(0\)</td>
         <td>\(-\)</td><td>\(0\)</td><td>\(+\)</td></tr>
-  </table>
+  </table></div>
   <p>Значит, неравенство \(2X^2-X-1\leqslant 0\) выполняется при</p>
   \[ -\frac12\leqslant X\leqslant 1 . \]
 </div>
@@ -501,7 +511,7 @@ footer a{color:var(--accent)}
   <p>Отмечаем на промежутке все «особые» точки, где хоть один множитель
   обращается в ноль: это \(-\frac{\pi}{3}\), \(0\), \(\frac{\pi}{3}\)
   и \(\pi\). Между ними знаки не меняются.</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr>
       <th>\(x\)</th>
       <th>\(\left]-\pi;-\frac{\pi}{3}\right[\)</th>
@@ -529,7 +539,7 @@ footer a{color:var(--accent)}
       <td><b>\(0\)</b></td><td><b>\(+\)</b></td><td><b>\(0\)</b></td>
       <td>\(-\)</td><td><b>\(0\)</b></td>
     </tr>
-  </table>
+  </table></div>
   <p>Нижняя строка получена по правилу знаков: «минус на минус — плюс»,
   «минус на плюс — минус», «плюс на плюс — плюс».</p>
   <p>Нам нужны клетки, где произведение \(\geqslant 0\), то есть плюс или ноль
@@ -553,7 +563,7 @@ footer a{color:var(--accent)}
   не являются — вот и получается изолированная точка. Это не ошибка, а
   нормальная ситуация для нестрогих неравенств.</p>
   <p><b>Проверим ответ на нескольких значениях.</b></p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(\sin 2x\)</th><th>\(\sin x\)</th>
         <th>\(\sin 2x\geqslant\sin x\)?</th><th>В ответе?</th></tr>
     <tr><td>\(-\frac{\pi}{2}\)</td><td>\(\sin(-\pi)=0\)</td><td>\(-1\)</td>
@@ -568,7 +578,7 @@ footer a{color:var(--accent)}
         <td>\(0\geqslant 1\) — нет</td><td>нет \(\checkmark\)</td></tr>
     <tr><td>\(\pi\)</td><td>\(\sin 2\pi=0\)</td><td>\(0\)</td>
         <td>\(0\geqslant 0\) — да</td><td>да \(\checkmark\)</td></tr>
-  </table>
+  </table></div>
   <p>Все пять контрольных точек согласуются с ответом.</p>
 </div>
 

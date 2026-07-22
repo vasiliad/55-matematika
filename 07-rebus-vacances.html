@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -76,12 +86,12 @@ footer a{color:var(--accent)}
   <span class="lbl">Условие</span>
   <p>Каждая буква обозначает цифру. Разные буквы обозначают <strong>разные</strong> цифры (одинаковые буквы — одинаковые цифры).</p>
   <p>Решить пример, записанный столбиком:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><td></td><td>S</td><td>O</td><td>L</td><td>E</td><td>I</td><td>L</td></tr>
     <tr><td>+</td><td></td><td>S</td><td>A</td><td>B</td><td>L</td><td>E</td></tr>
     <tr><th colspan="7">равно</th></tr>
     <tr><td></td><td>B</td><td>I</td><td>K</td><td>I</td><td>N</td><td>I</td></tr>
-  </table>
+  </table></div>
   <p>То есть шестизначное число плюс пятизначное даёт шестизначное.</p>
 </div>
 
@@ -114,12 +124,12 @@ footer a{color:var(--accent)}
   <p>Ключевое: <strong>перенос всегда равен либо \(0\), либо \(1\)</strong>. Больше он быть не может, потому что даже \(9+9+1=19\) — это всего один десяток сверху.</p>
 
   <p><strong>2. Разряды в нашем примере.</strong> Пронумеруем столбцы справа налево. Первый столбец — единицы, второй — десятки, третий — сотни, и так далее.</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>Столбец</th><th>6-й</th><th>5-й</th><th>4-й</th><th>3-й</th><th>2-й</th><th>1-й</th></tr>
     <tr><th>Первое число</th><td>S</td><td>O</td><td>L</td><td>E</td><td>I</td><td>L</td></tr>
     <tr><th>Второе число</th><td>—</td><td>S</td><td>A</td><td>B</td><td>L</td><td>E</td></tr>
     <tr><th>Сумма</th><td>B</td><td>I</td><td>K</td><td>I</td><td>N</td><td>I</td></tr>
-  </table>
+  </table></div>
   <p>Обратите внимание: второе число всего пятизначное, поэтому в шестом столбце у него ничего нет.</p>
 
   <p><strong>3. Обозначим переносы.</strong> Пусть \(c_1\) — перенос из первого столбца во второй, \(c_2\) — из второго в третий, и так далее до \(c_5\) — из пятого в шестой. Каждое из этих чисел равно \(0\) или \(1\).</p>
@@ -267,13 +277,13 @@ footer a{color:var(--accent)}
   Получается \(N=I\) при любом \(E\). Но это разные буквы. <strong>Не подходит вообще никогда.</strong></p>
 
   <p><strong>\(L=8\).</strong> Тогда \(S=6\), \(B=7\). Условие даёт \(16+E\ge 19\), то есть \(E\ge 3\). Цифры \(6,7,8\) заняты, поэтому \(E\in\{3,4,5,9\}\). Разберём каждое:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(E\)</th><th>\(I=8+E-10\)</th><th>\(N=16+E-19\)</th><th>Что не так</th></tr>
     <tr><td>3</td><td>1</td><td>0</td><td>\(O=5-c_4\); при \(c_4=0\) нужно \(K=9+A\le 9\), то есть \(A=0=N\); при \(c_4=1\) для \(K=A-1\) свободны только \(2,5,9\), но \(A=2\Rightarrow K=1=I\), \(A=5\Rightarrow K=4=O\), \(A=9\Rightarrow K=8=L\)</td></tr>
     <tr><td>4</td><td>2</td><td>1</td><td>\(O=6-c_4\); при \(c_4=0\) выходит \(O=6=S\); при \(c_4=1\) \(O=5\), а для \(K=A-1\) свободны \(0,3,9\): \(A=3\Rightarrow K=2=I\), \(A=9\Rightarrow K=8=L\)</td></tr>
     <tr><td>5</td><td>3</td><td>2</td><td>\(O=7-c_4\); при \(c_4=0\) выходит \(O=7=B\), при \(c_4=1\) выходит \(O=6=S\)</td></tr>
     <tr><td>9</td><td>7</td><td>6</td><td>\(I=7=B\) — совпадение</td></tr>
-  </table>
+  </table></div>
   <p><strong>Не подходит.</strong></p>
 
   <p><strong>\(L=6\).</strong> Тогда \(S=4\), \(B=5\). Условие даёт \(12+E\ge 19\), то есть \(E\ge 7\). Значит \(E\in\{7,8,9\}\).</p>
@@ -300,10 +310,10 @@ footer a{color:var(--accent)}
   <div class="num">7</div>
   <div class="head">Выписываем шифр и проверяем сложение</div>
   <p>Получилась такая расшифровка:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>Буква</th><td>S</td><td>O</td><td>L</td><td>E</td><td>I</td><td>A</td><td>B</td><td>K</td><td>N</td></tr>
     <tr><th>Цифра</th><td>4</td><td>9</td><td>6</td><td>7</td><td>3</td><td>1</td><td>5</td><td>8</td><td>0</td></tr>
-  </table>
+  </table></div>
   <p>Все девять цифр разные — проверьте: \(4,9,6,7,3,1,5,8,0\). Не использована только двойка.</p>
 
   <p><strong>Собираем числа.</strong></p>
@@ -329,12 +339,12 @@ footer a{color:var(--accent)}
 
 <div class="box answer">
   <span class="lbl">Ответ</span>
-  <table>
+  <div class="tablewrap"><table>
     <tr><td></td><td>4</td><td>9</td><td>6</td><td>7</td><td>3</td><td>6</td></tr>
     <tr><td>+</td><td></td><td>4</td><td>1</td><td>5</td><td>6</td><td>7</td></tr>
     <tr><th colspan="7">равно</th></tr>
     <tr><td></td><td>5</td><td>3</td><td>8</td><td>3</td><td>0</td><td>3</td></tr>
-  </table>
+  </table></div>
   <p>То есть \(496\,736+41\,567=538\,303\).</p>
   <p>Расшифровка: \(S=4\), \(O=9\), \(L=6\), \(E=7\), \(I=3\), \(A=1\), \(B=5\), \(K=8\), \(N=0\). Цифра \(2\) не используется.</p>
   <p>Перебор в шаге 6 был полным, поэтому <strong>это единственное решение</strong> ребуса.</p>

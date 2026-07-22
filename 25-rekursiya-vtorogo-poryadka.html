@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -311,12 +321,12 @@ footer a{color:var(--accent)}
   Оба множителя нам теперь известны.</p>
   \[u_n=w_n\cdot v_n=(2n-1)\cdot\frac{1}{2^{n}}=\frac{2n-1}{2^{n}}.\]
   <p>Проверим на всех числах, которые мы уже знаем:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(n\)</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
     <tr><th>\(2n-1\)</th><td>\(-1\)</td><td>1</td><td>3</td><td>5</td><td>7</td></tr>
     <tr><th>\(2^n\)</th><td>1</td><td>2</td><td>4</td><td>8</td><td>16</td></tr>
     <tr><th>\(u_n=\frac{2n-1}{2^n}\)</th><td>\(-1\)</td><td>\(\frac12\)</td><td>\(\frac34\)</td><td>\(\frac58\)</td><td>\(\frac{7}{16}\)</td></tr>
-  </table>
+  </table></div>
   <p>Первые три значения совпали с теми, что мы честно считали в шаге 2. Проверим и четвёртое
   прямо по исходному рецепту:</p>
   \[u_3=u_2-\frac14u_1=\frac34-\frac14\cdot\frac12=\frac34-\frac18=\frac68-\frac18=\frac58.\]
@@ -418,10 +428,10 @@ footer a{color:var(--accent)}
   <p>Оба конвоира приходят в точку 2, а \(S_n\) зажат между ними. Следовательно</p>
   \[S_n\ \longrightarrow\ 2\qquad\text{при }n\to+\infty.\]
   <p>Посмотрим на числах, чтобы поверить глазам:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(n\)</th><th>0</th><th>1</th><th>2</th><th>3</th><th>5</th><th>10</th><th>20</th></tr>
     <tr><th>\(S_n=2-\frac{2n+3}{2^n}\)</th><td>\(-1\)</td><td>\(-0{,}5\)</td><td>\(0{,}25\)</td><td>\(0{,}875\)</td><td>\(1{,}59375\)</td><td>\(\approx1{,}9775\)</td><td>\(\approx1{,}99996\)</td></tr>
-  </table>
+  </table></div>
 </div>
 
 <div class="box answer">

@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -213,13 +223,13 @@ footer a{color:var(--accent)}
   <p><b>7. Готовый предел: \(\lim\limits_{x\to-\infty}x\,e^{x}=0\).</b></p>
   <p>Это стандартный факт: «экспонента сильнее любого множителя».
   Проверим на числах:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(e^{x}\)</th><th>\(x\,e^{x}\)</th></tr>
     <tr><td>\(-3\)</td><td>\(0{,}049787\)</td><td>\(-0{,}14936\)</td></tr>
     <tr><td>\(-6\)</td><td>\(0{,}0024788\)</td><td>\(-0{,}014873\)</td></tr>
     <tr><td>\(-10\)</td><td>\(0{,}0000454\)</td><td>\(-0{,}000454\)</td></tr>
     <tr><td>\(-20\)</td><td>\(2{,}06\cdot 10^{-9}\)</td><td>\(-0{,}0000000412\)</td></tr>
-  </table>
+  </table></div>
   <p>Множитель \(x\) растёт по модулю, но \(e^{x}\) падает несравнимо быстрее,
   и произведение стремится к нулю.</p>
 
@@ -255,12 +265,12 @@ footer a{color:var(--accent)}
   горизонтальной линии на высоте \(1\).</p>
 
   <p>Проверим числами:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(x\,e^{x-1}\)</th><th>\(f(x)\)</th></tr>
     <tr><td>\(-2\)</td><td>\(-2\cdot 0{,}049787=-0{,}09957\)</td><td>\(0{,}90043\)</td></tr>
     <tr><td>\(-5\)</td><td>\(-5\cdot 0{,}0024788=-0{,}01239\)</td><td>\(0{,}98761\)</td></tr>
     <tr><td>\(-10\)</td><td>\(-10\cdot 0{,}0000167=-0{,}000167\)</td><td>\(0{,}99983\)</td></tr>
-  </table>
+  </table></div>
   <p>Действительно подползает к \(1\), причём <em>снизу</em> (значения меньше
   единицы). ✔</p>
 </div>
@@ -322,7 +332,7 @@ footer a{color:var(--accent)}
   \[ f(-1)=(-1)\cdot e^{-1-1}+1=-e^{-2}+1=1-\frac{1}{e^{2}}
      =1-\frac{1}{7{,}389}=1-0{,}13534=0{,}86466 . \]
 
-  <table>
+  <div class="tablewrap"><table>
     <tr>
       <th>\(x\)</th>
       <td>\(-\infty\)</td><td></td><td>\(-1\)</td><td></td><td>\(+\infty\)</td>
@@ -340,7 +350,7 @@ footer a{color:var(--accent)}
       <td>\((1)\)</td><td>↘</td><td>\(1-e^{-2}\approx0{,}865\)</td>
       <td>↗</td><td>\(+\infty\)</td>
     </tr>
-  </table>
+  </table></div>
 
   <p>Скобки у единицы означают: это предел, значение не достигается.</p>
   <p><b>Итог:</b> функция убывает на \(]-\infty;-1]\) и возрастает на
@@ -444,7 +454,7 @@ footer a{color:var(--accent)}
   \(]0;+\infty[\).</b> ✔</p>
 
   <p>Наглядная проверка знака \(h\) вокруг единицы:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(x^{2}\)</th><th>\(e^{x-1}\)</th>
         <th>\(x^{2}e^{x-1}\)</th><th>\(h(x)=1-x^{2}e^{x-1}\)</th></tr>
     <tr><td>\(0{,}5\)</td><td>\(0{,}25\)</td><td>\(0{,}60653\)</td>
@@ -457,7 +467,7 @@ footer a{color:var(--accent)}
         <td>\(1{,}33726\)</td><td>\(-0{,}33726\)</td></tr>
     <tr><td>\(2\)</td><td>\(4\)</td><td>\(2{,}71828\)</td>
         <td>\(10{,}87313\)</td><td>\(-9{,}87313\)</td></tr>
-  </table>
+  </table></div>
   <p>Значения только падают и ноль пересекают ровно один раз — в точке \(1\). ✔</p>
 </div>
 

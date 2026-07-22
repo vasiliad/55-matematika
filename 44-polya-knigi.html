@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -342,7 +352,7 @@ footer a{color:var(--accent)}
   </ul>
   <p>Спидометр меняет знак с минуса на плюс — это ровно картинка «идём вниз, потом вверх».
   Значит, в \(x=24\) находится <b>минимум</b>.</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr>
       <th>\(x\)</th><td>\(4\)</td><td></td><td>\(24\)</td><td></td><td>\(+\infty\)</td>
     </tr>
@@ -352,7 +362,7 @@ footer a{color:var(--accent)}
     <tr>
       <th>\(A(x)\)</th><td>\(+\infty\)</td><td>↘</td><td>\(864\)</td><td>↗</td><td>\(+\infty\)</td>
     </tr>
-  </table>
+  </table></div>
   <p>Проверим края таблицы «на здравый смысл»: при \(x\), близком к \(4\), дробь
   \(\dfrac{2400}{x-4}\) становится огромной — лист получается узким и невероятно длинным.
   При очень большом \(x\) слагаемое \(6x\) становится огромным — лист получается широченным.
@@ -371,11 +381,11 @@ footer a{color:var(--accent)}
   <p>(Считаем: \(24\cdot36=24\cdot30+24\cdot6=720+144=864\).)</p>
   <p><b>Сравним с соседними вариантами</b>, чтобы окончательно убедиться. Для каждого \(x\)
   считаем \(y=6+\dfrac{600}{x-4}\) и площадь \(x\cdot y\):</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\) (см)</th><th>\(14\)</th><th>\(20\)</th><th>\(23\)</th><th>\(24\)</th><th>\(25\)</th><th>\(28\)</th><th>\(40\)</th></tr>
     <tr><th>\(y\) (см)</th><td>\(66{,}0\)</td><td>\(43{,}5\)</td><td>\(37{,}58\)</td><td><b>\(36\)</b></td><td>\(34{,}57\)</td><td>\(31\)</td><td>\(22{,}67\)</td></tr>
     <tr><th>площадь \(xy\)</th><td>\(924{,}0\)</td><td>\(870{,}0\)</td><td>\(864{,}3\)</td><td><b>\(864{,}0\)</b></td><td>\(864{,}3\)</td><td>\(868{,}0\)</td><td>\(906{,}7\)</td></tr>
-  </table>
+  </table></div>
   <p>Разберём одну строчку целиком, чтобы было видно, откуда числа.
   При \(x=20\): \(y=6+\dfrac{600}{16}=6+37{,}5=43{,}5\); площадь \(=20\cdot43{,}5=870\).
   Больше, чем \(864\). ✔</p>

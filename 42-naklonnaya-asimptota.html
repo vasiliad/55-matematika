@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -297,7 +307,7 @@ footer a{color:var(--accent)}
   Ответ — на \(2x\). Это первая цифра нашего частного. Дальше умножаем весь делитель на \(2x\)
   и вычитаем результат. Повторяем, пока «остаток» не станет по степени ниже делителя.</p>
 
-<table style="width:auto;margin:20px auto;background:#fff">
+<div class="tablewrap"><table style="width:auto;margin:20px auto;background:#fff">
   <tr>
     <td style="border:0;text-align:right;padding-right:18px">\(2x^{2}+5x-11\)</td>
     <td style="border:0;border-left:2px solid #25211c;text-align:left;padding-left:18px">\(x+4\)
@@ -321,7 +331,7 @@ footer a{color:var(--accent)}
       <span style="font-size:14px;color:#6b6257">&nbsp;— остаток</span></td>
     <td style="border:0;border-left:2px solid #25211c"></td>
   </tr>
-</table>
+</table></div>
 
   <p><b>Разберём каждую строчку.</b></p>
   <ol>
@@ -396,7 +406,7 @@ footer a{color:var(--accent)}
   <p>Обозначим для краткости \(x_{1}=-4-\dfrac{\sqrt2}{2}\approx-4{,}707\) и
   \(x_{2}=-4+\dfrac{\sqrt2}{2}\approx-3{,}293\). Двойная черта в таблице означает
   «здесь функция не определена».</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr>
       <th>\(x\)</th>
       <td>\(-\infty\)</td><td></td><td>\(x_1\)</td><td></td><td>\(-4\)</td>
@@ -412,7 +422,7 @@ footer a{color:var(--accent)}
       <td>\(-\infty\)</td><td>↗</td><td>\(-11-2\sqrt2\)</td><td>↘</td><td>\(-\infty\)‖\(+\infty\)</td>
       <td>↘</td><td>\(-11+2\sqrt2\)</td><td>↗</td><td>\(+\infty\)</td>
     </tr>
-  </table>
+  </table></div>
   <p><b>Читаем таблицу вслух.</b> Слева функция поднимается из минус бесконечности,
   в точке \(x_1\approx-4{,}707\) достигает <b>местной вершины</b> высотой
   \(-11-2\sqrt2\approx-13{,}83\), затем падает в минус бесконечность у стенки \(x=-4\).
@@ -421,15 +431,15 @@ footer a{color:var(--accent)}
   а дальше снова растёт до плюс бесконечности.</p>
   <p><b>Проверим таблицу на числах</b> (все значения считаем по удобной формуле
   \(f(x)=2x-3+\frac{1}{x+4}\)):</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(-6\)</th><th>\(-5\)</th><th>\(x_1\approx-4{,}71\)</th><th>\(-4{,}5\)</th><th>\(-4{,}1\)</th></tr>
     <tr><th>\(f(x)\)</th><td>\(-15{,}50\)</td><td>\(-14{,}00\)</td><td><b>\(-13{,}83\)</b></td><td>\(-14{,}00\)</td><td>\(-21{,}20\)</td></tr>
-  </table>
+  </table></div>
   <p>Видно: числа поднимаются до \(-13{,}83\), потом резко падают — вершина на месте. ✔</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>\(x\)</th><th>\(-3{,}9\)</th><th>\(-3{,}5\)</th><th>\(x_2\approx-3{,}29\)</th><th>\(-3\)</th><th>\(0\)</th></tr>
     <tr><th>\(f(x)\)</th><td>\(-0{,}80\)</td><td>\(-8{,}00\)</td><td><b>\(-8{,}17\)</b></td><td>\(-8{,}00\)</td><td>\(-2{,}75\)</td></tr>
-  </table>
+  </table></div>
   <p>Числа спускаются до \(-8{,}17\) и снова растут — впадина на месте. ✔</p>
   <p>Отдельно разберём одно вычисление целиком: \(f(-4{,}5)=2\cdot(-4{,}5)-3+\dfrac{1}{-4{,}5+4}
   =-9-3+\dfrac{1}{-0{,}5}=-12-2=-14\). ✔</p>

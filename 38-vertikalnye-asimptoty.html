@@ -7,7 +7,15 @@
 <script>
 window.MathJax = {
   tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().catch(function () {
+        if (MathJax.typesetClear) MathJax.typesetClear();
+        return MathJax.typesetPromise();
+      });
+    }
+  }
 };
 </script>
 <script id="MathJax-script" async src="mathjax/tex-mml-chtml.js"></script>
@@ -23,7 +31,7 @@ body{
   margin:0; padding:32px 16px 80px; background:var(--bg); color:var(--ink);
   font-family:'Georgia','Times New Roman',serif; font-size:18px; line-height:1.75;
 }
-.wrap{max-width:820px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto;overflow-x:clip}
 header.top{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:28px}
 .crumb{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -49,6 +57,7 @@ p{margin:12px 0}
 ul,ol{margin:12px 0;padding-left:26px}
 li{margin:7px 0}
 table{border-collapse:collapse;margin:18px 0;width:100%;background:var(--card);font-size:17px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 th,td{border:1px solid var(--line);padding:9px 13px;text-align:center}
 th{background:var(--accent-soft);font-weight:700}
 details{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px}
@@ -56,7 +65,8 @@ summary{cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',sans-serif
   font-size:15px;color:var(--muted);font-weight:600}
 details[open] summary{margin-bottom:10px}
 .orig{font-style:italic;color:var(--muted);font-size:16px}
-mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container{display:inline-block!important;max-width:100%!important;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{display:block!important}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
   font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
 footer a{color:var(--accent)}
@@ -128,13 +138,13 @@ footer a{color:var(--accent)}
   <p><b>Правило дроби «число делить на почти ноль».</b> Пусть числитель подбирается
   к какому-то <i>ненулевому</i> числу \(N\), а знаменатель подбирается к нулю.
   Тогда дробь обязательно улетает в бесконечность, и знак определяется так:</p>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>Числитель \(N\)</th><th>Знаменатель</th><th>Дробь стремится к</th></tr>
     <tr><td>плюс</td><td>к нулю сверху (остаётся плюсом)</td><td>\(+\infty\)</td></tr>
     <tr><td>плюс</td><td>к нулю снизу (остаётся минусом)</td><td>\(-\infty\)</td></tr>
     <tr><td>минус</td><td>к нулю сверху (плюс)</td><td>\(-\infty\)</td></tr>
     <tr><td>минус</td><td>к нулю снизу (минус)</td><td>\(+\infty\)</td></tr>
-  </table>
+  </table></div>
   <p>Запись \(0^+\) означает «подбирается к нулю, оставаясь положительным»,
   а \(0^-\) — «оставаясь отрицательным». Проверить это можно всегда:
   подставьте \(a+0{,}01\) и \(a-0{,}01\) и посмотрите на знак знаменателя.</p>
@@ -384,7 +394,7 @@ footer a{color:var(--accent)}
 
 <div class="box answer">
   <span class="lbl">Ответ</span>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>Функция</th><th>\(a\)</th><th>Предел слева</th><th>Предел справа</th>
         <th>Вертикальная асимптота?</th></tr>
     <tr><td>\(f_1=\frac{3x-4}{x^2}\)</td><td>\(0\)</td><td>\(-\infty\)</td><td>\(-\infty\)</td>
@@ -399,7 +409,7 @@ footer a{color:var(--accent)}
         <td>\(-4\)</td><td>нет (дырка в графике)</td></tr>
     <tr><td>\(f_6=\exp\left(\frac{2}{x^2-1}\right)\)</td><td>\(1\)</td><td>\(0\)</td>
         <td>\(+\infty\)</td><td>да, \(x=1\)</td></tr>
-  </table>
+  </table></div>
   <p>Полезные упрощения, которые пригодились по дороге:
   \(f_4(x)=\dfrac{1}{\sqrt{x+1}+2}\) при \(x\neq3\);
   \(f_5(x)=-\left(2+\sqrt{e^x+3}\right)\) при \(x\neq0\).</p>
